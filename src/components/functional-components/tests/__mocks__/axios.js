@@ -23,8 +23,6 @@ const mockAxios = {
   //     }
   //   },
   get: (url, params) => {
-    console.log("THE URL: ", url)
-    console.log("THE params: ", params)
     switch (url) {
       case GET_ACCOUNT_DATA:
         return Promise.resolve(getAccountData)

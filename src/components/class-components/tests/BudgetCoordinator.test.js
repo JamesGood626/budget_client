@@ -47,10 +47,12 @@ test("BudgetCoordinator's child Component GetAccountForm's submit action calls i
   const budgetExceeded = await waitForElement(() =>
     getByTestId("budget-exceeded")
   )
+  const depositBtn = await waitForElement(() => getByTestId("deposit-btn"))
 
   expect(accountBalance).toHaveTextContent("0")
   expect(currentBudget).toHaveTextContent("Set Budget")
   expect(budgetExceeded).toHaveTextContent("You're Good")
+  expect(depositBtn).toHaveTextContent("Deposit")
 
   done()
 })

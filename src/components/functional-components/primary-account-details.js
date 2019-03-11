@@ -12,7 +12,7 @@ const Container = styled.div`
 const primaryAccountDetails = ({ budget }) => {
   return (
     <Container>
-      {budget !== null ? (
+      {budget ? (
         <>
           <div>
             <h3>Total Balance:</h3>
@@ -21,9 +21,7 @@ const primaryAccountDetails = ({ budget }) => {
           <div>
             <h3>Current Budget:</h3>
             <p data-testid="current-budget">
-              {budget.current_budget === null
-                ? "Set Budget"
-                : budget.current_budget}
+              {!budget.budget_set ? "Set Budget" : budget.current_budget}
             </p>
           </div>
           <div>

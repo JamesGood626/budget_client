@@ -1,10 +1,10 @@
 import React from "react"
-import BudgetCoordinator from "../components/functional-components/budget-coordinator"
-import { Link } from "gatsby"
+import BudgetCoordinator from "../components/class-components/BudgetCoordinator"
+// import { Link } from "gatsby"
 
 import Layout from "../components/layout"
 import Image from "../components/image"
-import SEO from "../components/seo"
+// import SEO from "../components/seo"
 
 const IndexPage = () => {
   return (

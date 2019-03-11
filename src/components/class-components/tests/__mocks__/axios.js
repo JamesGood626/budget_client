@@ -16,7 +16,6 @@ const mockAxios = {
   create: () => mockAxios,
   //   get: url => Promise.resolve(),
   get: url => {
-    console.log("THE URL: ", url)
     switch (url) {
       case UPLOAD:
         return Promise.resolve(uploadData)

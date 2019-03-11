@@ -1,31 +1,44 @@
-import React, { Component } from "react"
+import React, { useReducer } from "react"
+import BudgetContext from "../BudgetContext"
 import PrimaryAccountDetails from "../functional-components/primary-account-details"
-import axios from "axios"
-import { BUDGET_API } from "../../config"
+import TransactButtons from "../functional-components/transact-buttons"
+import AggregatedBudgetDataDisplay from "../functional-components/aggregated-budget-data-display"
+// import axios from "axios"
+// import { BUDGET_API } from "../../config"
 
 // TODO:
-// This could perhaps just be made to be a functional component ->
-// as it's only purpose will be to receive the budgetData and pass it down
-// to child components.
-// Also todo -> figure out a different way to handle the axios mocks. Unless that console
+// figure out a different way to handle the axios mocks. Unless that console
 // error has no teeth, then leave it be.
-export default class BudgetDisplay extends Component {
-  render() {
-    const { budgetData } = this.props
-    return (
-      <div>
-        <PrimaryAccountDetails
-          budget={
-            budgetData !== null && budgetData.budget_tracker.budget
-              ? budgetData.budget_tracker.budget
-              : null
-          }
-        />
-        <h1>Hello</h1>
-      </div>
-    )
-  }
+
+// Can create a context, wrap the children in said context, and then use a reducer
+// to carry out actions which will interact with the API.
+
+const budgetDisplay = ({ budgetData }) => {
+  return (
+    <div>
+      <PrimaryAccountDetails
+        budget={
+          budgetData !== null && budgetData.budget_tracker.budget
+            ? budgetData.budget_tracker.budget
+            : null
+        }
+      />
+      <BudgetContext.Consumer>
+        {value => (
+          <>
+            <TransactButtons reducer={value} />
+            {/* This component will contain the dropdowns for filtering
+                  expense_types, years, and months.
+                  And the resulting display/table to present the data */}
+            <AggregatedBudgetDataDisplay reducer={value} />
+          </>
+        )}
+      </BudgetContext.Consumer>
+    </div>
+  )
 }
+
+export default budgetDisplay
 
 // {
 //   budget_tracker: {

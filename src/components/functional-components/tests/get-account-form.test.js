@@ -19,7 +19,7 @@ import "jest-dom/extend-expect"
 afterEach(cleanup)
 
 jest.mock("axios")
-// const mockCallback = jest.fn()
+const mockCallback = jest.fn()
 
 test("The Component GetAccountForm's input updates on user input.", async done => {
   const { getByTestId, getByLabelText, debug } = render(<GetAccountForm />)
@@ -27,9 +27,11 @@ test("The Component GetAccountForm's input updates on user input.", async done =
   done()
 })
 
-test("The Component GetAccountForm's submit action calls it's updateBudgetData callback function with the retrieved budgetData from API.", async done => {
+test("The Component GetAccountForm's submit action calls it's setBudgetData callback function with the retrieved budgetData from API.", async done => {
   const { getByTestId, getByLabelText, debug } = render(
-    <GetAccountForm /> // updateBudgetData={mockCallback} <- callback mock never being called.
+    // setBudgetData={mockCallback} <- callback mock never being called.
+    // Really just here to mitigate warning message that occurs if testing without it.
+    <GetAccountForm setBudgetData={mockCallback} />
   )
   changeInputValueAndLoop(getByLabelText, fireEvent, getAccountInput)
 

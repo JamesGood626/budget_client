@@ -7,6 +7,8 @@ import {
   waitForElement,
   debugDOM,
 } from "react-testing-library"
+import BudgetReducerProvider from "../../BudgetReducerProvider"
+import useBudgetReducer from "../BudgetReducer"
 import BudgetDisplay from "../BudgetDisplay"
 import { initialGetAccountData } from "../../../test_fixture_data"
 // import { inputChangeTestCase, inputChange } from "./helpers"
@@ -25,9 +27,12 @@ jest.mock("axios")
 
 test("BudgetDisplay renders with retrieved data from budget app API.", async done => {
   const { getByTestId, debug } = render(
-    <BudgetDisplay budgetData={initialGetAccountData} />
+    // <BudgetDisplay budgetData={initialGetAccountData} />
+    <BudgetReducerProvider
+      reducer={{ state: initialGetAccountData, dispatch: () => true }}
+    />
   )
-  debug()
+  // debug()
   const accountBalance = await waitForElement(() =>
     getByTestId("account-balance")
   )
