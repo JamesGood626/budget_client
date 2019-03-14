@@ -28,6 +28,31 @@ test("AggregatedBudgetDataDisplay renders with budget data.", async done => {
     />
   )
   debug()
+
+  expect(getByTestId("budget-total")).toHaveTextContent("Budget Total:280000")
+  expect(getByTestId("unnecessary-expense-total")).toHaveTextContent(
+    "Unnecessary Expense Total:21000"
+  )
+  done()
+})
+
+test("AggregatedBudgetDataDisplay's months dropdowns reflect months available for a selected year.", async done => {
+  const { getByTestId, getByLabelText, debug } = render(
+    <AggregatedBudgetDataDisplay
+      reducer={{ state: accountDataWithUpdates, dispatch: () => true }}
+    />
+  )
+  // Successfully triggers update for the months available in the selected year to be
+  // presented in the select dropdown.
+  debug()
+  fireEvent.click(getByTestId("year-2018"))
+  expect(getByTestId("2018-11")).toHaveTextContent("November")
+  expect(getByTestId("2018-12")).toHaveTextContent("December")
+  expect(getByTestId("budget-total")).toHaveTextContent("Budget Total:180000")
+  expect(getByTestId("unnecessary-expense-total")).toHaveTextContent(
+    "Unnecessary Expense Total:14000"
+  )
+  debug()
   done()
 })
 

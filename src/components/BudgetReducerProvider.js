@@ -6,6 +6,8 @@ const BudgetReducerProvider = ({ reducer: { state, dispatch } }) => {
   console.log("The budget reducer provider state: ", state)
   return (
     <BudgetContext.Provider value={{ state, dispatch }}>
+      {/* Make this into a render prop instead so that BudgetDisplay is still
+      seen in BudgetCoordinator's render for better readability */}
       <BudgetDisplay budgetData={state} />
     </BudgetContext.Provider>
   )
