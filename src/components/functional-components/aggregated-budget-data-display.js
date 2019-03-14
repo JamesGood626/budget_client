@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import AggregatedBudgetExpenseTotal from "./aggregated-budget-expense-total"
 
+// LATEST TODO: Mar 14th
+//  See top comment in aggregated-budget-expense-total.js
 // year/month selection invariants
 // If more than one year is selected,
 // then by default, all months in those years will be selected.
@@ -20,6 +22,25 @@ const monthObj = {
   10: "October",
   11: "November",
   12: "December",
+}
+
+const accountActivityOptions = [
+  "All Activity",
+  "All Unnecessary Expenses",
+  "All Necessary Expenses",
+  "All Deposits",
+]
+
+const renderAccountActivityOptions = (options, callback) => {
+  return (
+    <select defaultValue="All Activity">
+      {options.map(option => (
+        <option value={option} onClick={() => callback(option)}>
+          {option}
+        </option>
+      ))}
+    </select>
+  )
 }
 
 const renderYearsDropDown = (years, setSelectedYear) => {
@@ -64,28 +85,43 @@ const renderMonthsDropDown = (year, months) => {
   )
 }
 
+const setYearsAndMonthsAvailableKeys = (
+  state,
+  setYearsAvailable,
+  setMonthsAvailable
+) => {
+  const { years_tracked } = state.budget_tracker
+  const yearKeys = Object.getOwnPropertyNames(years_tracked)
+  const monthKeys = yearKeys.reduce((acc, year) => {
+    const months = Object.getOwnPropertyNames(
+      years_tracked[year].months_tracked
+    )
+    acc[year] = months
+    return acc
+  }, {})
+  setYearsAvailable(yearKeys)
+  setMonthsAvailable(monthKeys)
+}
+
 const aggregatedBudgetDataDisplay = ({ reducer: { state } }) => {
-  const [expenseDepositFilter, setExpenseDepositFilter] = useState(
-    "All Expenses"
-  )
-  const [selectedYear, setSelectedYear] = useState("All Years")
   const [yearsAvailable, setYearsAvailable] = useState([])
   const [monthsAvailable, setMonthsAvailable] = useState([])
-  const { selectedMonths, changeSelectedMonths } = useSelectMonths()
+  const [expenseDepositFilter, setExpenseDepositFilter] = useState(
+    "All Activity"
+  )
+  const [selectedYear, setSelectedYear] = useState("All Years")
+  const { selectedMonths, changeSelectedMonths } = useSelectMonths("All Months")
   // console.log("GOT STATE IN AGGREGATED BDD: ", state)
   console.log("THE MONTHS AVAILABLE: ", monthsAvailable)
   useEffect(() => {
-    const { years_tracked } = state.budget_tracker
-    const yearKeys = Object.getOwnPropertyNames(years_tracked)
-    const monthKeys = yearKeys.reduce((acc, year) => {
-      const months = Object.getOwnPropertyNames(
-        years_tracked[year].months_tracked
+    if (yearsAvailable.length === 0) {
+      setYearsAndMonthsAvailableKeys(
+        state,
+        setYearsAvailable,
+        setMonthsAvailable
       )
-      acc[year] = months
-      return acc
-    }, {})
-    setYearsAvailable(yearKeys)
-    setMonthsAvailable(monthKeys)
+    }
+
     // empty array for right now to prevent re-render after setYearsAvailable is called,
     // but will need to listen for expenseDepositFilter change once I get to that point.
     // Or perhaps I won't... because as of right now, when selecting a year to set as selectedYear,
@@ -94,20 +130,10 @@ const aggregatedBudgetDataDisplay = ({ reducer: { state } }) => {
 
   return (
     <div>
-      <select defaultValue="All Expenses">
-        <option
-          value="All Expenses"
-          onClick={() => setExpenseDepositFilter("All Expenses")}
-        >
-          All Expenses
-        </option>
-        <option
-          value="All Deposits"
-          onClick={() => setExpenseDepositFilter("All Deposits")}
-        >
-          All Deposits
-        </option>
-      </select>
+      {renderAccountActivityOptions(
+        accountActivityOptions,
+        setExpenseDepositFilter
+      )}
       {yearsAvailable.length > 0 &&
         renderYearsDropDown(yearsAvailable, setSelectedYear)}
       {yearsAvailable.length > 0 && selectedYear
@@ -139,20 +165,25 @@ const aggregatedBudgetDataDisplay = ({ reducer: { state } }) => {
         />
       )}
       {/* The component that will display filtered data based on selected year/months from dropdown */}
-      {/* expensesOrDeposits -> "All Expenses" or "All Deposits" */}
+      {/* expensesOrDeposits -> "All Unnecessary Expenses" or "All Necessary Expenses" or "All Deposits" */}
+      {/* Will also need to pass down the selected year's months_tracked or in the
+          case of All Years just pass down years_tracked */}
       {/* <BudgetHistoryTable expensesOrDeposits={expenseDepositFilter} /> */}
     </div>
   )
 }
 
-const useSelectMonths = () => {
-  const [selectedMonths, setSelectedMonths] = useState("All Months")
+const useSelectMonths = initialState => {
+  const [selectedMonths, setSelectedMonths] = useState(initialState)
 
-  // Still need to handle preventing UI from reflecting a successful selection if
+  // TODO:
+  // Need to handle preventing UI from reflecting a successful selection if
   // this invariant doesn't hold true.
   const changeSelectedMonths = month => {
     if (typeof selectedMonths === "Array") {
       const lastElementPosition = selectedMonths.length - 1
+      // This is to ensure that August can't be added to the selectedMonths array if
+      // July doesn't precede it.
       if (selectedMonths[lastElementPosition] + 1 === month) {
         let newSelectedMonths = [...selectedMonths, month]
         setSelectedMonths(newSelectedMonths)

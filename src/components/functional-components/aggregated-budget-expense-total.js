@@ -1,5 +1,19 @@
 import React from "react"
 
+// FUTURE REFACTOR:
+// Would be much cleaner if I moved this logic up into
+// AggregatedBudgetDataDisplay and only pass down the totals to this component
+// YES -> This is the way to go for sure.
+// New plan:
+//  - Create a controller component which will be passed
+//    everything that this component (AggregatedBudgetExpenseTotal)
+//  - The controller component will be a child of AggregatedBudgetDataDisplay
+//    and will be a functional component which utilizes react hooks to
+//    transform the data received as props, and create internal state that will
+//    be used to pass down the final output that this component (AggregatedBudgetEx)
+//    and the Table component will require -> so that they may remain stricly presontational
+//    components.
+
 // Starting with displaying
 const calculateTotals = (years, yearData, showMonthData) => {
   if (years !== "SINGLE") {
