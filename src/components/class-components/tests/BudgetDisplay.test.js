@@ -10,7 +10,7 @@ import {
 import BudgetReducerProvider from "../../BudgetReducerProvider"
 import useBudgetReducer from "../BudgetReducer"
 import BudgetDisplay from "../BudgetDisplay"
-import { initialGetAccountData } from "../../../test_fixture_data"
+import { initialStateWithoutTransactions } from "../../../test_fixture_data"
 // import { inputChangeTestCase, inputChange } from "./helpers"
 
 // this adds custom jest matchers from jest-dom
@@ -27,10 +27,12 @@ jest.mock("axios")
 
 test("BudgetDisplay renders with retrieved data from budget app API.", async done => {
   const { getByTestId, debug } = render(
-    // <BudgetDisplay budgetData={initialGetAccountData} />
+    // <BudgetDisplay budgetData={initialStateWithoutTransactions} />
     <BudgetReducerProvider
-      reducer={{ state: initialGetAccountData, dispatch: () => true }}
-    />
+      reducer={{ state: initialStateWithoutTransactions, dispatch: () => true }}
+    >
+      {state => <BudgetDisplay budgetData={state.data} />}
+    </BudgetReducerProvider>
   )
   // debug()
   const accountBalance = await waitForElement(() =>

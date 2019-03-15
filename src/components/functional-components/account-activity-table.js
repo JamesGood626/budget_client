@@ -24,12 +24,12 @@ const Table = styled.table`
 `
 
 const Amount = styled.span`
-  color: ${props => (props.category === "DEPOSIT" ? green : red)};
+  color: ${props => (props.category === "DEPOSIT" ? "green" : "red")};
 `
 
 const renderTableRows = data => {
-  return data.map(({ category, type, amount, date }) => (
-    <tr>
+  return data.map(({ category, type, amount, date }, i) => (
+    <tr key={`${category}-${type}-${i}`}>
       <td>
         {type} <Amount category={category}>{amount}</Amount>
       </td>

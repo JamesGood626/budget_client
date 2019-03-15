@@ -10,6 +10,7 @@ const getAccountForm = ({ setBudgetData }) => {
     const { data } = await axios.get(`${BUDGET_API}/get-account`, {
       accountName: accountName.value,
     })
+    console.log("BUDGET DATA BEING SET: ", data)
     setBudgetData(data)
   }
 

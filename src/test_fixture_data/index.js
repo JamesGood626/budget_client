@@ -27,7 +27,6 @@ const initialGetAccountData = {
     },
   },
 }
-
 const fakeDepositsArr = [
   {
     category: "DEPOSIT",
@@ -127,6 +126,16 @@ const accountDataWithUpdates = {
   },
 }
 
+const initialStateWithoutTransactions = {
+  data: initialGetAccountData,
+  inProgress: false,
+}
+
+const initialStateWithTransactions = {
+  data: accountDataWithUpdates,
+  inProgress: false,
+}
+
 // For supplying user input to tests
 const getAccountInput = [
   {
@@ -136,7 +145,7 @@ const getAccountInput = [
 ]
 
 module.exports = {
-  initialGetAccountData,
-  accountDataWithUpdates,
+  initialStateWithoutTransactions,
+  initialStateWithTransactions,
   getAccountInput,
 }

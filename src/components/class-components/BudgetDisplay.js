@@ -16,6 +16,7 @@ import AggregatedBudgetDataDisplay from "../functional-components/aggregated-bud
 const budgetDisplay = ({ budgetData }) => {
   return (
     <div>
+      {console.log("THE BUDGET DATA FOR PRIMARY ACC DETAILS: ", budgetData)}
       <PrimaryAccountDetails
         budget={
           budgetData !== null && budgetData.budget_tracker.budget
@@ -27,9 +28,11 @@ const budgetDisplay = ({ budgetData }) => {
         {value => (
           <>
             <TransactButtons reducer={value} />
-            {/* This component will contain the dropdowns for filtering
-                  expense_types, years, and months.
-                  And the resulting display/table to present the data */}
+            {/*
+                AggregatedBudgetDataDisplay contains the dropdowns for filtering
+                expense_types, years, and months.
+                And the resulting display/table to present the data
+            */}
             <AggregatedBudgetDataDisplay reducer={value} />
           </>
         )}

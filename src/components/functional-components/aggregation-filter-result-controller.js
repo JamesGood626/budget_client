@@ -65,7 +65,7 @@ const multipleYearAggregation = (
       })
       allBudgetAndUnnecessaryExpenses.forEach(
         ([budget, unnecessaryExpenses, accountActivityData]) => {
-          console.log("FILTERED DATA: ", accountActivityData)
+          // console.log("FILTERED DATA: ", accountActivityData)
           acc.totals.budgetTotal += budget
           acc.totals.unnecessaryExpensesTotal += unnecessaryExpenses
           acc.accountActivityData = [
@@ -115,7 +115,7 @@ const singleYearAggregation = (
 
   allBudgetAndUnnecessaryExpenses.forEach(
     ([budget, unnecessaryExpenses, accountActivityData]) => {
-      console.log("FILTERED DATA: ", accountActivityData)
+      // console.log("FILTERED DATA: ", accountActivityData)
       responseObj.totals.budgetTotal += budget
       responseObj.totals.unnecessaryExpensesTotal += unnecessaryExpenses
       responseObj.accountActivityData = [
@@ -173,7 +173,7 @@ const aggregationFilterResultController = ({
     accountActivityFilter
   )
   // console.log("THE ACCOUNT ACTIVITY FILTER: ", accountActivityFilter)
-  console.log("SHOW ME THE DATA: ", accountActivityData)
+  // console.log("SHOW ME THE DATA: ", accountActivityData)
   return (
     <div>
       <AggregatedBudgetExpenseTotal totals={totals} />

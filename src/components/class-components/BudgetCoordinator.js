@@ -1,5 +1,4 @@
 import React from "react"
-import BudgetContext from "../BudgetContext"
 import useBudgetReducer from "./BudgetReducer"
 import BudgetReducerProvider from "../BudgetReducerProvider"
 import GetAccountForm from "../functional-components/get-account-form"
@@ -23,14 +22,12 @@ const BudgetCoordinator = () => {
   const { state, dispatch, setBudgetData } = useBudgetReducer()
   return (
     <div>
-      {state === null ? (
+      {state.data === null ? (
         <GetAccountForm setBudgetData={setBudgetData} />
       ) : (
-        // Put BudgetReducerProvider here.
-        <BudgetReducerProvider reducer={{ state, dispatch }} />
-        // <BudgetContext.Provider value={{ state, dispatch }}>
-        //   <BudgetDisplay budgetData={state} />
-        // </BudgetContext.Provider>
+        <BudgetReducerProvider reducer={{ state, dispatch }}>
+          {state => <BudgetDisplay budgetData={state.data} />}
+        </BudgetReducerProvider>
       )}
     </div>
   )

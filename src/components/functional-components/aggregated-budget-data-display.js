@@ -86,11 +86,11 @@ const renderMonthsDropDown = (year, months) => {
 }
 
 const setYearsAndMonthsAvailableKeys = (
-  state,
+  data,
   setYearsAvailable,
   setMonthsAvailable
 ) => {
-  const { years_tracked } = state.budget_tracker
+  const { years_tracked } = data.budget_tracker
   const yearKeys = Object.getOwnPropertyNames(years_tracked)
   const monthKeys = yearKeys.reduce((acc, year) => {
     const months = Object.getOwnPropertyNames(
@@ -103,7 +103,11 @@ const setYearsAndMonthsAvailableKeys = (
   setMonthsAvailable(monthKeys)
 }
 
-const aggregatedBudgetDataDisplay = ({ reducer: { state } }) => {
+const aggregatedBudgetDataDisplay = ({
+  reducer: {
+    state: { data },
+  },
+}) => {
   const [yearsAvailable, setYearsAvailable] = useState([])
   const [monthsAvailable, setMonthsAvailable] = useState([])
   const [expenseDepositFilter, setExpenseDepositFilter] = useState(
@@ -112,11 +116,12 @@ const aggregatedBudgetDataDisplay = ({ reducer: { state } }) => {
   const [selectedYear, setSelectedYear] = useState("All Years")
   const { selectedMonths, changeSelectedMonths } = useSelectMonths("All Months")
   // console.log("GOT STATE IN AGGREGATED BDD: ", state)
-  console.log("THE MONTHS AVAILABLE: ", monthsAvailable)
+  // console.log("THE MONTHS AVAILABLE: ", monthsAvailable)
   useEffect(() => {
     if (yearsAvailable.length === 0) {
+      console.log("THE DATA: ", data)
       setYearsAndMonthsAvailableKeys(
-        state,
+        data,
         setYearsAvailable,
         setMonthsAvailable
       )
@@ -156,8 +161,8 @@ const aggregatedBudgetDataDisplay = ({ reducer: { state } }) => {
           years={selectedYear === "All Years" ? yearsAvailable : "SINGLE"}
           yearData={
             selectedYear === "All Years"
-              ? state.budget_tracker.years_tracked
-              : state.budget_tracker.years_tracked[selectedYear]
+              ? data.budget_tracker.years_tracked
+              : data.budget_tracker.years_tracked[selectedYear]
           }
           showMonthData={
             selectedYear === "All Years" ? monthsAvailable : selectedMonths

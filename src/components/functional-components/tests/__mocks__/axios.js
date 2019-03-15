@@ -3,14 +3,10 @@
 // mocked file for that module. i.e. jest.mock("axios")
 // If I had named this get_account_axios.js, then jest would never detect this
 // mocked file.
-import { initialGetAccountData } from "../../../../test_fixture_data"
+import { initialStateWithoutTransactions } from "../../../../test_fixture_data"
 import { BUDGET_API } from "../../../../config"
 
 const GET_ACCOUNT_DATA = `${BUDGET_API}/get-account`
-
-const getAccountData = {
-  data: initialGetAccountData,
-}
 
 const mockAxios = {
   create: () => mockAxios,
@@ -25,7 +21,7 @@ const mockAxios = {
   get: (url, params) => {
     switch (url) {
       case GET_ACCOUNT_DATA:
-        return Promise.resolve(getAccountData)
+        return Promise.resolve(initialStateWithoutTransactions)
     }
   },
   noPost: url => {
