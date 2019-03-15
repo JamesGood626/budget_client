@@ -30,12 +30,14 @@ const initialGetAccountData = {
 
 const fakeDepositsArr = [
   {
-    deposit_type: "Check",
+    category: "DEPOSIT",
+    type: "Check",
     amount: 400000,
     date: "TBD",
   },
   {
-    deposit_type: "Check",
+    category: "DEPOSIT",
+    type: "Check",
     amount: 10000,
     date: "TBD",
   },
@@ -43,12 +45,14 @@ const fakeDepositsArr = [
 
 const fakeNecessaryExpensesArr = [
   {
-    deposit_type: "Rent",
+    category: "NECESSARY_EXPENSE",
+    type: "Rent",
     amount: 360000,
     date: "TBD",
   },
   {
-    deposit_type: "Groceries",
+    category: "UNECESSARY_EXPENSE",
+    type: "Groceries",
     amount: 7000,
     date: "TBD",
   },
@@ -56,12 +60,14 @@ const fakeNecessaryExpensesArr = [
 
 const fakeUnnecessaryExpensesArr = [
   {
-    deposit_type: "Coffee",
+    category: "UNNECESSARY_EXPENSE",
+    type: "Coffee",
     amount: 5000,
     date: "TBD",
   },
   {
-    deposit_type: "Eat out",
+    category: "UNNECESSARY_EXPENSE",
+    type: "Eat out",
     amount: 2000,
     date: "TBD",
   },

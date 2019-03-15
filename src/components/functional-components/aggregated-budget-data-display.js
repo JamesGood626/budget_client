@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import AggregatedBudgetExpenseTotal from "./aggregated-budget-expense-total"
+import AggregationFilterResultController from "./aggregation-filter-result-controller"
 
 // LATEST TODO: Mar 14th
 //  See top comment in aggregated-budget-expense-total.js
@@ -35,7 +35,7 @@ const renderAccountActivityOptions = (options, callback) => {
   return (
     <select defaultValue="All Activity">
       {options.map(option => (
-        <option value={option} onClick={() => callback(option)}>
+        <option value={option} key={option} onClick={() => callback(option)}>
           {option}
         </option>
       ))}
@@ -152,7 +152,7 @@ const aggregatedBudgetDataDisplay = ({ reducer: { state } }) => {
       3. Last thing... All Expenses/All Deposits to determine which data will
          be displayed in the table from each month. */}
       {yearsAvailable.length > 0 && (
-        <AggregatedBudgetExpenseTotal
+        <AggregationFilterResultController
           years={selectedYear === "All Years" ? yearsAvailable : "SINGLE"}
           yearData={
             selectedYear === "All Years"
@@ -162,6 +162,7 @@ const aggregatedBudgetDataDisplay = ({ reducer: { state } }) => {
           showMonthData={
             selectedYear === "All Years" ? monthsAvailable : selectedMonths
           }
+          accountActivityFilter={expenseDepositFilter}
         />
       )}
       {/* The component that will display filtered data based on selected year/months from dropdown */}

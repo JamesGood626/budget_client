@@ -56,6 +56,11 @@ test("AggregatedBudgetDataDisplay's months dropdowns reflect months available fo
   done()
 })
 
+// NEXT THING I NEED TO TEST
+// Ensure that the rendered results in the table are in alignment with what the currently
+// Filtered options selected reflect.
+// Can use a data-testid of category-{i} to do the DOM grabbin/toHaveTextContent tests.
+
 // test("The Component GetAccountForm's submit action calls it's setBudgetData callback function with the retrieved budgetData from API.", async done => {
 //   const { getByTestId, getByLabelText, debug } = render(
 //     // setBudgetData={mockCallback} <- callback mock never being called.
