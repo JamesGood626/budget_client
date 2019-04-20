@@ -65,7 +65,7 @@ const renderYearsDropDown = (years, setSelectedYear) => {
 // These will be used for the yearsFilter and monthsFilter
 // Dependending upon which year is selected in the dropdown
 // Will determine which months are display in the months dropdown.
-const renderMonthsDropDown = (year, months) => {
+const renderMonthsDropDown = (year, months, changeSelectedMonths) => {
   // Convert this function to just take in a single selected year.
   return (
     <select defaultValue="All Months">

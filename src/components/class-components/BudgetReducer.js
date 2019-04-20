@@ -1,19 +1,24 @@
 import { useReducer } from "react"
-
-const SET_STATE = "SET_STATE"
-const DESPOSIT = "DEPOSIT"
-const EXPENSE = "EXPENSE"
+import {
+  SET_STATE,
+  DEPOSIT,
+  NECESSARY_EXPENSE,
+  UNNECESSARY_EXPENSE,
+  TOGGLE_IN_PROGRESS,
+} from "../budgetReducerActions"
 
 function reducer(state, action) {
   switch (action.type) {
     case SET_STATE:
       return { ...state, data: action.payload }
-    case DESPOSIT:
+    case DEPOSIT:
       return state // add deposit to target array
-    case EXPENSE:
+    case NECESSARY_EXPENSE:
       return state // add expense to target array
-    case IN_PROGRESS:
-      return state
+    case UNNECESSARY_EXPENSE:
+      return state // add expense to target array
+    case TOGGLE_IN_PROGRESS:
+      return { ...state, inProgress: !state.inProgress }
   }
 }
 

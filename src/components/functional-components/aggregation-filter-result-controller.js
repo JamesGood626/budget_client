@@ -2,7 +2,11 @@ import React from "react"
 import AggregatedBudgetExpenseTotal from "./aggregated-budget-expense-total"
 import AccountActivityTable from "./account-activity-table"
 
-// FUTURE REFACTOR:
+// TODO: <- not done yet
+// Move the aggregateBudgetData and related functions into a utils folder and
+// import them into this file.
+
+// FUTURE REFACTOR: <- This is done. But need to do a sketch out/write up of this approach that I took.
 // Would be much cleaner if I moved this logic up into
 // AggregatedBudgetDataDisplay and only pass down the totals to this component
 // YES -> This is the way to go for sure.

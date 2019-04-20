@@ -1,6 +1,6 @@
-html {
+/* html {
   font-size: 62.5%;
-}
+} */
 
 *,
 *::before,
@@ -8,4 +8,8 @@ html {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
 }
