@@ -12,7 +12,7 @@ import endpoints from "../../config/api_endpoints"
 import { accountDataWithUpdates } from "../../test_fixture_data/index"
 
 const Container = styled.div`
-  background: blue;
+  background: #fff;
 `
 
 // TODO:

@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import axios from "axios"
 import styled from "styled-components"
 import TransactModalForm from "./transact-modal-form"
+import Button from "./button"
 import endpoints from "../../config/api_endpoints"
 import {
   DEPOSIT,
@@ -66,10 +67,29 @@ const transactButtons = ({ reducer: { dispatch } }) => {
   return (
     <div>
       {/* Need to open modals onClick with forms for adding the transactions */}
-      <button data-testid="deposit-btn" onClick={() => toggleModal("DEPOSIT")}>
+      <Button
+        data-testid="deposit-btn"
+        onClick={() => toggleModal("DEPOSIT")}
+        radius={25}
+        shadow={true}
+        padding={[1, 3.2]}
+        minHeight={3}
+        topColor="#46FF90"
+        bottomColor="#20E131"
+      >
         Deposit
-      </button>
-      <button onClick={() => toggleModal("EXPENSE")}>Expense</button>
+      </Button>
+      <Button
+        onClick={() => toggleModal("EXPENSE")}
+        radius={25}
+        shadow={true}
+        padding={[1, 3.2]}
+        minHeight={3}
+        topColor="#FF7878"
+        bottomColor="#FF5E5E"
+      >
+        Expense
+      </Button>
       {/* <button onClick={() => toggleModal("UNNECESSARY_EXPENSE")}>
         Unnecessary Expense
       </button> */}
