@@ -1,27 +1,22 @@
 import React from "react"
-import BudgetCoordinator from "../components/class-components/BudgetCoordinator"
-import { Link } from "gatsby"
+import styled from "styled-components"
 
 import Layout from "../components/layout"
 
-const isLoggedIn = () => false
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`
 
 const IndexPage = () => {
   return (
     <Layout>
-      {/* <BudgetCoordinator /> */}
-      {isLoggedIn() ? (
-        <>
-          {/* Redirect to Budget view */}
-          You are logged in, so check your{" "}
-          <Link to="/app/profile">profile</Link>
-        </>
-      ) : (
-        <>
-          You should <Link to="/app/login">log in</Link> to see restricted
-          content
-        </>
-      )}
+      <Container>
+        <h1>Welcome to Budget Slayer 9000!</h1>
+      </Container>
     </Layout>
   )
 }

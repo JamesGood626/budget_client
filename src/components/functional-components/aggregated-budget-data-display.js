@@ -90,7 +90,8 @@ const setYearsAndMonthsAvailableKeys = (
   setYearsAvailable,
   setMonthsAvailable
 ) => {
-  const { years_tracked } = data.budget_tracker
+  console.log("data before err: ", data)
+  const { years_tracked } = data
   const yearKeys = Object.getOwnPropertyNames(years_tracked)
   const monthKeys = yearKeys.reduce((acc, year) => {
     const months = Object.getOwnPropertyNames(
@@ -161,8 +162,8 @@ const aggregatedBudgetDataDisplay = ({
           years={selectedYear === "All Years" ? yearsAvailable : "SINGLE"}
           yearData={
             selectedYear === "All Years"
-              ? data.budget_tracker.years_tracked
-              : data.budget_tracker.years_tracked[selectedYear]
+              ? data.years_tracked
+              : data.years_tracked[selectedYear]
           }
           showMonthData={
             selectedYear === "All Years" ? monthsAvailable : selectedMonths

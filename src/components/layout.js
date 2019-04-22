@@ -8,22 +8,21 @@ import "./layout.css"
 
 const Layout = ({ children }) => {
   const reducer = useAuthReducer()
+  console.log(`typeof children: ${typeof children}`)
   return (
     <AuthReducerProvider reducer={reducer}>
       {({ state: { authenticated }, login, logout }) => {
         return (
           <>
             <Navbar authenticated={authenticated} logout={logout} />
-            {children({ authenticated, login, logout })}
+            {typeof children === "function"
+              ? children({ authenticated, login, logout })
+              : children}
           </>
         )
       }}
     </AuthReducerProvider>
   )
-}
-
-Layout.propTypes = {
-  children: PropTypes.func,
 }
 
 export default Layout

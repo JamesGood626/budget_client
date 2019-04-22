@@ -1,8 +1,6 @@
 import React, { useState } from "react"
 import axios from "axios"
-import { BUDGET_API } from "../../config"
-
-const POST_DEPOSIT = `${BUDGET_API}/deposit`
+import endpoints from "../../config/api_endpoints"
 
 const depositInputs = () => {
   const [incomeSource, setIncomeSource] = useState({ value: "", err: false })
@@ -28,7 +26,7 @@ const depositInputs = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    axios.post(POST_DEPOSIT, {
+    axios.post(endpoints.DEPOSIT_URL, {
       income_source: incomeSource.value,
       deposit_amount: depositAmount.value,
     })

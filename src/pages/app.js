@@ -1,10 +1,13 @@
 import React from "react"
+import axios from "axios"
 import { Router } from "@reach/router"
 import Layout from "../components/layout"
 import PrivateRoute from "../components/helper-components/auth/privateRoute"
 import BudgetCoordinator from "../components/class-components/BudgetCoordinator"
 import Login from "../components/functional-components/login"
 import Signup from "../components/functional-components/signup"
+
+axios.defaults.withCredentials = true
 
 const App = () => (
   <Layout>

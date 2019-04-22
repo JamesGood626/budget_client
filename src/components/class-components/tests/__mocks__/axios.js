@@ -4,16 +4,14 @@
 // If I had named this get_account_axios.js, then jest would never detect this
 // mocked file.
 import { initialStateWithoutTransactions } from "../../../../test_fixture_data"
-import { BUDGET_API } from "../../../../config"
-
-const UPLOAD = `${BUDGET_API}/get-account`
+import endpoints from "../../../../config/api_endpoints"
 
 const mockAxios = {
   create: () => mockAxios,
   //   get: url => Promise.resolve(),
   get: url => {
     switch (url) {
-      case UPLOAD:
+      case endpoints.GET_ACCOUNT:
         return Promise.resolve(initialStateWithoutTransactions)
     }
   },

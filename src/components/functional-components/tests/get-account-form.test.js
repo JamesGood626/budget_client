@@ -8,7 +8,7 @@ import {
   debugDOM,
 } from "react-testing-library"
 import GetAccountForm from "../get-account-form"
-import { BUDGET_API } from "../../../config"
+import endpoints from "../../../config/api_endpoints"
 import { getAccountInput } from "../../../test_fixture_data"
 import { changeInputValueAndLoop } from "../../../test_helpers"
 
@@ -38,7 +38,7 @@ test("The Component GetAccountForm's submit action calls it's setBudgetData call
   const getSpy = jest.spyOn(axios, "get")
   fireEvent.click(getByTestId("getAccountSubmitBtn"))
   expect(getSpy).toHaveBeenCalledTimes(1)
-  expect(getSpy).toHaveBeenCalledWith(`${BUDGET_API}/get-account`, {
+  expect(getSpy).toHaveBeenCalledWith(endpoints.GET_ACCOUNT, {
     accountName: "Primary",
   })
 

@@ -11,7 +11,7 @@ function reducer(state, action) {
 }
 
 const initialState = {
-  authenticated: false,
+  authenticated: true,
 }
 
 const useAuthReducer = () => {

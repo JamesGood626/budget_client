@@ -8,7 +8,8 @@ import {
   debugDOM,
 } from "react-testing-library"
 import AggregatedBudgetDataDisplay from "../aggregated-budget-data-display"
-import { BUDGET_API } from "../../../config"
+// import { BUDGET_API } from "../../../config"
+import endpoints from "../../../config/api_endpoints"
 import { initialStateWithTransactions } from "../../../test_fixture_data"
 import { changeInputValueAndLoop } from "../../../test_helpers"
 

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
-import { BUDGET_API } from "../../config"
+import endpoints from "../../config/api_endpoints"
 
 const getAccountForm = ({ setBudgetData }) => {
   const accountName = useAccountName()
 
   const handleSubmit = async e => {
     e.preventDefault()
-    const { data } = await axios.get(`${BUDGET_API}/get-account`, {
+    const { data } = await axios.get(endpoints.GET_ACCOUNT, {
       accountName: accountName.value,
     })
     console.log("BUDGET DATA BEING SET: ", data)

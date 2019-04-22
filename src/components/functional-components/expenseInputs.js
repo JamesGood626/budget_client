@@ -1,8 +1,6 @@
 import React, { useState } from "react"
 import axios from "axios"
-import { BUDGET_API } from "../../config"
-
-const POST_EXPENSE = `${BUDGET_API}/`
+import endpoints from "../../config/api_endpoints"
 
 const expenseInputs = () => {
   const [category, setCategory] = useState("NECESSARY_EXPENSE")
@@ -31,11 +29,11 @@ const expenseInputs = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    const POST_EXPENSE_URL =
+    const EXPENSE_URL =
       category === "NECESSARY_EXPENSE"
-        ? POST_EXPENSE + "necessary-expense"
-        : POST_EXPENSE + "unnecessary-expense"
-    axios.post(POST_EXPENSE_URL, {
+        ? endpoints.NECESSARY_EXPENSE_URL
+        : endpoints.UNNECESSARY_EXPENSE_URL
+    axios.post(EXPENSE_URL, {
       expense: expense.value,
       expense_amount: amount.value,
     })

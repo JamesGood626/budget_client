@@ -1,13 +1,25 @@
 import React, { useState } from "react"
 import axios from "axios"
+import styled from "styled-components"
 import TransactModalForm from "./transact-modal-form"
-import { BUDGET_API } from "../../config"
+import endpoints from "../../config/api_endpoints"
 import {
   DEPOSIT,
   NECESSARY_EXPENSE,
   UNNECESSARY_EXPENSE,
   TOGGLE_IN_PROGRESS,
 } from "../budgetReducerActions"
+
+const FadedBackground = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  background: #222;
+  opacity: 0.5;
+  width: 100vw;
+  height: 100vh;
+`
 
 // For whatever reason... DEPOSIT and the rest of the constants are undefined when running tests
 // Just going to pass in plain strings for now to the toggleModal function calls
@@ -31,7 +43,7 @@ const transactButtons = ({ reducer: { dispatch } }) => {
   const deposit = async params => {
     // API should return true/false only to indicate if deposit was successful
     // dispatch({type: IN_PROGRESS }) for loading indicator
-    const depositResult = await axios.post(`${BUDGET_API}/deposit`, params)
+    const depositResult = await axios.post(endpoints.DEPOSIT, params)
     if (!depositResult) {
       // How to handle this so that user may receive notification of post failure?
       return
@@ -39,7 +51,7 @@ const transactButtons = ({ reducer: { dispatch } }) => {
     dispatch({ type: "DEPOSIT", payload: params })
   }
   const toggleModal = type => {
-    setModalToggled({ toggled: !modalToggled, transactionType: type })
+    setModalToggled({ toggled: !modalToggled.toggled, transactionType: type })
   }
   // Clicking either of these buttons should open an appropriate modal
   // which will enable the user to enter deposit_type/expense_type and amount
@@ -57,14 +69,18 @@ const transactButtons = ({ reducer: { dispatch } }) => {
       <button data-testid="deposit-btn" onClick={() => toggleModal("DEPOSIT")}>
         Deposit
       </button>
-      <button onClick={() => toggleModal("NECESSARY_EXPENSE")}>
-        Necessary Expense
-      </button>
-      <button onClick={() => toggleModal("UNNECESSARY_EXPENSE")}>
+      <button onClick={() => toggleModal("EXPENSE")}>Expense</button>
+      {/* <button onClick={() => toggleModal("UNNECESSARY_EXPENSE")}>
         Unnecessary Expense
-      </button>
-      {modalToggled && (
-        <TransactModalForm transactionType={modalToggled.transactionType} />
+      </button> */}
+      {modalToggled.toggled && (
+        <>
+          <TransactModalForm
+            transactionType={modalToggled.transactionType}
+            toggleModal={toggleModal}
+          />
+          <FadedBackground />
+        </>
       )}
     </div>
   )

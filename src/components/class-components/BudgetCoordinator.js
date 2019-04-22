@@ -1,8 +1,18 @@
 import React from "react"
+import styled from "styled-components"
 import useBudgetReducer from "./BudgetReducer"
 import BudgetReducerProvider from "../BudgetReducerProvider"
 import GetAccountForm from "../functional-components/get-account-form"
 import BudgetDisplay from "./BudgetDisplay"
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background: lime;
+`
 
 // MARCH 11th most recent update regarding testing:
 // Due to the update of utilizing a reducer from this component
@@ -21,15 +31,16 @@ const BudgetCoordinator = () => {
   // const setBudgetData = data => dispatch({ type: SET_STATE, payload: data })
   const { state, dispatch, setBudgetData } = useBudgetReducer()
   return (
-    <div>
-      {state.data === null ? (
-        <GetAccountForm setBudgetData={setBudgetData} />
-      ) : (
-        <BudgetReducerProvider reducer={{ state, dispatch }}>
-          {state => <BudgetDisplay budgetData={state.data} />}
-        </BudgetReducerProvider>
-      )}
-    </div>
+    <Container>
+      <BudgetReducerProvider reducer={{ state, dispatch }}>
+        {state => (
+          <BudgetDisplay
+            budgetData={state.data}
+            setBudgetData={setBudgetData}
+          />
+        )}
+      </BudgetReducerProvider>
+    </Container>
   )
 }
 
