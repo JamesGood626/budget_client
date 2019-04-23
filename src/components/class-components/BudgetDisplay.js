@@ -45,10 +45,10 @@ const budgetDisplay = ({ budgetData, setBudgetData }) => {
               <>
                 <TransactButtons reducer={value} />
                 {/*
-              AggregatedBudgetDataDisplay contains the dropdowns for filtering
-              expense_types, years, and months.
-              And the resulting display/table to present the data
-          */}
+                  AggregatedBudgetDataDisplay contains the dropdowns for filtering
+                  expense_types, years, and months.
+                  And the resulting display/table to present the data
+                */}
                 <AggregatedBudgetDataDisplay reducer={value} />
               </>
             )
