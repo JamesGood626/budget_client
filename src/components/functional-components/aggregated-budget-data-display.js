@@ -111,7 +111,7 @@ const renderAccountActivityOptions = (options, callback) => {
       </Select>
       <LabelTextSpan>
         {/* TODO: Text needs to be the option selected from the dropdown */}
-        <span>&#9660;</span>Text
+        <span>&#9660;</span>Activity
       </LabelTextSpan>
     </Label>
   )
@@ -120,21 +120,26 @@ const renderAccountActivityOptions = (options, callback) => {
 const renderYearsDropDown = (years, setSelectedYear) => {
   return (
     <Label htmlFor="years-select">
-      <Select id="years-select" defaultValue="All Years">
+      <Select
+        id="years-select"
+        defaultValue="All Years"
+        onChange={e => {
+          const year = e.target.value
+          setSelectedYear(year)
+        }}
+      >
+        <option value="All Years" key="all-years" data-testid={`all-years`}>
+          All Years
+        </option>
         {years.map(year => (
-          <option
-            value={year}
-            key={year}
-            onClick={() => setSelectedYear(year)}
-            data-testid={`year-${year}`}
-          >
+          <option value={year} key={year} data-testid={`year-${year}`}>
             {year}
           </option>
         ))}
       </Select>
       <LabelTextSpan>
         {/* TODO: Text needs to be the option selected from the dropdown */}
-        <span>&#9660;</span>Text
+        <span>&#9660;</span>Years
       </LabelTextSpan>
     </Label>
   )
@@ -146,26 +151,38 @@ const renderYearsDropDown = (years, setSelectedYear) => {
 // Dependending upon which year is selected in the dropdown
 // Will determine which months are display in the months dropdown.
 const renderMonthsDropDown = (year, months, changeSelectedMonths) => {
+  console.log("THE YEAR: ", year)
+  console.log("THE MONTHS: ", months)
   // Convert this function to just take in a single selected year.
   return (
     <Label htmlFor="months-select">
-      <Select id="months-select" defaultValue="All Months">
+      <Select
+        id="months-select"
+        defaultValue="All Months"
+        onChange={e => {
+          const month = e.target.value
+          console.log("SELECTED month: ", month)
+          changeSelectedMonths(month)
+        }}
+      >
         <option value="All Months">All Months</option>
         {year !== "All Years" &&
-          months[year].map(month => (
-            <option
-              value={month}
-              key={`${year}-${month}`}
-              onClick={() => changeSelectedMonths(month)}
-              data-testid={`${year}-${month}`}
-            >
-              {monthObj[month]}
-            </option>
-          ))}
+          months[year].map(month => {
+            console.log("MAPPING MONTHS: ", month)
+            return (
+              <option
+                value={month}
+                key={`${year}-${month}`}
+                data-testid={`${year}-${month}`}
+              >
+                {monthObj[month]}
+              </option>
+            )
+          })}
       </Select>
       <LabelTextSpan>
         {/* TODO: Text needs to be the option selected from the dropdown */}
-        <span>&#9660;</span>Text
+        <span>&#9660;</span>Months
       </LabelTextSpan>
     </Label>
   )
