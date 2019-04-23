@@ -1,7 +1,22 @@
 import React from "react"
 import styled from "styled-components"
 
+const Container = styled.div`
+  height: 22rem;
+  overflow-y: scroll;
+  border-radius: 8px;
+`
+
 const Table = styled.table`
+  width: 100%;
+  overflow-y: scroll;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-radius: 8px;
+  background: #fff;
+  /* dark green text */
+  color: #1d470c;
+
   table,
   caption,
   tbody,
@@ -15,11 +30,25 @@ const Table = styled.table`
     border: 0;
     font-size: 100%;
     font: inherit;
-    vertical-align: baseline;
   }
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
+
+  th {
+    text-align: left;
+    vertical-align: middle;
+    padding-left: 1rem;
+    background: #f2f2f2;
+    font-weight: bold;
+    font-size: 1.2rem;
+    height: 4rem;
+  }
+
+  tr {
+    height: 3.4rem;
+    border-bottom: 2px solid rgba(151, 151, 151, 0.16);
+  }
+
+  td {
+    padding-left: 1rem;
   }
 `
 
@@ -30,8 +59,9 @@ const Amount = styled.span`
 const renderTableRows = data => {
   return data.map(({ category, type, amount, date }, i) => (
     <tr key={`${category}-${type}-${i}`}>
+      <td>{type}</td>
       <td>
-        {type} <Amount category={category}>{amount}</Amount>
+        <Amount category={category}>${amount}</Amount>
       </td>
       <td>{date}</td>
     </tr>
@@ -39,15 +69,16 @@ const renderTableRows = data => {
 }
 const accountActivityTable = ({ accountActivityData }) => {
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th>Expense</th>
+    <Container>
+      <Table>
+        <thead>
+          <th>Category</th>
+          <th>Amount</th>
           <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>{renderTableRows(accountActivityData)}</tbody>
-    </Table>
+        </thead>
+        <tbody>{renderTableRows(accountActivityData)}</tbody>
+      </Table>
+    </Container>
   )
 }
 

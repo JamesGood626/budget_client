@@ -22,7 +22,7 @@ const Button = styled.button`
   appearance: none;
   border-radius: ${({ radius }) => radius && `${radius}px`};
   background: ${({ topColor, bottomColor }) =>
-    `linear-gradient(180deg, ${topColor} 10%, ${bottomColor} 35%)`} ;
+    `linear-gradient(180deg, ${topColor} 10%, ${bottomColor} 35%)`};
 
   &:after {
     content: "";

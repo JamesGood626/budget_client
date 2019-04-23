@@ -11,6 +11,10 @@ import {
   TOGGLE_IN_PROGRESS,
 } from "../budgetReducerActions"
 
+const Container = styled.div`
+  margin-bottom: 1rem;
+`
+
 const FadedBackground = styled.div`
   position: absolute;
   top: 0;
@@ -65,7 +69,7 @@ const transactButtons = ({ reducer: { dispatch } }) => {
   // 3. Handle user interaction flow for deposit/necessary_expense/unnecessary_expense
   //    -> This will be handled in the modal components which get toggled below.
   return (
-    <div>
+    <Container>
       {/* Need to open modals onClick with forms for adding the transactions */}
       <Button
         data-testid="deposit-btn"
@@ -102,7 +106,7 @@ const transactButtons = ({ reducer: { dispatch } }) => {
           <FadedBackground />
         </>
       )}
-    </div>
+    </Container>
   )
 }
 

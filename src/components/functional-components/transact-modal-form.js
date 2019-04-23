@@ -27,7 +27,13 @@ const Container = styled.div`
 
 const transactModalForm = ({ transactionType, toggleModal }) => {
   return (
-    <Container onClick={() => toggleModal("")}>
+    <Container
+      onClick={e => {
+        if (e.target.nodeName !== "INPUT") {
+          toggleModal("")
+        }
+      }}
+    >
       {/* <h1 data-testid="transact-form">{transactionType}</h1> */}
       <form id="form">
         <div onClick={() => toggleModal("")}>X</div>

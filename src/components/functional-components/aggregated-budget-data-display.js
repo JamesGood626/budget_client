@@ -15,20 +15,21 @@ import AggregationFilterResultController from "./aggregation-filter-result-contr
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  margin-bottom: 1.6rem;
 `
 
 const Label = styled.label`
   display: block;
   position: relative;
-  width: 8.2rem;
+  width: 8.4rem;
   height: 1.8rem;
   border-radius: 8px;
 `
 
 const Select = styled.select`
   position: relative;
-  width: 8.2rem;
+  width: 8.4rem;
   height: 1.8rem;
   font-size: 0.8rem;
   font-weight: bold;
@@ -68,7 +69,7 @@ const LabelTextSpan = styled.span`
 
   span {
     position: absolute;
-    z-index: 1000;
+    z-index: 30;
     left: 0.6rem;
     font-size: 0.9rem;
     width: 1rem;

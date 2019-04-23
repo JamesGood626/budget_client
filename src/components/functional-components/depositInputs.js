@@ -34,10 +34,9 @@ const depositInputs = () => {
 
   return (
     <>
-      <label id="income-source" htmlFor="income-source">
-        Income Source
-      </label>
+      <label htmlFor="income-source">Income Source</label>
       <input
+        id="income-source"
         type="text"
         value={incomeSource.value}
         onChange={changeIncomeSource}
@@ -46,7 +45,7 @@ const depositInputs = () => {
       <input
         id="deposit-amount"
         type="text"
-        value={depositAmount}
+        value={depositAmount.value}
         onChange={changeDepositAmount}
       />
       <button type="submit" onClick={handleSubmit}>

@@ -12,7 +12,20 @@ import endpoints from "../../config/api_endpoints"
 import { accountDataWithUpdates } from "../../test_fixture_data/index"
 
 const Container = styled.div`
-  background: #fff;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  height: 44rem;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  /* background: #fff; */
+
+  #buttons-and-table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1rem;
+  }
 `
 
 // TODO:
@@ -42,7 +55,7 @@ const budgetDisplay = ({ budgetData, setBudgetData }) => {
           {value => {
             console.log("WHAT IS THE VALUE?!!>!: ", value)
             return (
-              <>
+              <div id="buttons-and-table-container">
                 <TransactButtons reducer={value} />
                 {/*
                   AggregatedBudgetDataDisplay contains the dropdowns for filtering
@@ -50,7 +63,7 @@ const budgetDisplay = ({ budgetData, setBudgetData }) => {
                   And the resulting display/table to present the data
                 */}
                 <AggregatedBudgetDataDisplay reducer={value} />
-              </>
+              </div>
             )
           }}
         </BudgetContext.Consumer>

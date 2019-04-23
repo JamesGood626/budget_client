@@ -79,7 +79,7 @@ const primaryAccountDetails = ({ budget }) => {
       <div id="first-block">
         <h3>Total Balance:</h3>
         <p
-          class={account_balance > 0 ? "green-text" : "red-text"}
+          className={account_balance > 0 ? "green-text" : "red-text"}
           data-testid="account-balance"
         >
           ${account_balance}
@@ -87,7 +87,7 @@ const primaryAccountDetails = ({ budget }) => {
       </div>
       <div id="second-block">
         <h3>Current Budget:</h3>
-        <p class="grey-text" data-testid="current-budget">
+        <p className="grey-text" data-testid="current-budget">
           {/* TODO: Make the "Set Budget" text be a button */}
           {!budget_set ? "Set Budget" : `$${current_budget}`}
         </p>
@@ -95,7 +95,7 @@ const primaryAccountDetails = ({ budget }) => {
       <div>
         <h3>Exceeded:</h3>
         <p
-          class={!budget_exceeded ? "green-text" : "red-text"}
+          className={!budget_exceeded ? "green-text" : "red-text"}
           data-testid="budget-exceeded"
         >
           {!budget_exceeded ? "You're Good" : "You're Fucked"}
