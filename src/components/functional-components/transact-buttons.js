@@ -76,7 +76,7 @@ const transactButtons = ({ reducer: { dispatch } }) => {
         onClick={() => toggleModal("DEPOSIT")}
         radius={25}
         shadow={true}
-        padding={[1, 3.2]}
+        padding={[0.8, 3.2]}
         minHeight={3}
         topColor="#46FF90"
         bottomColor="#20E131"
@@ -87,7 +87,7 @@ const transactButtons = ({ reducer: { dispatch } }) => {
         onClick={() => toggleModal("EXPENSE")}
         radius={25}
         shadow={true}
-        padding={[1, 3.2]}
+        padding={[0.8, 3.2]}
         minHeight={3}
         topColor="#FF7878"
         bottomColor="#FF5E5E"

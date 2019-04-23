@@ -8,12 +8,13 @@ const Section = styled.section`
   height: 5.4rem;
   width: 32rem;
   padding: 1.4rem 1rem 1.4rem 1rem;
+  margin-bottom: 1.6rem;
   /* dark green text */
   color: #1d470c;
   /* main white */
   background: #fff;
+  box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 35%);
   border-radius: 8px;
-  margin-bottom: 1.6rem;
 
   div {
     position: relative;

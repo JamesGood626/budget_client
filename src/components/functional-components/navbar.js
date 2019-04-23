@@ -10,8 +10,9 @@ const Container = styled.div`
   width: 100%;
   height: 4rem;
   padding: 0 2rem 0 2rem;
-  color: #fff;
-  background: #319482;
+  /* dark green text */
+  color: #1d470c;
+  background: #fff;
 
   nav {
     display: flex;
@@ -19,7 +20,8 @@ const Container = styled.div`
     justify-content: space-around;
 
     a {
-      color: #fff;
+      /* dark green text */
+      color: #1d470c;
       text-decoration: none;
 
       :hover {

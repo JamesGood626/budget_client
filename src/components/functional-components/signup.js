@@ -9,7 +9,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  background: orange;
+  height: 100%;
 `
 
 const signup = () => {

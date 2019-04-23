@@ -15,6 +15,7 @@ const Button = styled.button`
   min-height: ${({ minHeight }) => minHeight && `${minHeight}rem`};
   font-size: 1rem;
   font-weight: bold;
+  color: ${({ fontColor }) => (fontColor ? `${fontColor}` : `#222`)};
   text-align: center;
   cursor: pointer;
   /* The appearance property is used to display an element using */
@@ -63,6 +64,7 @@ const button = ({
   radius,
   topColor,
   bottomColor,
+  fontColor,
 }) => {
   console.log("The top color: ", topColor)
   return (
@@ -73,6 +75,7 @@ const button = ({
       radius={radius}
       topColor={topColor}
       bottomColor={bottomColor}
+      fontColor={fontColor}
     >
       {children}
     </Button>

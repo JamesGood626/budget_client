@@ -11,7 +11,6 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  background: orange;
 `
 
 const login = ({ login }) => {

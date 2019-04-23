@@ -11,16 +11,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  background: lime;
-  background: linear-gradient(
-    90deg,
-    #29cc29 0%,
-    #54d423 25%,
-    #73dc1c 50%,
-    #8ee416 75%,
-    #a8eb12 100%
-  );
-  /* overflow-y: scroll; */
+  /* background: lime; */
 `
 
 // MARCH 11th most recent update regarding testing:

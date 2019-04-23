@@ -5,6 +5,7 @@ const Container = styled.div`
   height: 22rem;
   overflow-y: scroll;
   border-radius: 8px;
+  box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 35%);
 `
 
 const Table = styled.table`
