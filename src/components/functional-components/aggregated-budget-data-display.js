@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import AggregationFilterResultController from "./aggregation-filter-result-controller"
+import AccountActivityDropDown from "./filter-dropdowns/account-activity-dropdown"
+import YearsAndMonthDropdowns from "./filter-dropdowns/years-and-month-dropdowns"
 
 // up arrow code just incase -> &#9650;
 
@@ -19,79 +21,6 @@ const Container = styled.div`
   margin-bottom: 1.6rem;
 `
 
-const Label = styled.label`
-  display: block;
-  position: relative;
-  width: 8.4rem;
-  height: 1.8rem;
-  border-radius: 8px;
-`
-
-const Select = styled.select`
-  position: relative;
-  width: 8.4rem;
-  height: 1.8rem;
-  font-size: 0.8rem;
-  font-weight: bold;
-  // Gets rid of the arrows
-  -webkit-appearance: none;
-  border: 0;
-  border-radius: 0;
-  &:hover {
-    cursor: pointer;
-  }
-  &:focus {
-    outline: none;
-  }
-  border-radius: 8px;
-  background: #fff;
-  background: lime;
-  box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 25%);
-`
-
-const LabelTextSpan = styled.span`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 30px;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #1d470c;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  border-radius: 8px;
-  background: #fff;
-
-  span {
-    position: absolute;
-    z-index: 30;
-    left: 0.6rem;
-    font-size: 0.9rem;
-    width: 1rem;
-    height: 1.7rem;
-  }
-`
-
-const monthObj = {
-  1: "January",
-  2: "February",
-  3: "March",
-  4: "April",
-  5: "May",
-  6: "June",
-  7: "July",
-  8: "August",
-  9: "September",
-  10: "October",
-  11: "November",
-  12: "December",
-}
-
 const accountActivityOptions = [
   "All Activity",
   "All Unnecessary Expenses",
@@ -99,94 +28,11 @@ const accountActivityOptions = [
   "All Deposits",
 ]
 
-const renderAccountActivityOptions = (options, callback) => {
-  return (
-    <Label htmlFor="account-activity-select">
-      <Select id="account-activity-select" defaultValue="All Activity">
-        {options.map(option => (
-          <option value={option} key={option} onClick={() => callback(option)}>
-            {option}
-          </option>
-        ))}
-      </Select>
-      <LabelTextSpan>
-        {/* TODO: Text needs to be the option selected from the dropdown */}
-        <span>&#9660;</span>Activity
-      </LabelTextSpan>
-    </Label>
-  )
-}
-
-const renderYearsDropDown = (years, setSelectedYear) => {
-  return (
-    <Label htmlFor="years-select">
-      <Select
-        id="years-select"
-        defaultValue="All Years"
-        onChange={e => {
-          const year = e.target.value
-          setSelectedYear(year)
-        }}
-      >
-        <option value="All Years" key="all-years" data-testid={`all-years`}>
-          All Years
-        </option>
-        {years.map(year => (
-          <option value={year} key={year} data-testid={`year-${year}`}>
-            {year}
-          </option>
-        ))}
-      </Select>
-      <LabelTextSpan>
-        {/* TODO: Text needs to be the option selected from the dropdown */}
-        <span>&#9660;</span>Years
-      </LabelTextSpan>
-    </Label>
-  )
-}
-
 // Does successfully render the data structures available in
 // yearsAvailable and monthsAvailable
 // These will be used for the yearsFilter and monthsFilter
 // Dependending upon which year is selected in the dropdown
 // Will determine which months are display in the months dropdown.
-const renderMonthsDropDown = (year, months, changeSelectedMonths) => {
-  console.log("THE YEAR: ", year)
-  console.log("THE MONTHS: ", months)
-  // Convert this function to just take in a single selected year.
-  return (
-    <Label htmlFor="months-select">
-      <Select
-        id="months-select"
-        defaultValue="All Months"
-        onChange={e => {
-          const month = e.target.value
-          console.log("SELECTED month: ", month)
-          changeSelectedMonths(month)
-        }}
-      >
-        <option value="All Months">All Months</option>
-        {year !== "All Years" &&
-          months[year].map(month => {
-            console.log("MAPPING MONTHS: ", month)
-            return (
-              <option
-                value={month}
-                key={`${year}-${month}`}
-                data-testid={`${year}-${month}`}
-              >
-                {monthObj[month]}
-              </option>
-            )
-          })}
-      </Select>
-      <LabelTextSpan>
-        {/* TODO: Text needs to be the option selected from the dropdown */}
-        <span>&#9660;</span>Months
-      </LabelTextSpan>
-    </Label>
-  )
-}
 
 const setYearsAndMonthsAvailableKeys = (
   data,
@@ -217,10 +63,8 @@ const aggregatedBudgetDataDisplay = ({
   const [expenseDepositFilter, setExpenseDepositFilter] = useState(
     "All Activity"
   )
-  const [selectedYear, setSelectedYear] = useState("All Years")
-  const { selectedMonths, changeSelectedMonths } = useSelectMonths("All Months")
-  // console.log("GOT STATE IN AGGREGATED BDD: ", state)
-  // console.log("THE MONTHS AVAILABLE: ", monthsAvailable)
+  const [selectedYear, setSelectedYear] = useState("ALL_YEARS")
+  const { selectedMonths, changeSelectedMonths } = useSelectMonths("ALL_MONTHS")
   useEffect(() => {
     if (yearsAvailable.length === 0) {
       console.log("THE DATA: ", data)
@@ -240,19 +84,17 @@ const aggregatedBudgetDataDisplay = ({
   return (
     <div>
       <Container>
-        {renderAccountActivityOptions(
-          accountActivityOptions,
-          setExpenseDepositFilter
-        )}
-        {yearsAvailable.length > 0 &&
-          renderYearsDropDown(yearsAvailable, setSelectedYear)}
-        {yearsAvailable.length > 0 && selectedYear
-          ? renderMonthsDropDown(
-              selectedYear,
-              monthsAvailable,
-              changeSelectedMonths
-            )
-          : null}
+        <AccountActivityDropDown
+          accountActivityOptions={accountActivityOptions}
+          setExpenseDepositFilter={setExpenseDepositFilter}
+        />
+        <YearsAndMonthDropdowns
+          yearsAvailable={yearsAvailable}
+          setSelectedYear={setSelectedYear}
+          selectedYear={selectedYear}
+          monthsAvailable={monthsAvailable}
+          changeSelectedMonths={changeSelectedMonths}
+        />
       </Container>
       {/* The div with two inner divs */}
       {/* This component needs data:
@@ -262,16 +104,20 @@ const aggregatedBudgetDataDisplay = ({
          months that are provided as props via selectedMonths.
       3. Last thing... All Expenses/All Deposits to determine which data will
          be displayed in the table from each month. */}
+      {console.log("The months Available:")}
+      {console.dir(monthsAvailable)}
+      {console.log("The selectedMonths:")}
+      {console.dir(selectedMonths)}
       {yearsAvailable.length > 0 && (
         <AggregationFilterResultController
-          years={selectedYear === "All Years" ? yearsAvailable : "SINGLE"}
+          years={selectedYear === "ALL_YEARS" ? yearsAvailable : "SINGLE"}
           yearData={
-            selectedYear === "All Years"
+            selectedYear === "ALL_YEARS"
               ? data.years_tracked
               : data.years_tracked[selectedYear]
           }
           showMonthData={
-            selectedYear === "All Years" ? monthsAvailable : selectedMonths
+            selectedYear === "ALL_YEARS" ? monthsAvailable : selectedMonths
           }
           accountActivityFilter={expenseDepositFilter}
         />
@@ -336,4 +182,6 @@ const useSelectMonths = initialState => {
 //    (This will most likely utilize reduce to obtain the required totals)
 // 4. And then based on whether all expenses/all deposits are selected.
 //    return an array of jsx elements as well when iterating through the months_tracked.
+
 export default aggregatedBudgetDataDisplay
+// export default withStateMachine(statechart)(aggregatedBudgetDataDisplay)

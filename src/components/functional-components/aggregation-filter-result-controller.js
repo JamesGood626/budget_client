@@ -67,9 +67,9 @@ const multipleYearAggregation = (
         )
         return [budget, unnecessaryExpenses, accountActivityData]
       })
+
       allBudgetAndUnnecessaryExpenses.forEach(
         ([budget, unnecessaryExpenses, accountActivityData]) => {
-          // console.log("FILTERED DATA: ", accountActivityData)
           acc.totals.budgetTotal += budget
           acc.totals.unnecessaryExpensesTotal += unnecessaryExpenses
           acc.accountActivityData = [
@@ -102,7 +102,7 @@ const singleYearAggregation = (
 
   let monthKeys = Object.getOwnPropertyNames(yearData.months_tracked)
   monthKeys =
-    showMonthData === "All Months"
+    showMonthData[0] === "ALL_MONTHS"
       ? monthKeys
       : monthKeys.filter(month => showMonthData.includes(month))
 
@@ -119,7 +119,6 @@ const singleYearAggregation = (
 
   allBudgetAndUnnecessaryExpenses.forEach(
     ([budget, unnecessaryExpenses, accountActivityData]) => {
-      // console.log("FILTERED DATA: ", accountActivityData)
       responseObj.totals.budgetTotal += budget
       responseObj.totals.unnecessaryExpensesTotal += unnecessaryExpenses
       responseObj.accountActivityData = [

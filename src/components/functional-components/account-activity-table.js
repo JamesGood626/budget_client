@@ -74,9 +74,11 @@ const accountActivityTable = ({ accountActivityData }) => {
     <Container>
       <Table>
         <thead>
-          <th>Category</th>
-          <th>Amount</th>
-          <th>Date</th>
+          <tr>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Date</th>
+          </tr>
         </thead>
         <tbody>{renderTableRows(accountActivityData)}</tbody>
       </Table>
