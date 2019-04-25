@@ -11,7 +11,8 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  /* background: lime; */
+  width: 100%;
+  /* background: orange; */
 `
 
 // MARCH 11th most recent update regarding testing:

@@ -14,11 +14,10 @@ import { accountDataWithUpdates } from "../../test_fixture_data/index"
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: auto;
+  align-items: center;
   height: 44rem;
   margin-top: 4rem;
   margin-bottom: 4rem;
-  /* background: #fff; */
 
   #buttons-and-table-container {
     display: flex;

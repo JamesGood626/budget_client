@@ -12,7 +12,18 @@ import {
 } from "../budgetReducerActions"
 
 const Container = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
   margin-bottom: 1rem;
+
+  @media screen and (max-width: 500px) {
+    width: ${props => props.theme.smallWidth};
+  }
+
+  @media screen and (min-width: 500px) and (max-width: 780px) {
+    width: ${props => props.theme.mediumWidth};
+  }
 `
 
 const FadedBackground = styled.div`

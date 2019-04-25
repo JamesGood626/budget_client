@@ -12,6 +12,7 @@
 
 body {
   height: 100vh;
+  width: 100vw;
   background: linear-gradient(
     90deg,
     #29cc29 0%,

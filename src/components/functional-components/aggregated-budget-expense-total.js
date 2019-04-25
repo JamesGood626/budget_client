@@ -16,6 +16,31 @@ const Section = styled.section`
   box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 35%);
   border-radius: 8px;
 
+  @media screen and (max-width: 500px) {
+    width: ${props => props.theme.smallWidth};
+
+    h3 {
+      font-size: ${props => props.theme.headerThreeSmall};
+      padding-bottom: 0.1rem;
+    }
+
+    p {
+      font-size: ${props => props.theme.textSmall};
+    }
+  }
+
+  @media screen and (min-width: 500px) and (max-width: 780px) {
+    width: ${props => props.theme.mediumWidth};
+
+    h3 {
+      font-size: ${props => props.theme.headerThreeMedium};
+    }
+
+    p {
+      font-size: ${props => props.theme.textMedium};
+    }
+  }
+
   div {
     position: relative;
     display: flex;
@@ -37,6 +62,18 @@ const Section = styled.section`
     height: 3rem;
     opacity: 0.09;
     background: #979797;
+  }
+
+  @media screen and (max-width: 500px) {
+    #first-block:after {
+      left: 78%;
+    }
+  }
+
+  @media screen and (min-width: 500px) and (max-width: 780px) {
+    #first-block:after {
+      left: 110%;
+    }
   }
 
   .green-text {

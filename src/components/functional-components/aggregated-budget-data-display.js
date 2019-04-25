@@ -17,8 +17,25 @@ import YearsAndMonthDropdowns from "./filter-dropdowns/years-and-month-dropdowns
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 1.6rem;
+  flex-direction: column;
+
+  @media (max-width: 600px) {
+    align-items: center;
+  }
+
+  #dropdowns {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.6rem;
+
+    @media screen and (max-width: 500px) {
+      width: ${props => props.theme.smallWidth};
+    }
+
+    @media screen and (min-width: 500px) and (max-width: 780px) {
+      width: ${props => props.theme.mediumWidth};
+    }
+  }
 `
 
 const accountActivityOptions = [
@@ -82,8 +99,8 @@ const aggregatedBudgetDataDisplay = ({
   }, [])
 
   return (
-    <div>
-      <Container>
+    <Container>
+      <div id="dropdowns">
         <AccountActivityDropDown
           accountActivityOptions={accountActivityOptions}
           setExpenseDepositFilter={setExpenseDepositFilter}
@@ -95,7 +112,7 @@ const aggregatedBudgetDataDisplay = ({
           monthsAvailable={monthsAvailable}
           changeSelectedMonths={changeSelectedMonths}
         />
-      </Container>
+      </div>
       {/* The div with two inner divs */}
       {/* This component needs data:
       1. years_tracked if All Years selected. Otherwise, the selected year.
@@ -104,10 +121,6 @@ const aggregatedBudgetDataDisplay = ({
          months that are provided as props via selectedMonths.
       3. Last thing... All Expenses/All Deposits to determine which data will
          be displayed in the table from each month. */}
-      {console.log("The months Available:")}
-      {console.dir(monthsAvailable)}
-      {console.log("The selectedMonths:")}
-      {console.dir(selectedMonths)}
       {yearsAvailable.length > 0 && (
         <AggregationFilterResultController
           years={selectedYear === "ALL_YEARS" ? yearsAvailable : "SINGLE"}
@@ -127,7 +140,7 @@ const aggregatedBudgetDataDisplay = ({
       {/* Will also need to pass down the selected year's months_tracked or in the
           case of All Years just pass down years_tracked */}
       {/* <BudgetHistoryTable expensesOrDeposits={expenseDepositFilter} /> */}
-    </div>
+    </Container>
   )
 }
 

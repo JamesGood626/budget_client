@@ -6,7 +6,7 @@ const Container = styled.div`
   overflow-y: scroll;
   border-radius: 8px;
   box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 35%);
-  background: #fff;
+  background: ${props => props.theme.white};
 `
 
 const Table = styled.table`
@@ -15,9 +15,8 @@ const Table = styled.table`
   border-collapse: collapse;
   border-spacing: 0;
   border-radius: 8px;
-  background: #fff;
-  /* dark green text */
-  color: #1d470c;
+  background: ${props => props.theme.white};
+  color: ${props => props.theme.darkGreen};
 
   table,
   caption,
@@ -42,6 +41,8 @@ const Table = styled.table`
     font-weight: bold;
     font-size: 1.2rem;
     height: 4rem;
+    padding-left: 2.4rem;
+    padding-right: 2.4rem;
   }
 
   tr {
@@ -50,20 +51,53 @@ const Table = styled.table`
   }
 
   td {
-    padding-left: 1rem;
+    padding-left: 2.4rem;
   }
-`
 
-const Amount = styled.span`
-  color: ${props => (props.category === "DEPOSIT" ? "green" : "red")};
+  @media screen and (max-width: 500px) {
+    width: ${props => props.theme.smallWidth};
+
+    th {
+      font-size: ${props => props.theme.headerThreeSmall};
+      padding: 1.1rem;
+    }
+
+    tr {
+      font-size: ${props => props.theme.textSmall};
+    }
+
+    td {
+      padding-left: 1.1rem;
+    }
+  }
+
+  @media screen and (min-width: 500px) and (max-width: 780px) {
+    width: ${props => props.theme.mediumWidth};
+
+    th {
+      font-size: ${props => props.theme.headerThreeMedium};
+    }
+
+    tr {
+      font-size: ${props => props.theme.textMedium};
+    }
+  }
+
+  .green-text {
+    color: ${props => props.theme.lightGreen};
+  }
+
+  .red-text {
+    color: ${props => props.theme.red};
+  }
 `
 
 const renderTableRows = data => {
   return data.map(({ category, type, amount, date }, i) => (
     <tr key={`${category}-${type}-${i}`}>
       <td>{type}</td>
-      <td>
-        <Amount category={category}>${amount}</Amount>
+      <td class={category === "DEPOSIT" ? "green-text" : "red-text"}>
+        ${amount}
       </td>
       <td>{date}</td>
     </tr>

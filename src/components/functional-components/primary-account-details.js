@@ -6,14 +6,43 @@ const Container = styled.div`
   justify-content: space-around;
   align-items: center;
   height: 5.4rem;
-  width: 32rem;
+  width: ${props => props.theme.largeWidth};
   padding: 1.4rem 1rem 1.4rem 1rem;
   /* dark green text */
-  color: #1d470c;
+  color: ${props => props.theme.darkGreen};
   /* main white */
-  background: #fff;
+  background: ${props => props.theme.white};
   border-radius: 8px;
   box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 35%);
+
+  h3 {
+    font-size: ${props => props.theme.headerThreeLarge};
+  }
+
+  @media screen and (max-width: 500px) {
+    padding: 0;
+    width: ${props => props.theme.smallWidth};
+
+    h3 {
+      font-size: ${props => props.theme.headerThreeSmall};
+    }
+
+    p {
+      font-size: ${props => props.theme.textSmall};
+    }
+  }
+
+  @media screen and (min-width: 500px) and (max-width: 780px) {
+    width: ${props => props.theme.mediumWidth};
+
+    h3 {
+      font-size: ${props => props.theme.headerThreeMedium};
+    }
+
+    p {
+      font-size: ${props => props.theme.textMedium};
+    }
+  }
 
   div {
     position: relative;
@@ -31,7 +60,7 @@ const Container = styled.div`
     content: "";
     position: absolute;
     top: 0.3rem;
-    left: 8.4rem;
+    left: 110%;
     width: 0.15rem;
     height: 3rem;
     opacity: 0.09;
@@ -42,23 +71,32 @@ const Container = styled.div`
     content: "";
     position: absolute;
     top: 0.3rem;
-    left: 9.3rem;
+    left: 112%;
     width: 0.15rem;
     height: 3rem;
     opacity: 0.09;
     background: #979797;
   }
 
+  @media screen and (max-width: 500px) {
+    #first-block:after {
+      left: 106%;
+    }
+    #second-block:after {
+      left: 106%;
+    }
+  }
+
   .green-text {
-    color: #54d423;
+    color: ${props => props.theme.lightGreen};
   }
 
   .red-text {
-    color: #ff5e5e;
+    color: ${props => props.theme.red};
   }
 
   .grey-text {
-    color: #979797;
+    color: ${props => props.theme.grey};
   }
 `
 

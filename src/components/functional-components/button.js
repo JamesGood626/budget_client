@@ -25,6 +25,18 @@ const Button = styled.button`
   background: ${({ topColor, bottomColor }) =>
     `linear-gradient(180deg, ${topColor} 10%, ${bottomColor} 35%)`};
 
+  @media screen and (max-width: 500px) {
+    font-size: 0.8rem;
+    padding: ${({ padding }) =>
+      padding && `${padding[0] / 1.6}rem ${padding[1] / 1.6}rem}`};
+  }
+
+  @media screen and (min-width: 500px) and (max-width: 780px) {
+    font-size: 0.9rem;
+    padding: ${({ padding }) =>
+      padding && `${padding[0] / 1.2}rem ${padding[1] / 1.4}rem}`};
+  }
+
   &:after {
     content: "";
     position: absolute;
@@ -66,7 +78,6 @@ const button = ({
   bottomColor,
   fontColor,
 }) => {
-  console.log("The top color: ", topColor)
   return (
     <Button
       onClick={onClick}
