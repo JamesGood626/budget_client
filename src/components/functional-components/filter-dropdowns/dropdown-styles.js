@@ -4,9 +4,11 @@ export const Label = styled.label`
   display: block;
   position: relative;
   /* width: 8.4rem; */
-  width: 30%;
+  width: ${props => (props.modalSelect ? "100%" : "30%")};
   height: 1.8rem;
   border-radius: 8px;
+
+  margin-bottom: ${props => (props.modalSelect ? "1rem" : null)};
 `
 
 export const Select = styled.select`

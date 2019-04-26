@@ -71,6 +71,7 @@ const Button = styled.button`
 const button = ({
   children,
   onClick,
+  type,
   padding,
   minHeight,
   radius,
@@ -81,6 +82,7 @@ const button = ({
   return (
     <Button
       onClick={onClick}
+      type={type}
       padding={padding}
       minHeight={minHeight}
       radius={radius}

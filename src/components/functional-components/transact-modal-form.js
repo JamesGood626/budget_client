@@ -1,7 +1,8 @@
-import React from "react"
+import React, { Component } from "react"
 import styled from "styled-components"
-import DepositInputs from "./depositInputs"
-import ExpenseInputs from "./expenseInputs"
+import DepositInputs from "./expense-deposit-inputs/depositInputs"
+import ExpenseInputs from "./expense-deposit-inputs/expenseInputs"
+import Form from "./block-components/form-styles"
 
 const Container = styled.div`
   display: flex;
@@ -14,34 +15,51 @@ const Container = styled.div`
   width: 100vw;
   height: 100vh;
 
-  form {
-    display: flex;
-    flex-direction: column;
-    height: 20rem;
-    width: 18rem;
-    padding: 2rem;
-    background: #fff;
-    border-radius: 8px;
+  div {
+    background: orange;
   }
 `
 
-const transactModalForm = ({ transactionType, toggleModal }) => {
-  return (
-    <Container
-      onClick={e => {
-        if (e.target.nodeName !== "INPUT") {
-          toggleModal("")
-        }
-      }}
-    >
-      {/* <h1 data-testid="transact-form">{transactionType}</h1> */}
-      <form id="form">
-        <div onClick={() => toggleModal("")}>X</div>
-        {transactionType === "DEPOSIT" && <DepositInputs />}
-        {transactionType === "EXPENSE" && <ExpenseInputs />}
-      </form>
-    </Container>
-  )
+class transactModalForm extends Component {
+  componentDidMount = () => {
+    this.setBodyStyle("hidden")
+  }
+
+  componentWillUnmount = () => {
+    this.setBodyStyle("scroll")
+  }
+
+  setBodyStyle = styleType => {
+    const [body] = document.getElementsByTagName("body")
+    body.style.overflowY = styleType
+  }
+
+  handleCloseClick = (e, toggleModal) => {
+    const { nodeName } = e.target
+    console.log("THE NODE NAME: ", nodeName)
+    const clickOutsideOfForm =
+      nodeName !== "FORM" &&
+      nodeName !== "SELECT" &&
+      nodeName !== "INPUT" &&
+      nodeName !== "LABEL" &&
+      nodeName !== "BUTTON"
+    if (clickOutsideOfForm) {
+      toggleModal("")
+    }
+  }
+
+  render() {
+    const { transactionType, toggleModal } = this.props
+    return (
+      <Container onClick={e => this.handleCloseClick(e, toggleModal)}>
+        <Form id="form">
+          <div onClick={() => toggleModal("")}>X</div>
+          {transactionType === "DEPOSIT" && <DepositInputs />}
+          {transactionType === "EXPENSE" && <ExpenseInputs />}
+        </Form>
+      </Container>
+    )
+  }
 }
 
 export default transactModalForm
