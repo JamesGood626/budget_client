@@ -113,14 +113,17 @@ const primaryAccountDetails = ({ budget }) => {
     budget_set,
     budget_exceeded,
   } = budget
+  const accountBalanceTextColor =
+    account_balance > 0
+      ? "green-text"
+      : account_balance < 0
+      ? "red-text"
+      : "grey-text"
   return (
     <Container>
       <div id="first-block">
         <h3>Total Balance:</h3>
-        <p
-          className={account_balance > 0 ? "green-text" : "red-text"}
-          data-testid="account-balance"
-        >
+        <p className={accountBalanceTextColor} data-testid="account-balance">
           ${account_balance}
         </p>
       </div>

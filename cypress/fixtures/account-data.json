@@ -1,0 +1,26 @@
+{
+  "years_tracked": {
+    "2019": {
+      "months_tracked": {
+        "4": {
+          "unnecessary_expenses": [],
+          "total_unnecessary_expenses": 0,
+          "total_necessary_expenses": 0,
+          "total_deposited": 0,
+          "necessary_expenses": [],
+          "deposits": [],
+          "budget_exceeded": false,
+          "budget": 0
+        }
+      }
+    }
+  },
+  "current_year": 2019,
+  "current_month": 4,
+  "budget": {
+    "current_budget": null,
+    "budget_set": false,
+    "budget_exceeded": false,
+    "account_balance": 0
+  }
+}

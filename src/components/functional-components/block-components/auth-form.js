@@ -60,15 +60,22 @@ const authForm = ({ apiEndpoint, btnText, login }) => {
 }
 
 const handleChange = (e, setField) => {
-  const { value } = e.target
+  const { id, value } = e.target
+  // Use this when adding validation logic.
+  // let payload = {value, error: ""}
+  if (id === "email") {
+    // in validateEmail
+    // run email validation logic/else set {value: "", error: "message"}
+  }
+  if (id === "password") {
+    // in validatePassword(value)
+    // run password validation logic/else set {value: "", error: "message"}
+  }
   setField(value)
 }
 
 const handleSubmit = async (e, email, password, login, apiEndpoint) => {
   e.preventDefault()
-  console.log("email: ", email)
-  console.log("password: ", password)
-  console.log(`endpointURL: ${apiEndpoint}`)
   const result = await axios.post(apiEndpoint, {
     email,
     password,
