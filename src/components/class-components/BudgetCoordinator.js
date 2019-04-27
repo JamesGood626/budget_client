@@ -1,8 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import useBudgetReducer from "./BudgetReducer"
-import BudgetReducerProvider from "../BudgetReducerProvider"
-import GetAccountForm from "../functional-components/get-account-form"
+import useBudgetReducer from "../reducers/budget/BudgetReducer"
+import BudgetReducerProvider from "../reducers/budget/BudgetReducerProvider"
 import BudgetDisplay from "./BudgetDisplay"
 
 const Container = styled.div`
@@ -35,10 +34,13 @@ const BudgetCoordinator = () => {
     <Container>
       <BudgetReducerProvider reducer={{ state, dispatch }}>
         {state => (
-          <BudgetDisplay
-            budgetData={state.data}
-            setBudgetData={setBudgetData}
-          />
+          <>
+            {console.log("THE STATE INSIDE COORDINATORS' RENDER PROP: ", state)}
+            <BudgetDisplay
+              budgetData={state.data}
+              setBudgetData={setBudgetData}
+            />
+          </>
         )}
       </BudgetReducerProvider>
     </Container>

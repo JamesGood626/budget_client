@@ -9,7 +9,7 @@ import {
   LabelTextSpan,
 } from "../filter-dropdowns/dropdown-styles"
 
-const expenseInputs = () => {
+const expenseInputs = ({ dateData }) => {
   const [category, setCategory] = useState("NECESSARY_EXPENSE")
   const [expense, setExpense] = useState({ value: "", err: false })
   const [amount, setAmount] = useState({ value: "", err: false })
@@ -36,7 +36,7 @@ const expenseInputs = () => {
 
   const handleSetCategory = e => setCategory(e.target.value)
 
-  const handleSubmit = e => {
+  const handleSubmit = (e, dateData) => {
     e.preventDefault()
     const EXPENSE_URL =
       category === "NECESSARY_EXPENSE"
@@ -45,14 +45,16 @@ const expenseInputs = () => {
     axios.post(EXPENSE_URL, {
       expense: expense.value,
       expense_amount: amount.value,
+      ...dateData,
     })
   }
 
   return (
     <>
-      <Label htmlFor="account-activity-select" modalSelect>
+      <Label htmlFor="expense-type-select" modalSelect>
         <Select
-          id="account-activity-select"
+          id="expense-type-select"
+          data-testid="expense-type-select"
           onChange={handleSetCategory}
           defaultValue="NECESSARY_EXPENSE"
         >
@@ -95,8 +97,9 @@ const expenseInputs = () => {
         onBlur={e => handleLabelAnimation(e, setAmountFocused, amountFocused)}
       />
       <Button
-        onClick={handleSubmit}
+        onClick={e => handleSubmit(e, dateData)}
         type="submit"
+        dataTestId="expenseBtn"
         radius={25}
         shadow={true}
         padding={[0.8, 3.2]}

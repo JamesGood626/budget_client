@@ -7,8 +7,8 @@ import {
   waitForElement,
   debugDOM,
 } from "react-testing-library"
-import BudgetReducerProvider from "../../BudgetReducerProvider"
-import useBudgetReducer from "../BudgetReducer"
+import BudgetReducerProvider from "../../reducers/budget/BudgetReducerProvider"
+import useBudgetReducer from "../../reducers/budget/BudgetReducer"
 import BudgetDisplay from "../BudgetDisplay"
 import { initialStateWithoutTransactions } from "../../../test_fixture_data"
 // import { inputChangeTestCase, inputChange } from "./helpers"
@@ -19,7 +19,7 @@ import "jest-dom/extend-expect"
 // automatically unmount and cleanup DOM after the test is finished.
 afterEach(cleanup)
 
-jest.mock("axios")
+// jest.mock("axios")
 
 // test("1+1 = 2", () => {
 //   expect(1 + 1).toBe(2)

@@ -72,6 +72,7 @@ const button = ({
   children,
   onClick,
   type,
+  dataTestId,
   padding,
   minHeight,
   radius,
@@ -83,6 +84,7 @@ const button = ({
     <Button
       onClick={onClick}
       type={type}
+      data-testid={dataTestId}
       padding={padding}
       minHeight={minHeight}
       radius={radius}

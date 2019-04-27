@@ -1,7 +1,7 @@
 import React from "react"
 import axios from "axios"
 import styled from "styled-components"
-import BudgetContext from "../BudgetContext"
+import BudgetContext from "../reducers/budget/BudgetContext"
 import PrimaryAccountDetails from "../functional-components/primary-account-details"
 import TransactButtons from "../functional-components/transact-buttons"
 import AggregatedBudgetDataDisplay from "../functional-components/aggregated-budget-data-display"
@@ -37,9 +37,9 @@ const Container = styled.div`
 const budgetDisplay = ({ budgetData, setBudgetData }) => {
   console.log("budget display attempting to render: ", budgetData)
   if (budgetData === null) {
-    setBudgetData(accountDataWithUpdates)
-    // console.log("fetching budget data")
-    // fetchBudgetData(setBudgetData)
+    // this is for dev only:
+    // setBudgetData(accountDataWithUpdates)
+    fetchBudgetData(setBudgetData)
   }
   return (
     <Container>

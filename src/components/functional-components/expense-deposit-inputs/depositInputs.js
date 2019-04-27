@@ -4,7 +4,12 @@ import endpoints from "../../../config/api_endpoints"
 import Button from "../button"
 import handleLabelAnimation from "./label-anim-helper"
 
-const depositInputs = () => {
+// NOTE:
+// DONT FORGET THAT YOU NEED ACCESS TO THE CURRENT MONTH AND CURRENT
+// YEAR OFF OF THE MAIN DATA STRUCTURE THAT'S RETURNED FROM THE INITIAL
+// GET ACCOUNT REQUEST.
+
+const depositInputs = ({ dateData, deposit }) => {
   const [incomeSource, setIncomeSource] = useState({ value: "", err: false })
   const [depositAmount, setDepositAmount] = useState({ value: "", err: false })
   const [incomeSourceFocused, setIncomeSourceFocused] = useState(false)
@@ -28,12 +33,20 @@ const depositInputs = () => {
     setDepositAmount({ value, err: false })
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e, dateData, deposit) => {
     e.preventDefault()
-    axios.post(endpoints.DEPOSIT_URL, {
+    console.log("DEPOSIT POST!")
+    const depositResult = await axios.post(endpoints.DEPOSIT_URL, {
       income_source: incomeSource.value,
-      deposit_amount: depositAmount.value,
+      deposit_amount: parseInt(depositAmount.value),
+      ...dateData,
     })
+    if (!depositResult) {
+      // How to handle this so that user may receive notification of post failure?
+      return
+    }
+    console.log("CALLING DEPOSIT")
+    await deposit(depositResult, dateData)
   }
 
   return (
@@ -75,8 +88,9 @@ const depositInputs = () => {
         }
       />
       <Button
-        onClick={handleSubmit}
+        onClick={e => handleSubmit(e, dateData, deposit)}
         type="submit"
+        dataTestId="depositBtn"
         radius={25}
         shadow={true}
         padding={[0.8, 3.2]}

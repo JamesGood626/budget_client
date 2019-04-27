@@ -20,7 +20,7 @@ const Container = styled.div`
   }
 `
 
-class transactModalForm extends Component {
+class TransactModalForm extends Component {
   componentDidMount = () => {
     this.setBodyStyle("hidden")
   }
@@ -49,17 +49,21 @@ class transactModalForm extends Component {
   }
 
   render() {
-    const { transactionType, toggleModal } = this.props
+    const { transactionType, toggleModal, dateData, deposit } = this.props
     return (
       <Container onClick={e => this.handleCloseClick(e, toggleModal)}>
         <Form id="form">
           <div onClick={() => toggleModal("")}>X</div>
-          {transactionType === "DEPOSIT" && <DepositInputs />}
-          {transactionType === "EXPENSE" && <ExpenseInputs />}
+          {transactionType === "DEPOSIT" && (
+            <DepositInputs dateData={dateData} deposit={deposit} />
+          )}
+          {transactionType === "EXPENSE" && (
+            <ExpenseInputs dateData={dateData} />
+          )}
         </Form>
       </Container>
     )
   }
 }
 
-export default transactModalForm
+export default TransactModalForm

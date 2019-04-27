@@ -24,6 +24,7 @@
   "devDependencies": {
     "babel-jest": "^24.3.1",
     "babel-preset-gatsby": "^0.1.8",
+    "cypress": "^3.2.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.3.1",
     "jest-dom": "^3.1.2",
@@ -40,7 +41,8 @@
     "format": "prettier --write src/**/*.{js,jsx}",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "test": "jest"
+    "test": "jest",
+    "cypress": "cypress open"
   },
   "repository": {
     "type": "git",

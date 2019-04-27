@@ -223,9 +223,16 @@ const getAccountInput = [
   },
 ]
 
+const successfulDepositResponse = {
+  account_balance: 5000000,
+  total_deposited: 4000000,
+  deposits: [{ income_source: "check", deposit_amount: 4000000 }],
+}
+
 module.exports = {
   initialStateWithoutTransactions,
   initialStateWithTransactions,
   getAccountInput,
   accountDataWithUpdates,
+  successfulDepositResponse,
 }

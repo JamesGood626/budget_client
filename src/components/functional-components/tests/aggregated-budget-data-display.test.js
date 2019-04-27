@@ -19,8 +19,8 @@ import "jest-dom/extend-expect"
 // automatically unmount and cleanup DOM after the test is finished.
 afterEach(cleanup)
 
-jest.mock("axios")
-const mockCallback = jest.fn()
+// jest.mock("axios")
+// const mockCallback = jest.fn()
 
 test("AggregatedBudgetDataDisplay renders with budget data.", async done => {
   const { getByTestId, getByLabelText, debug } = render(

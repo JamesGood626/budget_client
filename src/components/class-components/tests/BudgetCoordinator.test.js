@@ -17,7 +17,7 @@ import "jest-dom/extend-expect"
 // automatically unmount and cleanup DOM after the test is finished.
 afterEach(cleanup)
 
-jest.mock("axios")
+// jest.mock("axios")
 // const mockCallback = jest.fn()
 
 test("1+1 = 2", () => {

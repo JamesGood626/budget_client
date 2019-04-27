@@ -9,7 +9,7 @@ import {
   NECESSARY_EXPENSE,
   UNNECESSARY_EXPENSE,
   TOGGLE_IN_PROGRESS,
-} from "../budgetReducerActions"
+} from "../reducers/budget/budgetReducerActions"
 
 const Container = styled.div`
   display: flex;
@@ -48,7 +48,12 @@ const FadedBackground = styled.div`
 // }
 
 // if you add the IN_PROGRESS dispatch then you'll need more than just dispatch here.
-const transactButtons = ({ reducer: { dispatch } }) => {
+const transactButtons = ({
+  reducer: {
+    dispatch,
+    state: { data },
+  },
+}) => {
   const [modalToggled, setModalToggled] = useState({
     toggled: false,
     transactionType: null,
@@ -56,15 +61,8 @@ const transactButtons = ({ reducer: { dispatch } }) => {
   console.log("THE DISPATCH: ", dispatch)
   // similar function for expense.
   // The only things different would be the post URL and the dispatch type.
-  const deposit = async params => {
-    // API should return true/false only to indicate if deposit was successful
-    // dispatch({type: IN_PROGRESS }) for loading indicator
-    const depositResult = await axios.post(endpoints.DEPOSIT, params)
-    if (!depositResult) {
-      // How to handle this so that user may receive notification of post failure?
-      return
-    }
-    dispatch({ type: "DEPOSIT", payload: params })
+  const deposit = async (result, dateData) => {
+    dispatch({ type: "DEPOSIT", payload: { result, ...dateData } })
   }
   const toggleModal = type => {
     setModalToggled({ toggled: !modalToggled.toggled, transactionType: type })
@@ -113,6 +111,11 @@ const transactButtons = ({ reducer: { dispatch } }) => {
           <TransactModalForm
             transactionType={modalToggled.transactionType}
             toggleModal={toggleModal}
+            dateData={{
+              current_month: data.current_month,
+              current_year: data.current_year,
+            }}
+            deposit={deposit}
           />
           <FadedBackground />
         </>

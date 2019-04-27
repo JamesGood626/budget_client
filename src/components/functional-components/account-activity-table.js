@@ -96,7 +96,7 @@ const renderTableRows = data => {
   return data.map(({ category, type, amount, date }, i) => (
     <tr key={`${category}-${type}-${i}`}>
       <td>{type}</td>
-      <td class={category === "DEPOSIT" ? "green-text" : "red-text"}>
+      <td className={category === "DEPOSIT" ? "green-text" : "red-text"}>
         ${amount}
       </td>
       <td>{date}</td>
