@@ -5,17 +5,28 @@ import { navigate } from "gatsby"
 import Button from "../button"
 import Form from "./form-styles"
 import handleLabelAnimation from "../expense-deposit-inputs/label-anim-helper"
+import { array } from "prop-types"
 
 const authForm = ({ apiEndpoint, btnText, login }) => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState({ value: "", error: false })
+  const [password, setPassword] = useState({ value: "", error: false })
   const [emailFocused, setEmailFocused] = useState(false)
   const [passwordFocused, setPasswordFocused] = useState(false)
 
   return (
     <Form
       type="submit"
-      onSubmit={e => handleSubmit(e, email, password, login, apiEndpoint)}
+      onSubmit={e =>
+        handleSubmitOrFail(
+          e,
+          email.value,
+          password.value,
+          setEmail,
+          setPassword,
+          login,
+          apiEndpoint
+        )
+      }
     >
       <label htmlFor="email" className={emailFocused ? "input-active" : null}>
         Email
@@ -23,10 +34,11 @@ const authForm = ({ apiEndpoint, btnText, login }) => {
       <input
         id="email"
         type="text"
-        onChange={e => handleChange(e, setEmail)}
+        onChange={e => handleChange(e.target.value, setEmail)}
         onFocus={e => handleLabelAnimation(e, setEmailFocused, emailFocused)}
         onBlur={e => handleLabelAnimation(e, setEmailFocused, emailFocused)}
       />
+      {email.error && <span className="error-text">{email.error}</span>}
       <label
         htmlFor="password"
         className={passwordFocused ? "input-active" : null}
@@ -35,8 +47,8 @@ const authForm = ({ apiEndpoint, btnText, login }) => {
       </label>
       <input
         id="password"
-        type="text"
-        onChange={e => handleChange(e, setPassword)}
+        type="password"
+        onChange={e => handleChange(e.target.value, setPassword)}
         onFocus={e =>
           handleLabelAnimation(e, setPasswordFocused, passwordFocused)
         }
@@ -44,6 +56,7 @@ const authForm = ({ apiEndpoint, btnText, login }) => {
           handleLabelAnimation(e, setPasswordFocused, passwordFocused)
         }
       />
+      {password.error && <span className="error-text">{password.error}</span>}
       <Button
         radius={25}
         shadow={true}
@@ -59,35 +72,92 @@ const authForm = ({ apiEndpoint, btnText, login }) => {
   )
 }
 
-const handleChange = (e, setField) => {
-  const { id, value } = e.target
-  // Use this when adding validation logic.
-  // let payload = {value, error: ""}
-  if (id === "email") {
-    // in validateEmail
-    // run email validation logic/else set {value: "", error: "message"}
+// TODO:
+// Make more comprehensive
+const validateEmail = str => {
+  if (str.indexOf("@") > 0) {
+    return true
   }
-  if (id === "password") {
-    // in validatePassword(value)
-    // run password validation logic/else set {value: "", error: "message"}
-  }
-  setField(value)
+  return false
 }
 
-const handleSubmit = async (e, email, password, login, apiEndpoint) => {
+// TODO:
+// Make more comprehensive
+const validatePassword = str => {
+  return str.length > 10
+}
+
+const handleChange = (value, setField) => {
+  setField({ value, error: false })
+}
+
+const handleSubmitOrFail = async (
+  e,
+  email,
+  password,
+  setEmail,
+  setPassword,
+  login,
+  apiEndpoint
+) => {
   e.preventDefault()
+  const result = await handleSubmit(email, password, login, apiEndpoint)
+  console.log("WTF is result: ", result)
+  const errorsPresent = result.hasOwnProperty("length") && result.length > 0
+  if (errorsPresent) {
+    result.map(obj =>
+      obj.error === "Invalid email" ? setEmail(obj) : setPassword(obj)
+    )
+  }
+}
+
+const handleSubmit = async (email, password, login, apiEndpoint) => {
+  const result = validateUserInput(email, password)
+  const errorsPresent = result.hasOwnProperty("length") && result.length > 0
+  if (errorsPresent) {
+    return result
+  }
+  const loginSuccess = await postLoginInput(email, password, apiEndpoint)
+  if (loginSuccess) {
+    redirectToBudgetPage(login)
+    return true
+  } else {
+    // create another useState to display this...?
+    // Am I using too many useStates
+    return "Woops, something went wrong"
+  }
+}
+
+// Pass in validateEmail and validatePassword as args instead? Then I'd have so many args being
+// passed into handleSubmitOrFail <- what in the name of referential transparency
+const validateUserInput = (email, password) => {
+  let errors = []
+  if (!validateEmail(email)) {
+    errors = [...errors, { value: email, error: "Invalid email" }]
+  }
+  if (!validatePassword(password)) {
+    errors = [...errors, { value: password, error: "Invalid password" }]
+  }
+  return errors
+}
+
+const postLoginInput = async (email, password, apiEndpoint) => {
   const result = await axios.post(apiEndpoint, {
     email,
     password,
   })
-  if (
+  const loginSuccess =
     result.data.message === "Login Success!" &&
     apiEndpoint === endpoints.LOGIN_URL
-  ) {
-    login()
-    navigate("/app/budget")
+  if (loginSuccess) {
+    return true
   }
-  console.log("Result from Elixir API: ", result)
+  return false
+}
+
+const redirectToBudgetPage = login => {
+  login()
+  navigate("/app/budget")
 }
 
 export default authForm

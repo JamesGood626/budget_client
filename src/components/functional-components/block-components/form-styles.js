@@ -48,6 +48,10 @@ const Form = styled.form`
     margin-top: 1.2rem;
     padding: 0.6rem 1.2rem 0.6rem 1.2rem;
   }
+
+  .error-text {
+    color: red;
+  }
 `
 
 export default Form
