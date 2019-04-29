@@ -13,6 +13,7 @@ const Button = styled.button`
   padding: ${({ padding }) => padding && `${padding[0]}rem ${padding[1]}rem}`};
   margin: 10px;
   min-height: ${({ minHeight }) => minHeight && `${minHeight}rem`};
+  width: ${({ width }) => width && `${width}rem`};
   font-size: 1rem;
   font-weight: bold;
   color: ${({ fontColor }) => (fontColor ? `${fontColor}` : `#222`)};
@@ -70,11 +71,13 @@ const Button = styled.button`
 
 const button = ({
   children,
+  className,
   onClick,
   type,
   dataTestId,
   padding,
   minHeight,
+  width,
   radius,
   topColor,
   bottomColor,
@@ -83,10 +86,12 @@ const button = ({
   return (
     <Button
       onClick={onClick}
+      className={className}
       type={type}
       data-testid={dataTestId}
       padding={padding}
       minHeight={minHeight}
+      width={width}
       radius={radius}
       topColor={topColor}
       bottomColor={bottomColor}

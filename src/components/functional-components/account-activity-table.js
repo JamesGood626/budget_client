@@ -109,7 +109,7 @@ const accountActivityTable = ({ accountActivityData }) => {
       <Table>
         <thead>
           <tr>
-            <th>Category</th>
+            <th>Type</th>
             <th>Amount</th>
             <th>Date</th>
           </tr>

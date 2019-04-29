@@ -9,7 +9,8 @@ import handleLabelAnimation from "./label-anim-helper"
 // YEAR OFF OF THE MAIN DATA STRUCTURE THAT'S RETURNED FROM THE INITIAL
 // GET ACCOUNT REQUEST.
 
-const depositInputs = ({ dateData, deposit }) => {
+const depositInputs = ({ dateData, deposit, toggleModal }) => {
+  const [warningVisible, setWarningVisible] = useState(false)
   const [incomeSource, setIncomeSource] = useState({ value: "", err: false })
   const [depositAmount, setDepositAmount] = useState({ value: "", err: false })
   const [incomeSourceFocused, setIncomeSourceFocused] = useState(false)
@@ -33,9 +34,19 @@ const depositInputs = ({ dateData, deposit }) => {
     setDepositAmount({ value, err: false })
   }
 
-  const handleSubmit = async (e, dateData, deposit) => {
+  const handleSubmit = async (e, dateData, deposit, toggleModal) => {
     e.preventDefault()
-    console.log("DEPOSIT POST!")
+    // setWarningVisible(false)
+    postDeposit(dateData, deposit, toggleModal)
+  }
+
+  const handleShowWarning = e => {
+    e.preventDefault()
+    setWarningVisible(true)
+  }
+
+  const postDeposit = async (dateData, deposit, toggleModal) => {
+    // console.log("MAKING IT TO POST DEPOSIT")
     const depositResult = await axios.post(endpoints.DEPOSIT_URL, {
       income_source: incomeSource.value,
       deposit_amount: parseInt(depositAmount.value),
@@ -43,10 +54,11 @@ const depositInputs = ({ dateData, deposit }) => {
     })
     if (!depositResult) {
       // How to handle this so that user may receive notification of post failure?
-      return
+      return "It failed..."
     }
-    console.log("CALLING DEPOSIT")
     await deposit(depositResult, dateData)
+    console.log("TOGGLING THE MODAL")
+    toggleModal("")
   }
 
   return (
@@ -88,7 +100,8 @@ const depositInputs = ({ dateData, deposit }) => {
         }
       />
       <Button
-        onClick={e => handleSubmit(e, dateData, deposit)}
+        onClick={e => handleShowWarning(e)}
+        className="deposit-submit-btn"
         type="submit"
         dataTestId="depositBtn"
         radius={25}
@@ -101,6 +114,46 @@ const depositInputs = ({ dateData, deposit }) => {
       >
         Submit
       </Button>
+      {warningVisible && (
+        <div className="warning-container">
+          <h1>Warning</h1>
+          <p>This deposit may not be deleted after creation</p>
+          <div className="warning-btn-container">
+            <Button
+              onClick={e => handleSubmit(e, dateData, deposit, toggleModal)}
+              className="confirm-warning-btn"
+              type="submit"
+              dataTestId="confirm-warning-btn"
+              radius={25}
+              shadow={true}
+              padding={[2, 2]}
+              minHeight={3}
+              width={3}
+              topColor="#46FF90"
+              bottomColor="#20E131"
+              fontColor="#fff"
+            >
+              O
+            </Button>
+            <Button
+              onClick={e => handleSubmit(e, dateData, deposit, toggleModal)}
+              className="cancel-warning-btn"
+              type="submit"
+              dataTestId="cancel-warning-btn"
+              radius={25}
+              shadow={true}
+              padding={[2, 2]}
+              minHeight={3}
+              width={3}
+              topColor="#FF7878"
+              bottomColor="#FF5E5E"
+              fontColor="#fff"
+            >
+              X
+            </Button>
+          </div>
+        </div>
+      )}
     </>
   )
 }

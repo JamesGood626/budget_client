@@ -8,6 +8,7 @@ function reducer(state, action) {
     case actions.SET_STATE:
       return { ...state, data: action.payload }
     case actions.DEPOSIT:
+      console.log("IS this even hitting deposit in reducer???")
       return {
         ...state,
         data: updateNestedDepositData(state.data, action.payload),
@@ -42,17 +43,23 @@ const useBudgetReducer = () => {
 
 const updateNestedDepositData = (
   data,
-  { result, current_month, current_year }
+  { result: { data: resultData }, current_month, current_year }
 ) => {
-  const parsed = JSON.parse(result.data)
+  console.log("THE RESULT DATA: ", resultData)
+  // const parsed = JSON.parse(result.data)
   const currentMonthData =
     data.years_tracked[current_year].months_tracked[current_month]
-  console.log(`THE PARSED JSON: ${parsed}`)
+  const depositEntry = {
+    category: resultData.category,
+    type: resultData.type,
+    amount: resultData.amount,
+    date: resultData.date,
+  }
   return {
     ...data,
     budget: {
       ...data.budget,
-      account_balance: parsed.account_balance,
+      account_balance: resultData.account_balance,
     },
     years_tracked: {
       ...data.years_tracked,
@@ -62,8 +69,8 @@ const updateNestedDepositData = (
           [current_month]: {
             ...currentMonthData,
             total_deposited:
-              currentMonthData.total_deposited + parsed.total_deposited,
-            deposits: [...currentMonthData.deposits, ...parsed.deposits],
+              currentMonthData.total_deposited + resultData.total_deposited,
+            deposits: [...currentMonthData.deposits, depositEntry],
           },
         },
       },

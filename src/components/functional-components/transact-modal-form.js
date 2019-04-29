@@ -15,14 +15,36 @@ const Container = styled.div`
   width: 100vw;
   height: 100vh;
 
-  div {
-    background: orange;
+  .warning-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    position: absolute;
+    margin: 0 auto;
+    margin-left: -0.8rem;
+    padding: 1rem 1rem;
+    width: 18rem;
+    height: 18rem;
+    background: #fff;
+
+    p {
+      font-size: 1.2rem;
+    }
+
+    .warning-btn-container {
+      display: flex;
+      justify-content: space-around;
+    }
   }
 `
 
 class TransactModalForm extends Component {
   componentDidMount = () => {
     this.setBodyStyle("hidden")
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("Component updated: ", this.state)
   }
 
   componentWillUnmount = () => {
@@ -36,7 +58,6 @@ class TransactModalForm extends Component {
 
   handleCloseClick = (e, toggleModal) => {
     const { nodeName } = e.target
-    console.log("THE NODE NAME: ", nodeName)
     const clickOutsideOfForm =
       nodeName !== "FORM" &&
       nodeName !== "SELECT" &&
@@ -55,7 +76,11 @@ class TransactModalForm extends Component {
         <Form id="form">
           <div onClick={() => toggleModal("")}>X</div>
           {transactionType === "DEPOSIT" && (
-            <DepositInputs dateData={dateData} deposit={deposit} />
+            <DepositInputs
+              dateData={dateData}
+              deposit={deposit}
+              toggleModal={toggleModal}
+            />
           )}
           {transactionType === "EXPENSE" && (
             <ExpenseInputs dateData={dateData} />

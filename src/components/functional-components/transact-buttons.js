@@ -62,7 +62,10 @@ const transactButtons = ({
   // similar function for expense.
   // The only things different would be the post URL and the dispatch type.
   const deposit = async (result, dateData) => {
-    dispatch({ type: "DEPOSIT", payload: { result, ...dateData } })
+    dispatch({
+      type: "DEPOSIT",
+      payload: { result, ...dateData },
+    })
   }
   const toggleModal = type => {
     setModalToggled({ toggled: !modalToggled.toggled, transactionType: type })
@@ -82,6 +85,7 @@ const transactButtons = ({
       {/* Need to open modals onClick with forms for adding the transactions */}
       <Button
         data-testid="deposit-btn"
+        className="deposit-btn"
         onClick={() => toggleModal("DEPOSIT")}
         radius={25}
         shadow={true}
@@ -93,6 +97,7 @@ const transactButtons = ({
         Deposit
       </Button>
       <Button
+        className="expense-btn"
         onClick={() => toggleModal("EXPENSE")}
         radius={25}
         shadow={true}
