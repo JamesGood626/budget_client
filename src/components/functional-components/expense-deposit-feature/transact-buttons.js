@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import axios from "axios"
 import styled from "styled-components"
 import TransactModalForm from "./transact-modal-form"
-import Button from "../button"
+import Button from "../foundational-components/button"
 // import endpoints from "../../../config/api_endpoints"
 import actions from "../../reducers/budget/budgetReducerActions"
 

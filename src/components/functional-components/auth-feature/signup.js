@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import AuthForm from "./block-components/auth-form"
-import endpoints from "../../config/api_endpoints"
+import AuthForm from "./auth-form"
+import endpoints from "../../../config/api_endpoints"
 
 const Container = styled.div`
   display: flex;

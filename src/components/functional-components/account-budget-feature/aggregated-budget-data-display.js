@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import AggregationFilterResultController from "./aggregation-filter-result-controller"
-import AccountActivityDropDown from "./filter-dropdowns/account-activity-dropdown"
-import YearsAndMonthDropdowns from "./filter-dropdowns/years-and-month-dropdowns"
+import AccountActivityDropDown from "../filter-dropdowns/account-activity-dropdown"
+import YearsAndMonthDropdowns from "../filter-dropdowns/years-and-month-dropdowns"
 
 // up arrow code just incase -> &#9650;
 

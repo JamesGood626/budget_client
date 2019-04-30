@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import styled from "styled-components"
 import DepositInputs from "./expense-deposit-inputs/deposit-inputs"
 import ExpenseInputs from "./expense-deposit-inputs/expense-inputs"
-import Form from "../block-components/form-styles"
+import Form from "../foundational-components/form-styles"
 
 const Container = styled.div`
   display: flex;

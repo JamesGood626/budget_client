@@ -1,5 +1,5 @@
 import React from "react"
-import Button from "../button"
+import Button from "../foundational-components/button"
 
 const transactionWarning = ({
   message,

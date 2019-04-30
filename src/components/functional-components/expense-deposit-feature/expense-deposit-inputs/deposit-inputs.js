@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import axios from "axios"
 import endpoints from "../../../../config/api_endpoints"
-import Button from "../../button"
+import Button from "../../foundational-components/button"
 import TransactionWarning from "../transaction-warning"
 import handleLabelAnimation from "./label-anim-helper"
 

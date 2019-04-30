@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import AuthForm from "./block-components/auth-form"
-import endpoints from "../../config/api_endpoints"
+import AuthForm from "./auth-form"
+import endpoints from "../../../config/api_endpoints"
 
 // If you want this container to fill up the remaining height of the
 // body. -> use styled-components theming, and subtract the navbarHeight from 100vh.
