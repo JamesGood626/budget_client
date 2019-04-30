@@ -61,6 +61,7 @@ class TransactModalForm extends Component {
     const clickOutsideOfForm =
       nodeName !== "FORM" &&
       nodeName !== "SELECT" &&
+      nodeName !== "OPTION" &&
       nodeName !== "INPUT" &&
       nodeName !== "LABEL" &&
       nodeName !== "BUTTON"

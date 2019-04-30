@@ -49,16 +49,17 @@ const expenseInputs = ({ dateData, transact, toggleModal }) => {
       category === "NECESSARY_EXPENSE"
         ? endpoints.NECESSARY_EXPENSE_URL
         : endpoints.UNNECESSARY_EXPENSE_URL
-    axios.post(EXPENSE_URL, {
-      expense: expense.value,
-      expense_amount: amount.value,
-      ...dateData,
-    })
-    postExpense(category, dateData, transact, toggleModal)
+    postExpense(EXPENSE_URL, category, dateData, transact, toggleModal)
   }
 
-  const postExpense = async (type, dateData, transact, toggleModal) => {
-    const expendResult = await axios.post(endpoints.NECESSARY_EXPENSE_URL, {
+  const postExpense = async (
+    expense_url,
+    type,
+    dateData,
+    transact,
+    toggleModal
+  ) => {
+    const expendResult = await axios.post(expense_url, {
       expense: expense.value,
       amount: parseInt(amount.value),
       ...dateData,

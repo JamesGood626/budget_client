@@ -23,9 +23,5 @@ describe("Budget page deposit features", () => {
     cy.get(".deposit-submit-btn").click()
     cy.get(".confirm-warning-btn").click()
     cy.get(".deposit").should("have.text", "$4000")
-
-    // Expect warning message that user can't delete this after it's created
-
-    // After clicking ok... post to /api/deposit should occur
   })
 })

@@ -90,8 +90,7 @@ const updateNestedData = (
           ...data.years_tracked[current_year].months_tracked,
           [current_month]: {
             ...currentMonthData,
-            [nestedTotal]:
-              currentMonthData[nestedTotal] + resultData[nestedTotal],
+            [nestedTotal]: currentMonthData[nestedTotal] + resultData["amount"],
             [nestedArray]: [...currentMonthData[nestedArray], entry],
           },
         },

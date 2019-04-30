@@ -89,28 +89,20 @@ const Section = styled.section`
   }
 `
 
-// Should move this into a utils folder file or something...
-const getTextColor = val => {
-  return val > 0 ? "green-text" : val < 0 ? "red-text" : "grey-text"
-}
-
 const aggregatedBudgetExpenseTotal = ({
   totals: { budgetTotal, unnecessaryExpensesTotal },
 }) => {
-  const budgetTotalTextColor = getTextColor(budgetTotal)
-  const unnecessaryExpensesTotalTextColor = getTextColor(
-    unnecessaryExpensesTotal
-  )
-
   return (
     <Section>
       <div id="first-block" data-testid="budget-total">
         <h3>Aggregated Budget:</h3>
-        <p className={budgetTotalTextColor}>${budgetTotal}</p>
+        <p className="grey-text">${budgetTotal}</p>
       </div>
       <div data-testid="unnecessary-expense-total">
         <h3>Unnecessary Expense Total:</h3>
-        <p className={unnecessaryExpensesTotalTextColor}>
+        <p
+          className={unnecessaryExpensesTotal === 0 ? "grey-text" : "red-text"}
+        >
           ${unnecessaryExpensesTotal}
         </p>
       </div>

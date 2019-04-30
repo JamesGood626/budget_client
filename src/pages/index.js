@@ -16,6 +16,11 @@ const IndexPage = () => {
     <Layout>
       <Container>
         <h1>Welcome to Budget Slayer 9000!</h1>
+        <select className="num-select">
+          <option value="one">One</option>
+          <option value="two">Two</option>
+          <option value="three">Three</option>
+        </select>
       </Container>
     </Layout>
   )
