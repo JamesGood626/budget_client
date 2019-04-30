@@ -1,5 +1,8 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
+import Modal from "../expense-deposit-feature/modal"
+import SetBudgetForm from "./set-budget-form"
+import actions from "../../reducers/budget/budgetReducerActions"
 
 const Container = styled.div`
   display: flex;
@@ -44,7 +47,7 @@ const Container = styled.div`
     }
   }
 
-  div {
+  .account-detail-block {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -87,6 +90,23 @@ const Container = styled.div`
     }
   }
 
+  #second-block span {
+    display: flex;
+    align-items: center;
+  }
+
+  .set-budget-btn {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-left: 0.5rem;
+    padding-bottom: 1.2rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50px;
+    border: 2px solid ${props => props.theme.darkGreen};
+    color: ${props => props.theme.darkGreen};
+  }
+
   .green-text {
     color: ${props => props.theme.lightGreen};
   }
@@ -100,10 +120,40 @@ const Container = styled.div`
   }
 `
 
-// I won't actually show Nope.
-// Will have some kind of animation loader...
-// perhaps the grey div gradient placeholder anim.
-const primaryAccountDetails = ({ budget }) => {
+const FadedBackground = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  background: #222;
+  opacity: 0.5;
+  width: 100vw;
+  height: 100vh;
+`
+
+const primaryAccountDetails = ({
+  budget,
+  reducer: {
+    dispatch,
+    state: { data },
+  },
+}) => {
+  const [modalToggled, setModalToggled] = useState({
+    toggled: false,
+    transactionType: null,
+  })
+
+  const toggleModal = () => {
+    setModalToggled({ toggled: !modalToggled.toggled })
+  }
+
+  const setBudget = async (result, dateData) => {
+    dispatch({
+      type: actions.SET_BUDGET,
+      payload: { result, ...dateData },
+    })
+  }
+
   if (!budget) {
     return null
   }
@@ -121,28 +171,54 @@ const primaryAccountDetails = ({ budget }) => {
       : "grey-text"
   return (
     <Container>
-      <div id="first-block">
+      <div id="first-block" className="account-detail-block">
         <h3>Total Balance:</h3>
         <p className={accountBalanceTextColor} data-testid="account-balance">
           ${account_balance}
         </p>
       </div>
-      <div id="second-block">
+      <div id="second-block" className="account-detail-block">
         <h3>Current Budget:</h3>
-        <p className="grey-text" data-testid="current-budget">
-          {/* TODO: Make the "Set Budget" text be a button */}
-          {!budget_set ? "Set Budget" : `$${current_budget}`}
-        </p>
+        <span>
+          {!budget_set ? (
+            <>
+              <p className="grey-text" data-testid="current-budget">
+                Set Budget
+              </p>{" "}
+              <button className="set-budget-btn" onClick={toggleModal}>
+                +
+              </button>
+            </>
+          ) : (
+            `$${current_budget}`
+          )}
+        </span>
       </div>
-      <div>
+      <div className="account-detail-block">
         <h3>Exceeded:</h3>
         <p
           className={!budget_exceeded ? "green-text" : "red-text"}
           data-testid="budget-exceeded"
         >
+          {/* TODO: Change You're Fucked to contain the numerical amount which the budget was exceeded by. */}
           {!budget_exceeded ? "You're Good" : "You're Fucked"}
         </p>
       </div>
+      {modalToggled.toggled && (
+        <>
+          <Modal toggleModal={toggleModal}>
+            <SetBudgetForm
+              toggleModal={toggleModal}
+              dateData={{
+                current_month: data.current_month,
+                current_year: data.current_year,
+              }}
+              setBudget={setBudget}
+            />
+          </Modal>
+          <FadedBackground />
+        </>
+      )}
     </Container>
   )
 }

@@ -1,10 +1,10 @@
 import React, { useState } from "react"
-import axios from "axios"
+// import axios from "axios"
 import styled from "styled-components"
-import TransactModalForm from "./transact-modal-form"
+import Modal from "./modal"
+import TransactForm from "./transact-form"
 import Button from "../foundational-components/button"
-// import endpoints from "../../../config/api_endpoints"
-import actions from "../../reducers/budget/budgetReducerActions"
+// import actions from "../../reducers/budget/budgetReducerActions"
 
 const Container = styled.div`
   display: flex;
@@ -106,15 +106,17 @@ const transactButtons = ({
       </Button>
       {modalToggled.toggled && (
         <>
-          <TransactModalForm
-            transactionType={modalToggled.transactionType}
-            toggleModal={toggleModal}
-            dateData={{
-              current_month: data.current_month,
-              current_year: data.current_year,
-            }}
-            transact={transact}
-          />
+          <Modal toggleModal={toggleModal}>
+            <TransactForm
+              transactionType={modalToggled.transactionType}
+              toggleModal={toggleModal}
+              dateData={{
+                current_month: data.current_month,
+                current_year: data.current_year,
+              }}
+              transact={transact}
+            />
+          </Modal>
           <FadedBackground />
         </>
       )}

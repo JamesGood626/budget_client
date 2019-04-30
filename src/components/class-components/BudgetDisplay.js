@@ -37,31 +37,36 @@ const budgetDisplay = ({ budgetData, setBudgetData }) => {
   console.log("budget display attempting to render: ", budgetData)
   if (budgetData === null) {
     // this is for dev only:
-    // setBudgetData(accountDataWithUpdates)
-    fetchBudgetData(setBudgetData)
+    setBudgetData(accountDataWithUpdates)
+    // fetchBudgetData(setBudgetData)
   }
   return (
     <Container>
       {console.log("THE BUDGET DATA FOR PRIMARY ACC DETAILS: ", budgetData)}
-      <PrimaryAccountDetails
-        budget={
-          budgetData !== null && budgetData.budget ? budgetData.budget : null
-        }
-      />
       {budgetData && (
         <BudgetContext.Consumer>
           {value => {
             console.log("WHAT IS THE VALUE?!!>!: ", value)
             return (
-              <div id="buttons-and-table-container">
-                <TransactButtons reducer={value} />
-                {/*
+              <>
+                <PrimaryAccountDetails
+                  reducer={value}
+                  budget={
+                    budgetData !== null && budgetData.budget
+                      ? budgetData.budget
+                      : null
+                  }
+                />
+                <div id="buttons-and-table-container">
+                  <TransactButtons reducer={value} />
+                  {/*
                   AggregatedBudgetDataDisplay contains the dropdowns for filtering
                   expense_types, years, and months.
                   And the resulting display/table to present the data
                 */}
-                <AggregatedBudgetDataDisplay reducer={value} />
-              </div>
+                  <AggregatedBudgetDataDisplay reducer={value} />
+                </div>
+              </>
             )
           }}
         </BudgetContext.Consumer>

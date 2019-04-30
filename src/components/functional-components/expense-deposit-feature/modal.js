@@ -1,8 +1,5 @@
 import React, { Component } from "react"
 import styled from "styled-components"
-import DepositInputs from "./expense-deposit-inputs/deposit-inputs"
-import ExpenseInputs from "./expense-deposit-inputs/expense-inputs"
-import Form from "../foundational-components/form-styles"
 
 const Container = styled.div`
   display: flex;
@@ -43,10 +40,6 @@ class TransactModalForm extends Component {
     this.setBodyStyle("hidden")
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log("Component updated: ", this.state)
-  }
-
   componentWillUnmount = () => {
     this.setBodyStyle("scroll")
   }
@@ -71,26 +64,10 @@ class TransactModalForm extends Component {
   }
 
   render() {
-    const { transactionType, toggleModal, dateData, transact } = this.props
+    const { children, toggleModal } = this.props
     return (
       <Container onClick={e => this.handleCloseClick(e, toggleModal)}>
-        <Form id="form">
-          <div onClick={() => toggleModal("")}>X</div>
-          {transactionType === "DEPOSIT" && (
-            <DepositInputs
-              dateData={dateData}
-              transact={transact}
-              toggleModal={toggleModal}
-            />
-          )}
-          {transactionType === "EXPENSE" && (
-            <ExpenseInputs
-              dateData={dateData}
-              transact={transact}
-              toggleModal={toggleModal}
-            />
-          )}
-        </Form>
+        {children}
       </Container>
     )
   }
