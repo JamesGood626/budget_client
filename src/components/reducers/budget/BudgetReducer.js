@@ -8,15 +8,35 @@ function reducer(state, action) {
     case actions.SET_STATE:
       return { ...state, data: action.payload }
     case actions.DEPOSIT:
-      console.log("IS this even hitting deposit in reducer???")
       return {
         ...state,
-        data: updateNestedDepositData(state.data, action.payload),
-      } // add deposit to target array
+        data: updateNestedData(
+          state.data,
+          action.payload,
+          "total_deposited",
+          "deposits"
+        ),
+      }
     case actions.NECESSARY_EXPENSE:
-      return state // add expense to target array
+      return {
+        ...state,
+        data: updateNestedData(
+          state.data,
+          action.payload,
+          "total_necessary_expenses",
+          "necessary_expenses"
+        ),
+      }
     case actions.UNNECESSARY_EXPENSE:
-      return state // add expense to target array
+      return {
+        ...state,
+        data: updateNestedData(
+          state.data,
+          action.payload,
+          "total_unnecessary_expenses",
+          "unnecessary_expenses"
+        ),
+      }
     case actions.TOGGLE_IN_PROGRESS:
       return { ...state, inProgress: !state.inProgress }
     default:
@@ -41,15 +61,17 @@ const useBudgetReducer = () => {
   }
 }
 
-const updateNestedDepositData = (
+const updateNestedData = (
   data,
-  { result: { data: resultData }, current_month, current_year }
+  { result: { data: resultData }, current_month, current_year },
+  nestedTotal,
+  nestedArray
 ) => {
   console.log("THE RESULT DATA: ", resultData)
   // const parsed = JSON.parse(result.data)
   const currentMonthData =
     data.years_tracked[current_year].months_tracked[current_month]
-  const depositEntry = {
+  const entry = {
     category: resultData.category,
     type: resultData.type,
     amount: resultData.amount,
@@ -68,9 +90,9 @@ const updateNestedDepositData = (
           ...data.years_tracked[current_year].months_tracked,
           [current_month]: {
             ...currentMonthData,
-            total_deposited:
-              currentMonthData.total_deposited + resultData.total_deposited,
-            deposits: [...currentMonthData.deposits, depositEntry],
+            [nestedTotal]:
+              currentMonthData[nestedTotal] + resultData[nestedTotal],
+            [nestedArray]: [...currentMonthData[nestedArray], entry],
           },
         },
       },

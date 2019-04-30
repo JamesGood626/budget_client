@@ -1,15 +1,17 @@
 import React, { useState } from "react"
 import axios from "axios"
-import endpoints from "../../../config/api_endpoints"
-import Button from "../button"
+import endpoints from "../../../../config/api_endpoints"
+import Button from "../../button"
+import TransactionWarning from "../transaction-warning"
 import handleLabelAnimation from "./label-anim-helper"
 import {
   Select,
   Label,
   LabelTextSpan,
-} from "../filter-dropdowns/dropdown-styles"
+} from "../../filter-dropdowns/dropdown-styles"
 
-const expenseInputs = ({ dateData }) => {
+const expenseInputs = ({ dateData, transact, toggleModal }) => {
+  const [warningVisible, setWarningVisible] = useState(false)
   const [category, setCategory] = useState("NECESSARY_EXPENSE")
   const [expense, setExpense] = useState({ value: "", err: false })
   const [amount, setAmount] = useState({ value: "", err: false })
@@ -34,9 +36,14 @@ const expenseInputs = ({ dateData }) => {
     setAmount({ value, err: false })
   }
 
+  const handleShowWarning = e => {
+    e.preventDefault()
+    setWarningVisible(true)
+  }
+
   const handleSetCategory = e => setCategory(e.target.value)
 
-  const handleSubmit = (e, dateData) => {
+  const handleSubmit = async (e, dateData, transact, toggleModal) => {
     e.preventDefault()
     const EXPENSE_URL =
       category === "NECESSARY_EXPENSE"
@@ -47,6 +54,21 @@ const expenseInputs = ({ dateData }) => {
       expense_amount: amount.value,
       ...dateData,
     })
+    postExpense(category, dateData, transact, toggleModal)
+  }
+
+  const postExpense = async (type, dateData, transact, toggleModal) => {
+    const expendResult = await axios.post(endpoints.NECESSARY_EXPENSE_URL, {
+      expense: expense.value,
+      amount: parseInt(amount.value),
+      ...dateData,
+    })
+    if (!expendResult) {
+      // How to handle this so that user may receive notification of post failure?
+      return "It failed..."
+    }
+    await transact(type, expendResult, dateData)
+    toggleModal("")
   }
 
   return (
@@ -62,7 +84,6 @@ const expenseInputs = ({ dateData }) => {
           <option value="UNNECESSARY_EXPENSE">Unnecessary Expense</option>
         </Select>
         <LabelTextSpan>
-          {/* TODO: Text needs to be the option selected from the dropdown */}
           <span>&#9660;</span>
           {category === "NECESSARY_EXPENSE"
             ? "Necessary Expense"
@@ -97,8 +118,9 @@ const expenseInputs = ({ dateData }) => {
         onBlur={e => handleLabelAnimation(e, setAmountFocused, amountFocused)}
       />
       <Button
-        onClick={e => handleSubmit(e, dateData)}
+        onClick={e => handleShowWarning(e)}
         type="submit"
+        className="expense-submit-btn"
         dataTestId="expenseBtn"
         radius={25}
         shadow={true}
@@ -110,6 +132,15 @@ const expenseInputs = ({ dateData }) => {
       >
         Submit
       </Button>
+      {warningVisible && (
+        <TransactionWarning
+          message="This expense may not be deleted after creation"
+          handleSubmit={handleSubmit}
+          dateData={dateData}
+          transact={transact}
+          toggleModal={toggleModal}
+        />
+      )}
     </>
   )
 }

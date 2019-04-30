@@ -1,15 +1,11 @@
 import React, { useState } from "react"
 import axios from "axios"
-import endpoints from "../../../config/api_endpoints"
-import Button from "../button"
+import endpoints from "../../../../config/api_endpoints"
+import Button from "../../button"
+import TransactionWarning from "../transaction-warning"
 import handleLabelAnimation from "./label-anim-helper"
 
-// NOTE:
-// DONT FORGET THAT YOU NEED ACCESS TO THE CURRENT MONTH AND CURRENT
-// YEAR OFF OF THE MAIN DATA STRUCTURE THAT'S RETURNED FROM THE INITIAL
-// GET ACCOUNT REQUEST.
-
-const depositInputs = ({ dateData, deposit, toggleModal }) => {
+const depositInputs = ({ dateData, transact, toggleModal }) => {
   const [warningVisible, setWarningVisible] = useState(false)
   const [incomeSource, setIncomeSource] = useState({ value: "", err: false })
   const [depositAmount, setDepositAmount] = useState({ value: "", err: false })
@@ -34,10 +30,9 @@ const depositInputs = ({ dateData, deposit, toggleModal }) => {
     setDepositAmount({ value, err: false })
   }
 
-  const handleSubmit = async (e, dateData, deposit, toggleModal) => {
+  const handleSubmit = async (e, dateData, transact, toggleModal) => {
     e.preventDefault()
-    // setWarningVisible(false)
-    postDeposit(dateData, deposit, toggleModal)
+    postDeposit(dateData, transact, toggleModal)
   }
 
   const handleShowWarning = e => {
@@ -45,8 +40,7 @@ const depositInputs = ({ dateData, deposit, toggleModal }) => {
     setWarningVisible(true)
   }
 
-  const postDeposit = async (dateData, deposit, toggleModal) => {
-    // console.log("MAKING IT TO POST DEPOSIT")
+  const postDeposit = async (dateData, transact, toggleModal) => {
     const depositResult = await axios.post(endpoints.DEPOSIT_URL, {
       income_source: incomeSource.value,
       deposit_amount: parseInt(depositAmount.value),
@@ -56,8 +50,7 @@ const depositInputs = ({ dateData, deposit, toggleModal }) => {
       // How to handle this so that user may receive notification of post failure?
       return "It failed..."
     }
-    await deposit(depositResult, dateData)
-    console.log("TOGGLING THE MODAL")
+    await transact("DEPOSIT", depositResult, dateData)
     toggleModal("")
   }
 
@@ -115,44 +108,13 @@ const depositInputs = ({ dateData, deposit, toggleModal }) => {
         Submit
       </Button>
       {warningVisible && (
-        <div className="warning-container">
-          <h1>Warning</h1>
-          <p>This deposit may not be deleted after creation</p>
-          <div className="warning-btn-container">
-            <Button
-              onClick={e => handleSubmit(e, dateData, deposit, toggleModal)}
-              className="confirm-warning-btn"
-              type="submit"
-              dataTestId="confirm-warning-btn"
-              radius={25}
-              shadow={true}
-              padding={[2, 2]}
-              minHeight={3}
-              width={3}
-              topColor="#46FF90"
-              bottomColor="#20E131"
-              fontColor="#fff"
-            >
-              O
-            </Button>
-            <Button
-              onClick={e => handleSubmit(e, dateData, deposit, toggleModal)}
-              className="cancel-warning-btn"
-              type="submit"
-              dataTestId="cancel-warning-btn"
-              radius={25}
-              shadow={true}
-              padding={[2, 2]}
-              minHeight={3}
-              width={3}
-              topColor="#FF7878"
-              bottomColor="#FF5E5E"
-              fontColor="#fff"
-            >
-              X
-            </Button>
-          </div>
-        </div>
+        <TransactionWarning
+          message="This deposit may not be deleted after creation"
+          handleSubmit={handleSubmit}
+          dateData={dateData}
+          transact={transact}
+          toggleModal={toggleModal}
+        />
       )}
     </>
   )

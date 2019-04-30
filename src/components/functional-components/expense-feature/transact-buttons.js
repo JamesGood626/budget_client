@@ -2,14 +2,9 @@ import React, { useState } from "react"
 import axios from "axios"
 import styled from "styled-components"
 import TransactModalForm from "./transact-modal-form"
-import Button from "./button"
-import endpoints from "../../config/api_endpoints"
-import {
-  DEPOSIT,
-  NECESSARY_EXPENSE,
-  UNNECESSARY_EXPENSE,
-  TOGGLE_IN_PROGRESS,
-} from "../reducers/budget/budgetReducerActions"
+import Button from "../button"
+// import endpoints from "../../../config/api_endpoints"
+import actions from "../../reducers/budget/budgetReducerActions"
 
 const Container = styled.div`
   display: flex;
@@ -47,7 +42,8 @@ const FadedBackground = styled.div`
 //   dispatch({ type: category, payload: params })
 // }
 
-// if you add the IN_PROGRESS dispatch then you'll need more than just dispatch here.
+// if you add the IN_PROGRESS dispatch then you'll need more than just dispatch here. (To facilitate a loading animation,
+// will more than likely add this)
 const transactButtons = ({
   reducer: {
     dispatch,
@@ -58,15 +54,14 @@ const transactButtons = ({
     toggled: false,
     transactionType: null,
   })
-  console.log("THE DISPATCH: ", dispatch)
-  // similar function for expense.
-  // The only things different would be the post URL and the dispatch type.
-  const deposit = async (result, dateData) => {
+
+  const transact = async (type, result, dateData) => {
     dispatch({
-      type: "DEPOSIT",
+      type,
       payload: { result, ...dateData },
     })
   }
+
   const toggleModal = type => {
     setModalToggled({ toggled: !modalToggled.toggled, transactionType: type })
   }
@@ -108,9 +103,6 @@ const transactButtons = ({
       >
         Expense
       </Button>
-      {/* <button onClick={() => toggleModal("UNNECESSARY_EXPENSE")}>
-        Unnecessary Expense
-      </button> */}
       {modalToggled.toggled && (
         <>
           <TransactModalForm
@@ -120,7 +112,7 @@ const transactButtons = ({
               current_month: data.current_month,
               current_year: data.current_year,
             }}
-            deposit={deposit}
+            transact={transact}
           />
           <FadedBackground />
         </>

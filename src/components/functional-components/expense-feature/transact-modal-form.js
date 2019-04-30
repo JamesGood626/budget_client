@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import styled from "styled-components"
-import DepositInputs from "./expense-deposit-inputs/depositInputs"
-import ExpenseInputs from "./expense-deposit-inputs/expenseInputs"
-import Form from "./block-components/form-styles"
+import DepositInputs from "./expense-deposit-inputs/deposit-inputs"
+import ExpenseInputs from "./expense-deposit-inputs/expense-inputs"
+import Form from "../block-components/form-styles"
 
 const Container = styled.div`
   display: flex;
@@ -70,7 +70,7 @@ class TransactModalForm extends Component {
   }
 
   render() {
-    const { transactionType, toggleModal, dateData, deposit } = this.props
+    const { transactionType, toggleModal, dateData, transact } = this.props
     return (
       <Container onClick={e => this.handleCloseClick(e, toggleModal)}>
         <Form id="form">
@@ -78,12 +78,16 @@ class TransactModalForm extends Component {
           {transactionType === "DEPOSIT" && (
             <DepositInputs
               dateData={dateData}
-              deposit={deposit}
+              transact={transact}
               toggleModal={toggleModal}
             />
           )}
           {transactionType === "EXPENSE" && (
-            <ExpenseInputs dateData={dateData} />
+            <ExpenseInputs
+              dateData={dateData}
+              transact={transact}
+              toggleModal={toggleModal}
+            />
           )}
         </Form>
       </Container>

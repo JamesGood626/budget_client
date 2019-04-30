@@ -1,12 +1,16 @@
 import { useReducer } from "react"
-import { LOGIN, LOGOUT } from "./authReducerActions"
+import actions from "./authReducerActions"
+
+console.log("WHAT ARE ACTIONS: ", actions)
 
 function reducer(state, action) {
   switch (action.type) {
-    case LOGIN:
+    case "LOGIN":
       return { ...state, authenticated: true }
-    case LOGOUT:
+    case actions.LOGOUT:
       return { ...state, authenticated: false }
+    default:
+      return state
   }
 }
 
@@ -16,9 +20,9 @@ const initialState = {
 
 const useAuthReducer = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
-  const login = () => dispatch({ type: LOGIN })
+  const login = () => dispatch({ type: actions.LOGIN })
   const logout = redirectToLoginPage => {
-    dispatch({ type: LOGOUT })
+    dispatch({ type: actions.LOGOUT })
     redirectToLoginPage()
   }
 
