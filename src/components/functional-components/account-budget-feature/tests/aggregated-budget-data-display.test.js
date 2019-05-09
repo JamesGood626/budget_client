@@ -7,11 +7,16 @@ import {
   waitForElement,
   debugDOM,
 } from "react-testing-library"
+
+// Hmm.. not all jest tests fail w/ the current array assigned to modulePaths in jest.config.js
+// But this one does:
+// "components/functional-components/aggregated-budget-feature/aggregated-budget-data-display"
+// Had to change below to be relative path in order to pass test.
 import AggregatedBudgetDataDisplay from "../aggregated-budget-data-display"
 // import { BUDGET_API } from "../../../config"
-import endpoints from "../../../config/api_endpoints"
-import { initialStateWithTransactions } from "../../../test_fixture_data"
-import { changeInputValueAndLoop } from "../../../test_helpers"
+import endpoints from "config/api_endpoints"
+import { initialStateWithTransactions } from "test_fixture_data"
+import { changeInputValueAndLoop } from "test_helpers"
 
 // this adds custom jest matchers from jest-dom
 import "jest-dom/extend-expect"

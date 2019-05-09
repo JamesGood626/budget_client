@@ -1,9 +1,9 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import AuthReducerProvider from "../components/reducers/auth/authReducerProvider"
-import useAuthReducer from "../components/reducers/auth/AuthReducer"
-import Navbar from "./functional-components/foundational-components/navbar"
+import AuthReducerProvider from "components/reducers/auth/authReducerProvider"
+import useAuthReducer from "components/reducers/auth/AuthReducer"
+import Navbar from "components/functional-components/foundational-components/navbar"
 import "./layout.css"
 
 const Layout = ({ children }) => {

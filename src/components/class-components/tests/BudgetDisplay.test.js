@@ -7,10 +7,10 @@ import {
   waitForElement,
   debugDOM,
 } from "react-testing-library"
-import BudgetReducerProvider from "../../reducers/budget/BudgetReducerProvider"
-import useBudgetReducer from "../../reducers/budget/BudgetReducer"
-import BudgetDisplay from "../BudgetDisplay"
-import { initialStateWithoutTransactions } from "../../../test_fixture_data"
+import BudgetReducerProvider from "components/reducers/budget/BudgetReducerProvider"
+import useBudgetReducer from "components/reducers/budget/BudgetReducer"
+import BudgetDisplay from "components/class-components/BudgetDisplay"
+import { initialStateWithoutTransactions } from "test_fixture_data"
 // import { inputChangeTestCase, inputChange } from "./helpers"
 
 // this adds custom jest matchers from jest-dom

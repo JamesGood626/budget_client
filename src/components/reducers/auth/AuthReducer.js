@@ -1,5 +1,5 @@
 import { useReducer } from "react"
-import actions from "./authReducerActions"
+import actions from "components/reducers/auth/authReducerActions"
 
 console.log("WHAT ARE ACTIONS: ", actions)
 

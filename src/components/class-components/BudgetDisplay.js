@@ -1,14 +1,14 @@
 import React from "react"
 import axios from "axios"
 import styled from "styled-components"
-import BudgetContext from "../reducers/budget/BudgetContext"
-import PrimaryAccountDetails from "../functional-components/account-budget-feature/primary-account-details"
-import TransactButtons from "../functional-components/expense-deposit-feature/transact-buttons"
-import AggregatedBudgetDataDisplay from "../functional-components/account-budget-feature/aggregated-budget-data-display"
-import endpoints from "../../config/api_endpoints"
+import BudgetContext from "components/reducers/budget/BudgetContext"
+import PrimaryAccountDetails from "components/functional-components/account-budget-feature/primary-account-details"
+import TransactButtons from "components/functional-components/expense-deposit-feature/transact-buttons"
+import AggregatedBudgetDataDisplay from "components/functional-components/account-budget-feature/aggregated-budget-data-display"
+import endpoints from "config/api_endpoints"
 
 // only required while styling the application
-import { accountDataWithUpdates } from "../../test_fixture_data/index"
+import { accountDataWithUpdates } from "test_fixture_data"
 
 const Container = styled.div`
   display: flex;
@@ -37,8 +37,8 @@ const budgetDisplay = ({ budgetData, setBudgetData }) => {
   console.log("budget display attempting to render: ", budgetData)
   if (budgetData === null) {
     // this is for dev only:
-    setBudgetData(accountDataWithUpdates)
-    // fetchBudgetData(setBudgetData)
+    // setBudgetData(accountDataWithUpdates)
+    fetchBudgetData(setBudgetData)
   }
   return (
     <Container>

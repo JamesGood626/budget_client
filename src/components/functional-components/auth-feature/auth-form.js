@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import axios from "axios"
-import endpoints from "../../../config/api_endpoints"
 import { navigate } from "gatsby"
-import Button from "../foundational-components/button"
-import Form from "../foundational-components/form-styles"
-import handleLabelAnimation from "../expense-deposit-feature/expense-deposit-inputs/label-anim-helper"
+import endpoints from "config/api_endpoints"
+import Button from "components/functional-components/foundational-components/button"
+import Form from "components/functional-components/foundational-components/form-styles"
+import handleLabelAnimation from "components/functional-components/expense-deposit-feature/expense-deposit-inputs/label-anim-helper"
 
 const authForm = ({ apiEndpoint, btnText, login }) => {
   const [email, setEmail] = useState({ value: "", error: false })

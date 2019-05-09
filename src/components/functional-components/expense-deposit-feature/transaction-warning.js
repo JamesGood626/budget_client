@@ -1,20 +1,14 @@
 import React from "react"
-import Button from "../foundational-components/button"
+import Button from "components/functional-components/foundational-components/button"
 
-const transactionWarning = ({
-  message,
-  handleSubmit,
-  dateData,
-  transact,
-  toggleModal,
-}) => {
+const transactionWarning = ({ message, handleSubmit, toggleModal }) => {
   return (
     <div className="warning-container">
       <h1>Warning</h1>
       <p>{message}</p>
       <div className="warning-btn-container">
         <Button
-          onClick={e => handleSubmit(e, dateData, transact, toggleModal)}
+          onClick={handleSubmit}
           className="confirm-warning-btn"
           type="submit"
           dataTestId="confirm-warning-btn"

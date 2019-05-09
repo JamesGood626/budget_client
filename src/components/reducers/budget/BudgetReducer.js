@@ -1,5 +1,12 @@
 import { useReducer } from "react"
-import actions from "./budgetReducerActions"
+import actions from "components/reducers/budget/budgetReducerActions"
+
+// budget: {
+//   current_budget: null,
+//   budget_set: false,
+//   budget_exceeded: false,
+//   account_balance: 0,
+// },
 
 function reducer(state, action) {
   console.log("The state: ", state)
@@ -7,6 +14,22 @@ function reducer(state, action) {
   switch (action.type) {
     case actions.SET_STATE:
       return { ...state, data: action.payload }
+    case actions.SET_BUDGET:
+      const { budget_amount } = action.payload.data
+      // change current_budget on state.budget
+      const updatedState = {
+        ...state,
+        data: {
+          ...state.data,
+          budget: {
+            ...state.data.budget,
+            current_budget: budget_amount,
+            budget_set: true,
+          },
+        },
+      }
+      console.log("THE UPDATED STATE FROM SET_BUDGET: ", updatedState)
+      return updatedState
     case actions.DEPOSIT:
       return {
         ...state,

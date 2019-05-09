@@ -1,7 +1,7 @@
 import React from "react"
 // import { Action, withStateMachine } from "react-automata"
-import YearsDropdown from "./years-dropdown"
-import MonthsDropdown from "./months-dropdown"
+import YearsDropdown from "components/functional-components/filter-dropdowns/years-dropdown"
+import MonthsDropdown from "components/functional-components/filter-dropdowns/months-dropdown"
 // import statechart from "./year-and-month-statechart"
 
 const monthObj = {

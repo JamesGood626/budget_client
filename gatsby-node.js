@@ -1,3 +1,4 @@
+const path = require("path")
 /**
  * Implement Gatsby's Node APIs in this file.
  *
@@ -19,4 +20,16 @@ exports.onCreatePage = async ({ page, actions }) => {
     // Update the page.
     createPage(page)
   }
+}
+
+exports.onCreateWebpackConfig = ({ stage, actions }) => {
+  console.log("the path.resole: ", path.resolve(__dirname, "src"))
+  actions.setWebpackConfig({
+    resolve: {
+      modules: [path.resolve(__dirname, "src"), "node_modules"],
+      alias: {
+        components: path.resolve(__dirname, "src", "components"),
+      },
+    },
+  })
 }

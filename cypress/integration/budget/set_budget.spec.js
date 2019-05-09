@@ -11,6 +11,11 @@ describe("Budget page set budget feature", () => {
     })
     cy.contains("Total Balance:")
     cy.get(".set-budget-btn").click()
+    cy.get("#set-budget-input")
+      .focus()
+      .type("200000")
+    cy.get(".set-budget-submit-btn").click()
+    cy.get(".confirm-warning-btn").click()
 
     //   cy.get("#expense")
     //     .focus()

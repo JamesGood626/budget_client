@@ -1,5 +1,9 @@
 import React from "react"
-import { Select, Label, LabelTextSpan } from "./dropdown-styles"
+import {
+  Select,
+  Label,
+  LabelTextSpan,
+} from "components/functional-components/filter-dropdowns/dropdown-styles"
 
 export default function yearsDropdown({ yearsAvailable, selectYearOption }) {
   return (

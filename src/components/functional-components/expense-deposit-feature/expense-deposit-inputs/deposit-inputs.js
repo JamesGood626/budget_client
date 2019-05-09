@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import axios from "axios"
-import endpoints from "../../../../config/api_endpoints"
-import Button from "../../foundational-components/button"
-import TransactionWarning from "../transaction-warning"
-import handleLabelAnimation from "./label-anim-helper"
+import endpoints from "config/api_endpoints"
+import Button from "components/functional-components/foundational-components/button"
+import TransactionWarning from "components/functional-components/expense-deposit-feature/transaction-warning"
+import handleLabelAnimation from "components/functional-components/expense-deposit-feature/expense-deposit-inputs/label-anim-helper"
 
 const depositInputs = ({ dateData, transact, toggleModal }) => {
   const [warningVisible, setWarningVisible] = useState(false)
@@ -40,6 +40,7 @@ const depositInputs = ({ dateData, transact, toggleModal }) => {
     setWarningVisible(true)
   }
 
+  // This can be made more generic...
   const postDeposit = async (dateData, transact, toggleModal) => {
     const depositResult = await axios.post(endpoints.DEPOSIT_URL, {
       income_source: incomeSource.value,
@@ -110,9 +111,7 @@ const depositInputs = ({ dateData, transact, toggleModal }) => {
       {warningVisible && (
         <TransactionWarning
           message="This deposit may not be deleted after creation"
-          handleSubmit={handleSubmit}
-          dateData={dateData}
-          transact={transact}
+          handleSubmit={e => handleSubmit(e, dateData, transact, toggleModal)}
           toggleModal={toggleModal}
         />
       )}

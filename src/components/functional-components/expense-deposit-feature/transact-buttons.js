@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 // import axios from "axios"
 import styled from "styled-components"
-import Modal from "./modal"
-import TransactForm from "./transact-form"
-import Button from "../foundational-components/button"
+import Modal from "components/functional-components/expense-deposit-feature/modal"
+import TransactForm from "components/functional-components/expense-deposit-feature/transact-form"
+import Button from "components/functional-components/foundational-components/button"
 // import actions from "../../reducers/budget/budgetReducerActions"
 
 const Container = styled.div`

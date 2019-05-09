@@ -2,11 +2,11 @@ import React from "react"
 import axios from "axios"
 import { ThemeProvider } from "styled-components"
 import { Router } from "@reach/router"
-import Layout from "../components/layout"
-import PrivateRoute from "../components/functional-components/auth-feature/privateRoute"
-import BudgetCoordinator from "../components/class-components/BudgetCoordinator"
-import Login from "../components/functional-components/auth-feature/login"
-import Signup from "../components/functional-components/auth-feature/signup"
+import Layout from "components/layout"
+import PrivateRoute from "components/functional-components/auth-feature/privateRoute"
+import BudgetCoordinator from "components/class-components/BudgetCoordinator"
+import Login from "components/functional-components/auth-feature/login"
+import Signup from "components/functional-components/auth-feature/signup"
 
 axios.defaults.withCredentials = true
 

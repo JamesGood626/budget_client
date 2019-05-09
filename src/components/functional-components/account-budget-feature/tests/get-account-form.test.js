@@ -8,9 +8,9 @@ import {
   debugDOM,
 } from "react-testing-library"
 // import GetAccountForm from "../get-account-form"
-import endpoints from "../../../../config/api_endpoints"
+import endpoints from "config/api_endpoints"
 // import { getAccountInput } from "../../../test_fixture_data"
-import { changeInputValueAndLoop } from "../../../../test_helpers"
+import { changeInputValueAndLoop } from "test_helpers"
 
 // this adds custom jest matchers from jest-dom
 import "jest-dom/extend-expect"

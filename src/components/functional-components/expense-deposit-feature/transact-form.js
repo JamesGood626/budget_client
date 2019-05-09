@@ -1,7 +1,7 @@
 import React from "react"
-import DepositInputs from "./expense-deposit-inputs/deposit-inputs"
-import ExpenseInputs from "./expense-deposit-inputs/expense-inputs"
-import Form from "../foundational-components/form-styles"
+import DepositInputs from "components/functional-components/expense-deposit-feature/expense-deposit-inputs/deposit-inputs"
+import ExpenseInputs from "components/functional-components/expense-deposit-feature/expense-deposit-inputs/expense-inputs"
+import Form from "components/functional-components/foundational-components/form-styles"
 
 const transactForm = ({ transactionType, toggleModal, dateData, transact }) => {
   return (

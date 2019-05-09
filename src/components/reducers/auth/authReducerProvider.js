@@ -1,5 +1,5 @@
 import React from "react"
-import AuthContext from "./AuthContext"
+import AuthContext from "components/reducers/auth/AuthContext"
 
 const AuthReducerProvider = ({ children, reducer }) => {
   return (

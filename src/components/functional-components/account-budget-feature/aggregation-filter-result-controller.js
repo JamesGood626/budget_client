@@ -1,6 +1,6 @@
 import React from "react"
-import AggregatedBudgetExpenseTotal from "./aggregated-budget-expense-total"
-import AccountActivityTable from "./account-activity-table"
+import AggregatedBudgetExpenseTotal from "components/functional-components/account-budget-feature/aggregated-budget-expense-total"
+import AccountActivityTable from "components/functional-components/account-budget-feature/account-activity-table"
 
 // TODO: <- not done yet
 // Move the aggregateBudgetData and related functions into a utils folder and

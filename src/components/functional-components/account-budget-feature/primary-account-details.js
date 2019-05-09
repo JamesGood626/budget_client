@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import Modal from "../expense-deposit-feature/modal"
-import SetBudgetForm from "./set-budget-form"
-import actions from "../../reducers/budget/budgetReducerActions"
+import Modal from "components/functional-components/expense-deposit-feature/modal"
+import SetBudgetForm from "components/functional-components/account-budget-feature/set-budget-form"
+import actions from "components/reducers/budget/budgetReducerActions"
 
 const Container = styled.div`
   display: flex;

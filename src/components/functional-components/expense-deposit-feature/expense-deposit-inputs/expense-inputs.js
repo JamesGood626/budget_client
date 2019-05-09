@@ -1,14 +1,14 @@
 import React, { useState } from "react"
 import axios from "axios"
-import endpoints from "../../../../config/api_endpoints"
-import Button from "../../foundational-components/button"
-import TransactionWarning from "../transaction-warning"
-import handleLabelAnimation from "./label-anim-helper"
+import endpoints from "config/api_endpoints"
+import Button from "components/functional-components/foundational-components/button"
+import TransactionWarning from "components/functional-components/expense-deposit-feature/transaction-warning"
+import handleLabelAnimation from "components/functional-components/expense-deposit-feature/expense-deposit-inputs/label-anim-helper"
 import {
   Select,
   Label,
   LabelTextSpan,
-} from "../../filter-dropdowns/dropdown-styles"
+} from "components/functional-components/filter-dropdowns/dropdown-styles"
 
 const expenseInputs = ({ dateData, transact, toggleModal }) => {
   const [warningVisible, setWarningVisible] = useState(false)
@@ -136,9 +136,7 @@ const expenseInputs = ({ dateData, transact, toggleModal }) => {
       {warningVisible && (
         <TransactionWarning
           message="This expense may not be deleted after creation"
-          handleSubmit={handleSubmit}
-          dateData={dateData}
-          transact={transact}
+          handleSubmit={e => handleSubmit(e, dateData, transact, toggleModal)}
           toggleModal={toggleModal}
         />
       )}

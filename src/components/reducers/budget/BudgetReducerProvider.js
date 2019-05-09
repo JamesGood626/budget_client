@@ -1,5 +1,5 @@
 import React from "react"
-import BudgetContext from "./BudgetContext"
+import BudgetContext from "components/reducers/budget/BudgetContext"
 
 const BudgetReducerProvider = ({ children, reducer: { state, dispatch } }) => {
   return (

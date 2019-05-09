@@ -7,9 +7,9 @@ import {
   waitForElement,
   debugDOM,
 } from "react-testing-library"
-import BudgetCoordinator from "../BudgetCoordinator"
-import { initialGetAccountData } from "../../../test_fixture_data"
-import { changeInputValueAndLoop } from "../../../test_helpers"
+import BudgetCoordinator from "components/class-components/BudgetCoordinator"
+import { initialGetAccountData } from "test_fixture_data"
+import { changeInputValueAndLoop } from "test_helpers"
 
 // this adds custom jest matchers from jest-dom
 import "jest-dom/extend-expect"

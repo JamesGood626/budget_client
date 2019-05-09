@@ -1,8 +1,8 @@
 import React from "react"
 import styled from "styled-components"
-import useBudgetReducer from "../reducers/budget/BudgetReducer"
-import BudgetReducerProvider from "../reducers/budget/BudgetReducerProvider"
-import BudgetDisplay from "./BudgetDisplay"
+import useBudgetReducer from "components/reducers/budget/BudgetReducer"
+import BudgetReducerProvider from "components/reducers/budget/BudgetReducerProvider"
+import BudgetDisplay from "components/class-components/BudgetDisplay"
 
 const Container = styled.div`
   display: flex;
