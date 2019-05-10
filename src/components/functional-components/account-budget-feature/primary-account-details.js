@@ -3,6 +3,7 @@ import styled from "styled-components"
 import Modal from "components/functional-components/expense-deposit-feature/modal"
 import SetBudgetForm from "components/functional-components/account-budget-feature/set-budget-form"
 import actions from "components/reducers/budget/budgetReducerActions"
+import formatCurrency from "utils/currency"
 
 const Container = styled.div`
   display: flex;
@@ -174,7 +175,7 @@ const primaryAccountDetails = ({
       <div id="first-block" className="account-detail-block">
         <h3>Total Balance:</h3>
         <p className={accountBalanceTextColor} data-testid="account-balance">
-          ${account_balance}
+          {formatCurrency(account_balance)}
         </p>
       </div>
       <div id="second-block" className="account-detail-block">
@@ -190,7 +191,7 @@ const primaryAccountDetails = ({
               </button>
             </>
           ) : (
-            `$${current_budget}`
+            `${formatCurrency(current_budget)}`
           )}
         </span>
       </div>

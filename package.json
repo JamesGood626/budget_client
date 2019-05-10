@@ -6,6 +6,7 @@
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
     "axios": "^0.18.0",
+    "dinero.js": "^1.6.0",
     "gatsby": "^2.3.29",
     "gatsby-image": "^2.0.31",
     "gatsby-plugin-manifest": "^2.0.22",

@@ -1,13 +1,6 @@
 import { useReducer } from "react"
 import actions from "components/reducers/budget/budgetReducerActions"
 
-// budget: {
-//   current_budget: null,
-//   budget_set: false,
-//   budget_exceeded: false,
-//   account_balance: 0,
-// },
-
 function reducer(state, action) {
   console.log("The state: ", state)
   console.log("The action: ", action)
@@ -16,20 +9,7 @@ function reducer(state, action) {
       return { ...state, data: action.payload }
     case actions.SET_BUDGET:
       const { budget_amount } = action.payload.data
-      // change current_budget on state.budget
-      const updatedState = {
-        ...state,
-        data: {
-          ...state.data,
-          budget: {
-            ...state.data.budget,
-            current_budget: budget_amount,
-            budget_set: true,
-          },
-        },
-      }
-      console.log("THE UPDATED STATE FROM SET_BUDGET: ", updatedState)
-      return updatedState
+      return setBudgetUpdateState(state, budget_amount)
     case actions.DEPOSIT:
       return {
         ...state,
@@ -84,6 +64,18 @@ const useBudgetReducer = () => {
   }
 }
 
+const setBudgetUpdateState = (state, budget_amount) => ({
+  ...state,
+  data: {
+    ...state.data,
+    budget: {
+      ...state.data.budget,
+      current_budget: budget_amount,
+      budget_set: true,
+    },
+  },
+})
+
 const updateNestedData = (
   data,
   { result: { data: resultData }, current_month, current_year },
@@ -100,6 +92,7 @@ const updateNestedData = (
     amount: resultData.amount,
     date: resultData.date,
   }
+
   return {
     ...data,
     budget: {

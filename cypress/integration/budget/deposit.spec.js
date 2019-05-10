@@ -22,6 +22,6 @@ describe("Budget page deposit features", () => {
       .type("4000")
     cy.get(".deposit-submit-btn").click()
     cy.get(".confirm-warning-btn").click()
-    cy.get(".deposit").should("have.text", "$4000")
+    cy.get(".deposit").should("have.text", "$40.00")
   })
 })

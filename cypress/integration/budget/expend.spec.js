@@ -23,7 +23,7 @@ describe("Budget page expend features", () => {
     cy.get(".expense-submit-btn").click()
     cy.contains("Warning")
     cy.get(".confirm-warning-btn").click()
-    cy.get(".expense").should("have.text", "$9000")
+    cy.get(".expense").should("have.text", "$90.00")
   })
 
   it("creates an unecessary expense", () => {
@@ -31,7 +31,7 @@ describe("Budget page expend features", () => {
       category: "UNNECESSARY_EXPENSE",
       type: "Coffee",
       amount: 4000,
-      account_balance: -5000,
+      account_balance: -4000,
       date: "TBD",
     })
     cy.contains("Total Balance:")
@@ -46,6 +46,6 @@ describe("Budget page expend features", () => {
     cy.get(".expense-submit-btn").click()
     cy.contains("Warning")
     cy.get(".confirm-warning-btn").click()
-    cy.get(".expense").should("have.text", "$4000")
+    cy.get(".expense").should("have.text", "$40.00")
   })
 })
