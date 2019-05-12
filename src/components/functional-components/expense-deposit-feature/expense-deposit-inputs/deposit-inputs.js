@@ -4,6 +4,7 @@ import endpoints from "config/api_endpoints"
 import Button from "components/functional-components/foundational-components/button"
 import TransactionWarning from "components/functional-components/expense-deposit-feature/transaction-warning"
 import handleLabelAnimation from "components/functional-components/expense-deposit-feature/expense-deposit-inputs/label-anim-helper"
+import utils from "utils/currency"
 
 const depositInputs = ({ dateData, transact, toggleModal }) => {
   const [warningVisible, setWarningVisible] = useState(false)
@@ -13,21 +14,28 @@ const depositInputs = ({ dateData, transact, toggleModal }) => {
   const [depositAmountFocused, setDepositAmountFocused] = useState(false)
 
   const changeIncomeSource = e => {
+    let err = false
     const value = e.target.value
     const valueIsNumber = !isNaN(value)
     if (valueIsNumber) {
-      setIncomeSource({ err: true })
+      err = true
     }
-    setIncomeSource({ value, err: false })
+    setIncomeSource({ value, err })
   }
 
   const changeDepositAmount = e => {
+    let err = false
     const value = e.target.value
+    // TODO: really want to test for if any a-z characters are used.
     const valueIsString = isNaN(value)
     if (valueIsString) {
-      setDepositAmount({ err: true })
+      err = true
     }
-    setDepositAmount({ value, err: false })
+    const newValue = utils.convertStringToCurrency(value)
+    setDepositAmount({
+      value: newValue,
+      err: err,
+    })
   }
 
   const handleSubmit = async (e, dateData, transact, toggleModal) => {
@@ -44,7 +52,7 @@ const depositInputs = ({ dateData, transact, toggleModal }) => {
   const postDeposit = async (dateData, transact, toggleModal) => {
     const depositResult = await axios.post(endpoints.DEPOSIT_URL, {
       income_source: incomeSource.value,
-      deposit_amount: parseInt(depositAmount.value),
+      deposit_amount: utils.convertCurrencyToInt(depositAmount.value),
       ...dateData,
     })
     if (!depositResult) {

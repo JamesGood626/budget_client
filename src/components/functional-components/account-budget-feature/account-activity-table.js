@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import formatCurrency from "utils/currency"
+import utils from "utils/currency"
 
 const Container = styled.div`
   height: 22rem;
@@ -102,7 +102,7 @@ const renderTableRows = data => {
           category === "DEPOSIT" ? "deposit green-text" : "expense red-text"
         }
       >
-        {formatCurrency(amount)}
+        {utils.formatCurrency(amount)}
       </td>
       <td>{date}</td>
     </tr>

@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import formatCurrency from "utils/currency"
+import utils from "utils/currency"
 
 const Section = styled.section`
   display: flex;
@@ -97,14 +97,14 @@ const aggregatedBudgetExpenseTotal = ({
     <Section>
       <div id="first-block" data-testid="budget-total">
         <h3>Aggregated Budget:</h3>
-        <p className="grey-text">{formatCurrency(budgetTotal)}</p>
+        <p className="grey-text">{utils.formatCurrency(budgetTotal)}</p>
       </div>
       <div data-testid="unnecessary-expense-total">
         <h3>Unnecessary Expense Total:</h3>
         <p
           className={unnecessaryExpensesTotal === 0 ? "grey-text" : "red-text"}
         >
-          {formatCurrency(unnecessaryExpensesTotal)}
+          {utils.formatCurrency(unnecessaryExpensesTotal)}
         </p>
       </div>
     </Section>

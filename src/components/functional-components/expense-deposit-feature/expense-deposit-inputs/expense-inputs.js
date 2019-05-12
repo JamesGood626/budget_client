@@ -9,6 +9,7 @@ import {
   Label,
   LabelTextSpan,
 } from "components/functional-components/filter-dropdowns/dropdown-styles"
+import utils from "utils/currency"
 
 const expenseInputs = ({ dateData, transact, toggleModal }) => {
   const [warningVisible, setWarningVisible] = useState(false)
@@ -30,10 +31,12 @@ const expenseInputs = ({ dateData, transact, toggleModal }) => {
   const changeAmount = e => {
     const value = e.target.value
     const valueIsString = isNaN(value)
+    // TODO: really want to test for if any a-z characters are used.
     if (valueIsString) {
       setAmount({ err: true })
     }
-    setAmount({ value, err: false })
+    const newValue = utils.convertStringToCurrency(value)
+    setAmount({ value: newValue, err: false })
   }
 
   const handleShowWarning = e => {
@@ -61,7 +64,7 @@ const expenseInputs = ({ dateData, transact, toggleModal }) => {
   ) => {
     const expendResult = await axios.post(expense_url, {
       expense: expense.value,
-      amount: parseInt(amount.value),
+      amount: utils.convertCurrencyToInt(amount.value),
       ...dateData,
     })
     if (!expendResult) {

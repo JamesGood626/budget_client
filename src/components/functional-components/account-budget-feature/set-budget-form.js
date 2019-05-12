@@ -4,6 +4,7 @@ import Form from "components/functional-components/foundational-components/form-
 import Button from "components/functional-components/foundational-components/button"
 import TransactionWarning from "components/functional-components/expense-deposit-feature/transaction-warning"
 import endpoints from "config/api_endpoints"
+import utils from "utils/currency"
 
 const setBudgetForm = ({ toggleModal, setBudget, dateData }) => {
   const [warningVisible, setWarningVisible] = useState(false)
@@ -15,7 +16,8 @@ const setBudgetForm = ({ toggleModal, setBudget, dateData }) => {
     if (valueIsNumber) {
       setBudgetAmount({ err: true })
     }
-    setBudgetAmount({ value, err: false })
+    const newValue = utils.convertStringToCurrency(value)
+    setBudgetAmount({ value: newValue, err: false })
   }
 
   const handleShowWarning = e => {
@@ -27,7 +29,7 @@ const setBudgetForm = ({ toggleModal, setBudget, dateData }) => {
   // that's located inside of deposit-inputs.js and expense-inputs.js
   const postSetBudget = async (dateData, setBudget, toggleModal) => {
     const setBudgetResult = await axios.post(endpoints.SET_BUDGET_URL, {
-      budget_amount: budgetAmount.value,
+      budget_amount: utils.convertCurrencyToInt(budgetAmount.value),
       ...dateData,
     })
     if (!setBudgetResult) {
