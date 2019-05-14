@@ -14,14 +14,13 @@ describe("Budget page expend features", () => {
     })
     cy.contains("Total Balance:")
     cy.get(".expense-btn").click()
-    cy.get("#expense")
-      .focus()
-      .type("Rent")
-    cy.get("#amount")
-      .focus()
-      .type("9000")
+    cy.getInputAndEnter("#expense", "Rent")
+    cy.getInputAndEnter("#amount", "9000")
+
+    // POST form data
     cy.get(".expense-submit-btn").click()
     cy.contains("Warning")
+    // confirm POST submit
     cy.get(".confirm-warning-btn").click()
     cy.get(".expense").should("have.text", "$90.00")
   })
@@ -37,14 +36,13 @@ describe("Budget page expend features", () => {
     cy.contains("Total Balance:")
     cy.get(".expense-btn").click()
     cy.get("#expense-type-select").select("Unnecessary Expense")
-    cy.get("#expense")
-      .focus()
-      .type("Coffee")
-    cy.get("#amount")
-      .focus()
-      .type("4000")
+    cy.getInputAndEnter("#expense", "Coffee")
+    cy.getInputAndEnter("#amount", "4000")
+
+    // POST form data
     cy.get(".expense-submit-btn").click()
     cy.contains("Warning")
+    // confirm POST submit
     cy.get(".confirm-warning-btn").click()
     cy.get(".expense").should("have.text", "$40.00")
   })

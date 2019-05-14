@@ -5,15 +5,15 @@
 //     newInputValue: String/Number,
 // }
 const changeInputValueAndLoop = (getByLabelText, fireEvent, inputsList) => {
-  inputsList.map(({ labelText, newInputValue }) => {
+  inputsList.map(({ labelText, valueInput, finalValue }) => {
     let input = getByLabelText(labelText)
     // Before user input is received
     expect(input.value).toBe("")
     fireEvent.change(input, {
-      target: { value: newInputValue },
+      target: { value: valueInput },
     })
     // Ensure user input is reflected in UI.
-    expect(input.value).toBe(newInputValue)
+    expect(input.value).toBe(finalValue)
   })
 }
 

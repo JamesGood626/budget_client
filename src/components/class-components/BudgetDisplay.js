@@ -1,11 +1,9 @@
 import React from "react"
-import axios from "axios"
 import styled from "styled-components"
 import BudgetContext from "components/reducers/budget/BudgetContext"
 import PrimaryAccountDetails from "components/functional-components/account-budget-feature/primary-account-details"
 import TransactButtons from "components/functional-components/expense-deposit-feature/transact-buttons"
 import AggregatedBudgetDataDisplay from "components/functional-components/account-budget-feature/aggregated-budget-data-display"
-import endpoints from "config/api_endpoints"
 
 // only required while styling the application
 import { accountDataWithUpdates } from "test_fixture_data"
@@ -28,57 +26,37 @@ const Container = styled.div`
 
 // TODO:
 // figure out a different way to handle the axios mocks. Unless that console
-// error has no teeth, then leave it be.
+// warning has no teeth, then leave it be.
 
 // Can create a context, wrap the children in said context, and then use a reducer
 // to carry out actions which will interact with the API.
 
-const budgetDisplay = ({ budgetData, setBudgetData }) => {
-  console.log("budget display attempting to render: ", budgetData)
-  if (budgetData === null) {
-    // this is for dev only:
-    // setBudgetData(accountDataWithUpdates)
-    fetchBudgetData(setBudgetData)
-  }
+const budgetDisplay = ({ budgetData }) => {
   return (
     <Container>
-      {console.log("THE BUDGET DATA FOR PRIMARY ACC DETAILS: ", budgetData)}
-      {budgetData && (
-        <BudgetContext.Consumer>
-          {value => {
-            console.log("WHAT IS THE VALUE?!!>!: ", value)
-            return (
-              <>
-                <PrimaryAccountDetails
-                  reducer={value}
-                  budget={
-                    budgetData !== null && budgetData.budget
-                      ? budgetData.budget
-                      : null
-                  }
-                />
-                <div id="buttons-and-table-container">
-                  <TransactButtons reducer={value} />
-                  {/*
+      <BudgetContext.Consumer>
+        {value => {
+          return (
+            <>
+              <PrimaryAccountDetails
+                reducer={value}
+                budget={budgetData.budget}
+              />
+              <div id="buttons-and-table-container">
+                <TransactButtons reducer={value} />
+                {/*
                   AggregatedBudgetDataDisplay contains the dropdowns for filtering
                   expense_types, years, and months.
                   And the resulting display/table to present the data
                 */}
-                  <AggregatedBudgetDataDisplay reducer={value} />
-                </div>
-              </>
-            )
-          }}
-        </BudgetContext.Consumer>
-      )}
+                <AggregatedBudgetDataDisplay reducer={value} />
+              </div>
+            </>
+          )
+        }}
+      </BudgetContext.Consumer>
     </Container>
   )
-}
-
-const fetchBudgetData = async setBudgetData => {
-  const result = await axios.get(endpoints.GET_ACCOUNT_URL)
-  console.log("fetchBudgetData result: ", result.data)
-  setBudgetData(result.data)
 }
 
 export default budgetDisplay

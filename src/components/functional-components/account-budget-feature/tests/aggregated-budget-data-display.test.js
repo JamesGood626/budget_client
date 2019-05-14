@@ -36,10 +36,10 @@ test("AggregatedBudgetDataDisplay renders with budget data.", async done => {
   // debug()
 
   expect(getByTestId("budget-total")).toHaveTextContent(
-    "Aggregated Budget:$280000"
+    "Aggregated Budget:$2,800.00"
   )
   expect(getByTestId("unnecessary-expense-total")).toHaveTextContent(
-    "Unnecessary Expense Total:$21000"
+    "Unnecessary Expense Total:$210.00"
   )
   done()
 })

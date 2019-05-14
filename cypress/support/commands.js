@@ -24,3 +24,9 @@ Cypress.Commands.add(
     cy.contains("Log In!").click()
   }
 )
+
+Cypress.Commands.add("getInputAndEnter", (id, input) => {
+  cy.get(id)
+    .focus()
+    .type(input)
+})

@@ -14,13 +14,12 @@ describe("Budget page deposit features", () => {
     })
     cy.contains("Total Balance:")
     cy.get(".deposit-btn").click()
-    cy.get("#income-source")
-      .focus()
-      .type("Check")
-    cy.get("#deposit-amount")
-      .focus()
-      .type("4000")
+    cy.getInputAndEnter("#income-source", "Check")
+    cy.getInputAndEnter("#deposit-amount", "4000")
+
+    // POST form data
     cy.get(".deposit-submit-btn").click()
+    // confirm POST submit
     cy.get(".confirm-warning-btn").click()
     cy.get(".deposit").should("have.text", "$40.00")
   })

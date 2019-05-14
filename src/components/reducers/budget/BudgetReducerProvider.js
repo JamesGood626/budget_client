@@ -4,7 +4,7 @@ import BudgetContext from "components/reducers/budget/BudgetContext"
 const BudgetReducerProvider = ({ children, reducer: { state, dispatch } }) => {
   return (
     <BudgetContext.Provider value={{ state, dispatch }}>
-      {children(state)}
+      {children}
     </BudgetContext.Provider>
   )
 }

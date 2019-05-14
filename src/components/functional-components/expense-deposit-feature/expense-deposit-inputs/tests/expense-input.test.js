@@ -27,11 +27,13 @@ const dateData = {
 const necessaryExpenseInput = [
   {
     labelText: "Expense",
-    newInputValue: "Groceries",
+    valueInput: "Groceries",
+    finalValue: "Groceries",
   },
   {
     labelText: "Amount",
-    newInputValue: "30000",
+    valueInput: "30000",
+    finalValue: "$300.00",
   },
 ]
 
@@ -44,11 +46,11 @@ const necessaryExpenseParams = {
 const unnecessaryExpenseInput = [
   {
     labelText: "Expense",
-    newInputValue: "Coffee",
+    finalValue: "Coffee",
   },
   {
     labelText: "Amount",
-    newInputValue: "4000",
+    finalValue: "$40.00",
   },
 ]
 

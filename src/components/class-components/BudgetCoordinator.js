@@ -1,8 +1,10 @@
 import React from "react"
+import axios from "axios"
 import styled from "styled-components"
 import useBudgetReducer from "components/reducers/budget/BudgetReducer"
 import BudgetReducerProvider from "components/reducers/budget/BudgetReducerProvider"
 import BudgetDisplay from "components/class-components/BudgetDisplay"
+import endpoints from "config/api_endpoints"
 
 const Container = styled.div`
   display: flex;
@@ -26,22 +28,27 @@ const Container = styled.div`
 // The only thing I can think of that might be able to circumvent this
 // is to pass in useReducer(reducer, initalState) to the reducer prop of the
 // children components <- and even this seems unlikely to work.
+
+const fetchBudgetData = async setBudgetData => {
+  const result = await axios.get(endpoints.GET_ACCOUNT_URL)
+  console.log("fetchBudgetData result: ", result.data)
+  setBudgetData(result.data)
+}
+
 const BudgetCoordinator = () => {
-  // const [state, dispatch] = useReducer(reducer, null)
-  // const setBudgetData = data => dispatch({ type: SET_STATE, payload: data })
   const { state, dispatch, setBudgetData } = useBudgetReducer()
+  const { data: budgetData } = state
+  if (budgetData === null) {
+    // this is for dev only:
+    // setBudgetData(accountDataWithUpdates)
+    fetchBudgetData(setBudgetData)
+  }
+
+  const budgetDataIsAvailable = budgetData !== null && budgetData.budget
   return (
     <Container>
       <BudgetReducerProvider reducer={{ state, dispatch }}>
-        {state => (
-          <>
-            {console.log("THE STATE INSIDE COORDINATORS' RENDER PROP: ", state)}
-            <BudgetDisplay
-              budgetData={state.data}
-              setBudgetData={setBudgetData}
-            />
-          </>
-        )}
+        {budgetDataIsAvailable && <BudgetDisplay budgetData={budgetData} />}
       </BudgetReducerProvider>
     </Container>
   )
