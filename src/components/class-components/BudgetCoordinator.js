@@ -6,6 +6,9 @@ import BudgetReducerProvider from "components/reducers/budget/BudgetReducerProvi
 import BudgetDisplay from "components/class-components/BudgetDisplay"
 import endpoints from "config/api_endpoints"
 
+// only required while styling the application
+import { accountDataWithUpdates } from "test_fixture_data"
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -35,7 +38,9 @@ const fetchBudgetData = async setBudgetData => {
   setBudgetData(result.data)
 }
 
+// ALso fetchBudgetData as props to facilitate testing as well?
 const BudgetCoordinator = () => {
+  // Dependency injection these useBudgetReducer values to facilitate unit testing this component?
   const { state, dispatch, setBudgetData } = useBudgetReducer()
   const { data: budgetData } = state
   if (budgetData === null) {

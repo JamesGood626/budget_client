@@ -5,9 +5,6 @@ import PrimaryAccountDetails from "components/functional-components/account-budg
 import TransactButtons from "components/functional-components/expense-deposit-feature/transact-buttons"
 import AggregatedBudgetDataDisplay from "components/functional-components/account-budget-feature/aggregated-budget-data-display"
 
-// only required while styling the application
-import { accountDataWithUpdates } from "test_fixture_data"
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;

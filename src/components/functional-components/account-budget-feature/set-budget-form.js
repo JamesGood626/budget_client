@@ -1,14 +1,31 @@
 import React, { useState } from "react"
 import axios from "axios"
+import styled from "styled-components"
 import Form from "components/functional-components/foundational-components/form-styles"
 import Button from "components/functional-components/foundational-components/button"
 import TransactionWarning from "components/functional-components/expense-deposit-feature/transaction-warning"
 import endpoints from "config/api_endpoints"
 import utils from "utils/currency"
+import ExitSvg from "components/functional-components/foundational-components/ExitSvg"
+import handleLabelAnimation from "components/functional-components/expense-deposit-feature/expense-deposit-inputs/label-anim-helper"
+
+const Div = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+
+  svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+`
 
 const setBudgetForm = ({ toggleModal, setBudget, dateData }) => {
   const [warningVisible, setWarningVisible] = useState(false)
   const [budgetAmount, setBudgetAmount] = useState({ value: "", err: false })
+  const [budgetAmountFocused, setBudgetAmountFocused] = useState(false)
 
   const changeBudgetAmount = e => {
     const value = e.target.value
@@ -48,13 +65,26 @@ const setBudgetForm = ({ toggleModal, setBudget, dateData }) => {
   return (
     <>
       <Form id="form">
-        <h1>Damn</h1>
-        <div onClick={() => toggleModal("")}>X</div>
+        <Div onClick={() => toggleModal("")}>
+          <ExitSvg />
+        </Div>
+        <label
+          htmlFor="income-source"
+          className={budgetAmountFocused ? "input-active" : null}
+        >
+          Budget Amount
+        </label>
         <input
           id="set-budget-input"
           type="text"
           value={budgetAmount.value}
           onChange={changeBudgetAmount}
+          onFocus={e =>
+            handleLabelAnimation(e, setBudgetAmountFocused, budgetAmountFocused)
+          }
+          onBlur={e =>
+            handleLabelAnimation(e, setBudgetAmountFocused, budgetAmountFocused)
+          }
         />
         <Button
           onClick={e => handleShowWarning(e)}

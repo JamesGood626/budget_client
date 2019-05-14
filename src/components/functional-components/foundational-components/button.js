@@ -67,6 +67,14 @@ const Button = styled.button`
       box-shadow: 1px 1px 12px 0 rgba(0,0,0,60%);
     }
   }
+
+  svg {
+    position: absolute;
+    top: calc(50% - 0.5rem);
+    left: calc(50% - 0.5rem);
+    width: 1rem;
+    height: 1rem;
+  }
 `
 
 const button = ({

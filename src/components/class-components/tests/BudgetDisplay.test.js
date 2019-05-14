@@ -27,11 +27,10 @@ afterEach(cleanup)
 
 test("BudgetDisplay renders with retrieved data from budget app API.", async done => {
   const { getByTestId, debug } = render(
-    // <BudgetDisplay budgetData={initialStateWithoutTransactions} />
     <BudgetReducerProvider
       reducer={{ state: initialStateWithoutTransactions, dispatch: () => true }}
     >
-      {state => <BudgetDisplay budgetData={state.data} />}
+      <BudgetDisplay budgetData={initialStateWithoutTransactions.data} />
     </BudgetReducerProvider>
   )
   // debug()
@@ -49,21 +48,3 @@ test("BudgetDisplay renders with retrieved data from budget app API.", async don
   expect(budgetExceeded).toHaveTextContent("You're Good")
   done()
 })
-
-// export const inputChangeTestCase = async (inputField, getByLabelText, value) => {
-//   let input;
-//   input = getByLabelText(inputField);
-//   expect(input.value).toBe('');
-//   fireEvent.change(input, {
-//     target: { value }
-//   });
-//   input = await waitForElement(() => getByLabelText(inputField));
-//   expect(input.value).toBe(value);
-// };
-
-// export const inputChange = async (inputField, getByLabelText, value) => {
-//   const input = getByLabelText(inputField);
-//   fireEvent.change(input, {
-//     target: { value }
-//   });
-// };

@@ -1,5 +1,7 @@
 import React from "react"
 import Button from "components/functional-components/foundational-components/button"
+import CheckMarkSvg from "components/functional-components/foundational-components/checkMarkSvg"
+import ExitSvg from "components/functional-components/foundational-components/ExitSvg"
 
 const transactionWarning = ({ message, handleSubmit, toggleModal }) => {
   return (
@@ -21,7 +23,7 @@ const transactionWarning = ({ message, handleSubmit, toggleModal }) => {
           bottomColor="#20E131"
           fontColor="#fff"
         >
-          O
+          <CheckMarkSvg />
         </Button>
         <Button
           onClick={e => toggleModal("")}
@@ -37,7 +39,7 @@ const transactionWarning = ({ message, handleSubmit, toggleModal }) => {
           bottomColor="#FF5E5E"
           fontColor="#fff"
         >
-          X
+          <ExitSvg />
         </Button>
       </div>
     </div>

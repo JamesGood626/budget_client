@@ -18,14 +18,12 @@ export default function monthsDropdown({
         defaultValue="ALL_MONTHS"
         onChange={e => {
           const month = e.target.value
-          console.log("SELECTED month: ", month)
           changeSelectedMonths(month)
         }}
       >
         <option value="ALL_MONTHS">All Months</option>
         {selectedYear !== "ALL_YEARS" &&
           monthsAvailable[selectedYear].map(month => {
-            console.log("MAPPING MONTHS: ", month)
             return (
               <option
                 value={month}

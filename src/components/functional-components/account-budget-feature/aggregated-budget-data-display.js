@@ -80,6 +80,8 @@ const aggregatedBudgetDataDisplay = ({
   const [expenseDepositFilter, setExpenseDepositFilter] = useState(
     "All Activity"
   )
+  // TODO: create a Context so that I don't have to prop drill these down (currently passing
+  // down through two components... Not terrible, but considering neater alternatives)
   const [selectedYear, setSelectedYear] = useState("ALL_YEARS")
   const { selectedMonths, changeSelectedMonths } = useSelectMonths("ALL_MONTHS")
   useEffect(() => {
