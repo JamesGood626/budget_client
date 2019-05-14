@@ -123,6 +123,9 @@ const aggregatedBudgetDataDisplay = ({
          months that are provided as props via selectedMonths.
       3. Last thing... All Expenses/All Deposits to determine which data will
          be displayed in the table from each month. */}
+      {console.log(
+        `monthsAvailable: ${monthsAvailable} & selectedMonths: ${selectedMonths}`
+      )}
       {yearsAvailable.length > 0 && (
         <AggregationFilterResultController
           years={selectedYear === "ALL_YEARS" ? yearsAvailable : "SINGLE"}

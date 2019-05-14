@@ -95,7 +95,7 @@ const Table = styled.table`
 
 const renderTableRows = data => {
   return data.map(({ category, type, amount, date }, i) => (
-    <tr key={`${category}-${type}-${i}`}>
+    <tr key={`${category}-${type}-${i}`} data-testid={`${category}-${i}`}>
       <td>{type}</td>
       <td
         className={

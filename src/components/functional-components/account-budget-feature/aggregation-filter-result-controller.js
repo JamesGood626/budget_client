@@ -101,10 +101,12 @@ const singleYearAggregation = (
   }
 
   let monthKeys = Object.getOwnPropertyNames(yearData.months_tracked)
-  monthKeys =
-    showMonthData[0] === "ALL_MONTHS"
-      ? monthKeys
-      : monthKeys.filter(month => showMonthData.includes(month))
+  // what was I thinking here? Seems to be a mismatch between what I set up
+  // inm aggregated-budget-data-display.js
+  // monthKeys =
+  //   showMonthData[0] === "ALL_MONTHS"
+  //     ? monthKeys
+  //     : monthKeys.filter(month => showMonthData.includes(month))
 
   const allBudgetAndUnnecessaryExpenses = monthKeys.map(monthKey => {
     const monthData = yearData.months_tracked[monthKey]
@@ -114,6 +116,11 @@ const singleYearAggregation = (
       monthData,
       accountActivityFilter
     )
+    // TODO: remove this after finished debugging
+    // console.log(
+    //   "in singleYearAggregation -> accountActivityData: ",
+    //   accountActivityData
+    // )
     return [budget, unnecessaryExpenses, accountActivityData]
   })
 
@@ -176,7 +183,10 @@ const aggregationFilterResultController = ({
     accountActivityFilter
   )
   // console.log("THE ACCOUNT ACTIVITY FILTER: ", accountActivityFilter)
-  // console.log("SHOW ME THE DATA: ", accountActivityData)
+  // console.log(
+  //   "SHOW ME THE ACCOUNT ACTIVITY FILTERED DATA: ",
+  //   accountActivityData
+  // )
   return (
     <div>
       <AggregatedBudgetExpenseTotal totals={totals} />

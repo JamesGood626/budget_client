@@ -78,7 +78,7 @@ const fakeNecessaryExpensesArr = [
     date: "TBD",
   },
   {
-    category: "UNECESSARY_EXPENSE",
+    category: "NECESSARY_EXPENSE",
     type: "Groceries",
     amount: 7000,
     date: "TBD",
