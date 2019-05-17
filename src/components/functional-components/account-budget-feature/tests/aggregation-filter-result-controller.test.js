@@ -23,6 +23,9 @@ afterEach(cleanup)
 //     "All Deposits",
 //   ]
 
+// NOTE: The rendered HTML contains duplicates because the test data in accountDataWithUpdates
+// for the monthData of 2018 used the fake(deposits/necessaryExpenses/unnecessaryExpenses) twice.
+// Thought this was an err...
 // TODO:
 // Move these into test-helpers
 // also set up proper dates, and ensure that the dates are rendered in appropriate order.
@@ -45,6 +48,23 @@ const unnecessaryExpenseActivityTestArr = [
   { testId: "UNNECESSARY_EXPENSE-1", content: "Eat out$20.00TBD" },
   { testId: "UNNECESSARY_EXPENSE-2", content: "Coffee$50.00TBD" },
   { testId: "UNNECESSARY_EXPENSE-3", content: "Eat out$20.00TBD" },
+]
+
+// TODO: This will be in ascending order (from most recent to oldest) at the moment.
+// Create the logic inside aggregation-filter-result-controller.js to render the result in descending order by default.
+const allActivityTestArr = [
+  { testId: "DEPOSIT-0", content: "Check$4,000.00TBD" },
+  { testId: "DEPOSIT-1", content: "Check$100.00TBD" },
+  { testId: "NECESSARY_EXPENSE-2", content: "Rent$3,600.00TBD" },
+  { testId: "NECESSARY_EXPENSE-3", content: "Groceries$70.00TBD" },
+  { testId: "UNNECESSARY_EXPENSE-4", content: "Coffee$50.00TBD" },
+  { testId: "UNNECESSARY_EXPENSE-5", content: "Eat out$20.00TBD" },
+  { testId: "DEPOSIT-6", content: "Check$4,000.00TBD" },
+  { testId: "DEPOSIT-7", content: "Check$100.00TBD" },
+  { testId: "NECESSARY_EXPENSE-8", content: "Rent$3,600.00TBD" },
+  { testId: "NECESSARY_EXPENSE-9", content: "Groceries$70.00TBD" },
+  { testId: "UNNECESSARY_EXPENSE-10", content: "Coffee$50.00TBD" },
+  { testId: "UNNECESSARY_EXPENSE-11", content: "Eat out$20.00TBD" },
 ]
 
 const expectTableContentsToBe = (activityTestArr, getByTestId) => {
@@ -113,8 +133,8 @@ test("AggregationFilterResultController renders all account activity.", async do
     />
   )
 
-  debug()
+  // debug()
 
-  // expectTableContentsToBe(unnecessaryExpenseActivityTestArr, getByTestId)
+  expectTableContentsToBe(allActivityTestArr, getByTestId)
   done()
 })
