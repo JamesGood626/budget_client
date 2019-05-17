@@ -4,7 +4,7 @@ describe("Budget page deposit features", () => {
     cy.seedAndVisitBudgetPage()
   })
 
-  it.only("creates a deposit", () => {
+  it("creates a deposit", () => {
     cy.route("POST", "/api/deposit", {
       category: "DEPOSIT",
       type: "Check",
@@ -22,5 +22,13 @@ describe("Budget page deposit features", () => {
     // confirm POST submit
     cy.get(".confirm-warning-btn").click()
     cy.get(".deposit").should("have.text", "$40.00")
+  })
+
+  it("displays error warning if user enters non-integer input for depositAmount", () => {
+    cy.contains("Total Balance:")
+    cy.get(".deposit-btn").click()
+    cy.getInputAndEnter("#income-source", "Check")
+    cy.getInputAndEnter("#deposit-amount", "sadas")
+    cy.contains("Please provide an integer value.")
   })
 })

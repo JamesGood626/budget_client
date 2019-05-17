@@ -2,13 +2,7 @@ import React from "react"
 
 const ExitSvg = () => (
   <svg viewBox="0 0 42 41" version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <g
-      id="Page-1"
-      stroke="none"
-      stroke-width="1"
-      fill="none"
-      fill-rule="evenodd"
-    >
+    <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g
         id="Desktop"
         transform="translate(-320.000000, -203.000000)"

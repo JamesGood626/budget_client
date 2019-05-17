@@ -2,13 +2,7 @@ import React from "react"
 
 const CheckMarkSvg = () => (
   <svg viewBox="0 0 46 34" version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <g
-      id="Page-1"
-      stroke="none"
-      stroke-width="1"
-      fill="none"
-      fill-rule="evenodd"
-    >
+    <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g
         id="Desktop"
         transform="translate(-268.000000, -218.000000)"

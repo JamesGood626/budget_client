@@ -37,7 +37,7 @@ describe("Budget page expend features", () => {
     cy.get(".expense-btn").click()
     cy.get("#expense-type-select").select("Unnecessary Expense")
     cy.getInputAndEnter("#expense", "Coffee")
-    cy.getInputAndEnter("#amount", "4000")
+    cy.getInputAndEnter("#expense-amount", "4000")
 
     // POST form data
     cy.get(".expense-submit-btn").click()
@@ -45,5 +45,13 @@ describe("Budget page expend features", () => {
     // confirm POST submit
     cy.get(".confirm-warning-btn").click()
     cy.get(".expense").should("have.text", "$40.00")
+  })
+
+  it("displays error warning if user enters non-integer input for expenseAmount", () => {
+    cy.contains("Total Balance:")
+    cy.get(".expense-btn").click()
+    cy.getInputAndEnter("#expense", "Coffee")
+    cy.getInputAndEnter("#expense-amount", "sadas")
+    cy.contains("Please provide an integer value.")
   })
 })

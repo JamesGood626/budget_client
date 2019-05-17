@@ -52,6 +52,12 @@ const Form = styled.form`
   .error-text {
     color: red;
   }
+
+  .amount--invalid {
+    color: red;
+    margin-top: 0.2rem;
+    font-size: 0.9rem;
+  }
 `
 
 export default Form

@@ -45,6 +45,32 @@ const accountActivityOptions = [
   "All Deposits",
 ]
 
+const useSelectMonths = initialState => {
+  const [selectedMonths, setSelectedMonths] = useState(initialState)
+
+  // TODO:
+  // Need to handle preventing UI from reflecting a successful selection if
+  // this invariant doesn't hold true.
+  const changeSelectedMonths = month => {
+    if (typeof selectedMonths === "Array") {
+      const lastElementPosition = selectedMonths.length - 1
+      // This is to ensure that August can't be added to the selectedMonths array if
+      // July doesn't precede it.
+      if (selectedMonths[lastElementPosition] + 1 === month) {
+        let newSelectedMonths = [...selectedMonths, month]
+        setSelectedMonths(newSelectedMonths)
+      }
+    } else {
+      setSelectedMonths([month])
+    }
+  }
+
+  return {
+    selectedMonths,
+    changeSelectedMonths,
+  }
+}
+
 // Does successfully render the data structures available in
 // yearsAvailable and monthsAvailable
 // These will be used for the yearsFilter and monthsFilter
@@ -56,7 +82,6 @@ const setYearsAndMonthsAvailableKeys = (
   setYearsAvailable,
   setMonthsAvailable
 ) => {
-  console.log("data before err: ", data)
   const { years_tracked } = data
   const yearKeys = Object.getOwnPropertyNames(years_tracked)
   const monthKeys = yearKeys.reduce((acc, year) => {
@@ -98,6 +123,7 @@ const aggregatedBudgetDataDisplay = ({
     // but will need to listen for expenseDepositFilter change once I get to that point.
     // Or perhaps I won't... because as of right now, when selecting a year to set as selectedYear,
     // the UI re-renders.
+    // TODO: Dan's blog post on useEffect
   }, [])
 
   return (
@@ -123,9 +149,6 @@ const aggregatedBudgetDataDisplay = ({
          months that are provided as props via selectedMonths.
       3. Last thing... All Expenses/All Deposits to determine which data will
          be displayed in the table from each month. */}
-      {console.log(
-        `monthsAvailable: ${monthsAvailable} & selectedMonths: ${selectedMonths}`
-      )}
       {yearsAvailable.length > 0 && (
         <AggregationFilterResultController
           years={selectedYear === "ALL_YEARS" ? yearsAvailable : "SINGLE"}
@@ -147,32 +170,6 @@ const aggregatedBudgetDataDisplay = ({
       {/* <BudgetHistoryTable expensesOrDeposits={expenseDepositFilter} /> */}
     </Container>
   )
-}
-
-const useSelectMonths = initialState => {
-  const [selectedMonths, setSelectedMonths] = useState(initialState)
-
-  // TODO:
-  // Need to handle preventing UI from reflecting a successful selection if
-  // this invariant doesn't hold true.
-  const changeSelectedMonths = month => {
-    if (typeof selectedMonths === "Array") {
-      const lastElementPosition = selectedMonths.length - 1
-      // This is to ensure that August can't be added to the selectedMonths array if
-      // July doesn't precede it.
-      if (selectedMonths[lastElementPosition] + 1 === month) {
-        let newSelectedMonths = [...selectedMonths, month]
-        setSelectedMonths(newSelectedMonths)
-      }
-    } else {
-      setSelectedMonths([month])
-    }
-  }
-
-  return {
-    selectedMonths,
-    changeSelectedMonths,
-  }
 }
 
 // selectedYears?

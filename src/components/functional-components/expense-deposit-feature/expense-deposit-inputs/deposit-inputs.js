@@ -5,6 +5,7 @@ import Button from "components/functional-components/foundational-components/but
 import TransactionWarning from "components/functional-components/expense-deposit-feature/transaction-warning"
 import handleLabelAnimation from "components/functional-components/expense-deposit-feature/expense-deposit-inputs/label-anim-helper"
 import utils from "utils/currency"
+import { changeAmount } from "./helpers"
 
 const depositInputs = ({ dateData, transact, toggleModal }) => {
   const [warningVisible, setWarningVisible] = useState(false)
@@ -23,20 +24,8 @@ const depositInputs = ({ dateData, transact, toggleModal }) => {
     setIncomeSource({ value, err })
   }
 
-  const changeDepositAmount = e => {
-    let err = false
-    const value = e.target.value
-    // TODO: really want to test for if any a-z characters are used.
-    const valueIsString = isNaN(value)
-    if (valueIsString) {
-      err = true
-    }
-    const newValue = utils.convertStringToCurrency(value)
-    setDepositAmount({
-      value: newValue,
-      err: err,
-    })
-  }
+  const changeDepositAmount = e =>
+    changeAmount(e.target.value, setDepositAmount)
 
   const handleSubmit = async (e, dateData, transact, toggleModal) => {
     e.preventDefault()
@@ -56,7 +45,7 @@ const depositInputs = ({ dateData, transact, toggleModal }) => {
       ...dateData,
     })
     if (!depositResult) {
-      // How to handle this so that user may receive notification of post failure?
+      // TODO: (future improvement) -> use a hook to display error UI if post fails/otherwise close modal
       return "It failed..."
     }
     await transact("DEPOSIT", depositResult, dateData)
@@ -101,6 +90,9 @@ const depositInputs = ({ dateData, transact, toggleModal }) => {
           handleLabelAnimation(e, setDepositAmountFocused, depositAmountFocused)
         }
       />
+      {depositAmount.err && (
+        <p className="amount--invalid">{depositAmount.err}</p>
+      )}
       <Button
         onClick={e => handleShowWarning(e)}
         className="deposit-submit-btn"

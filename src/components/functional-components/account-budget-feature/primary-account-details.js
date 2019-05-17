@@ -121,6 +121,8 @@ const Container = styled.div`
   }
 `
 
+// TODO: Fix this so that it always appears from the top to bottom of the viewport (even when scrolled down the page....)
+// for whatever reason this css isn't taking effect in the cypress view.
 const FadedBackground = styled.div`
   position: absolute;
   top: 0;

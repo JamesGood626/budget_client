@@ -10,6 +10,7 @@ import {
   LabelTextSpan,
 } from "components/functional-components/filter-dropdowns/dropdown-styles"
 import utils from "utils/currency"
+import { changeAmount } from "./helpers"
 
 const expenseInputs = ({ dateData, transact, toggleModal }) => {
   const [warningVisible, setWarningVisible] = useState(false)
@@ -28,16 +29,7 @@ const expenseInputs = ({ dateData, transact, toggleModal }) => {
     setExpense({ value, err: false })
   }
 
-  const changeAmount = e => {
-    const value = e.target.value
-    const valueIsString = isNaN(value)
-    // TODO: really want to test for if any a-z characters are used.
-    if (valueIsString) {
-      setAmount({ err: true })
-    }
-    const newValue = utils.convertStringToCurrency(value)
-    setAmount({ value: newValue, err: false })
-  }
+  const changeExpenseAmount = e => changeAmount(e.target.value, setAmount)
 
   const handleShowWarning = e => {
     e.preventDefault()
@@ -110,17 +102,21 @@ const expenseInputs = ({ dateData, transact, toggleModal }) => {
         }
         onBlur={e => handleLabelAnimation(e, setExpenseFocused, expenseFocused)}
       />
-      <label htmlFor="amount" className={amountFocused ? "input-active" : null}>
+      <label
+        htmlFor="expense-amount"
+        className={amountFocused ? "input-active" : null}
+      >
         Amount
       </label>
       <input
-        id="amount"
+        id="expense-amount"
         type="text"
         value={amount.value}
-        onChange={changeAmount}
+        onChange={changeExpenseAmount}
         onFocus={e => handleLabelAnimation(e, setAmountFocused, amountFocused)}
         onBlur={e => handleLabelAnimation(e, setAmountFocused, amountFocused)}
       />
+      {amount.err && <p className="amount--invalid">{amount.err}</p>}
       <Button
         onClick={e => handleShowWarning(e)}
         type="submit"
