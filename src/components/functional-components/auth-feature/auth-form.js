@@ -83,7 +83,7 @@ const validateEmail = str => {
 // TODO:
 // Make more comprehensive
 const validatePassword = str => {
-  return str.length > 10
+  return str.length >= 10
 }
 
 const handleChange = (value, setField) => {
@@ -103,6 +103,7 @@ const handleSubmitOrFail = async (
   const result = await handleSubmit(email, password, login, apiEndpoint)
   console.log("WTF is result: ", result)
   const errorsPresent = result.hasOwnProperty("length") && result.length > 0
+  console.log("errorsPresent", errorsPresent)
   if (errorsPresent) {
     result.map(obj =>
       obj.error === "Invalid email" ? setEmail(obj) : setPassword(obj)
@@ -116,9 +117,13 @@ const handleSubmit = async (email, password, login, apiEndpoint) => {
   if (errorsPresent) {
     return result
   }
-  const loginSuccess = await postLoginInput(email, password, apiEndpoint)
-  if (loginSuccess) {
+  const postSuccess = await postInput(email, password, apiEndpoint)
+  console.log("the postSuccess response: ", postSuccess)
+  if (postSuccess === "LOGIN_SUCCESS") {
     redirectToBudgetPage(login)
+    return true
+  } else if (postSuccess === "SIGNUP_SUCCESS") {
+    // TODO: set state w/ a useState to display signup success UI.
     return true
   } else {
     // create another useState to display this...?
@@ -140,7 +145,7 @@ const validateUserInput = (email, password) => {
   return errors
 }
 
-const postLoginInput = async (email, password, apiEndpoint) => {
+const postInput = async (email, password, apiEndpoint) => {
   const result = await axios.post(apiEndpoint, {
     email,
     password,
@@ -149,9 +154,9 @@ const postLoginInput = async (email, password, apiEndpoint) => {
     result.data.message === "Login Success!" &&
     apiEndpoint === endpoints.LOGIN_URL
   if (loginSuccess) {
-    return true
+    return "LOGIN_SUCCESS"
   }
-  return false
+  return "SIGNUP_SUCCESS"
 }
 
 const redirectToBudgetPage = login => {

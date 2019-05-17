@@ -39,11 +39,18 @@ const depositInputs = ({ dateData, transact, toggleModal }) => {
 
   // This can be made more generic...
   const postDeposit = async (dateData, transact, toggleModal) => {
-    const depositResult = await axios.post(endpoints.DEPOSIT_URL, {
-      income_source: incomeSource.value,
-      deposit_amount: utils.convertCurrencyToInt(depositAmount.value),
-      ...dateData,
-    })
+    const int_deposit_amount = utils.convertCurrencyToInt(depositAmount.value)
+    console.log("int_deposit_amount: ", int_deposit_amount)
+    let depositResult
+    if (int_deposit_amount > 0) {
+      depositResult = await axios.post(endpoints.DEPOSIT_URL, {
+        income_source: incomeSource.value,
+        deposit_amount: int_deposit_amount,
+        ...dateData,
+      })
+    } else {
+      return "Must enter an amount greater than 0."
+    }
     if (!depositResult) {
       // TODO: (future improvement) -> use a hook to display error UI if post fails/otherwise close modal
       return "It failed..."
