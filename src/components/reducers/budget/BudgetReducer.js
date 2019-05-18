@@ -82,9 +82,12 @@ const updateNestedData = (
   nestedTotal,
   nestedArray
 ) => {
-  resultData = JSON.parse(resultData)
-  console.log("THE RESULT DATA: ", resultData)
-  // const parsed = JSON.parse(result.data)
+  // console.log("the resultData before: ", resultData)
+  // resultData = JSON.parse(resultData)
+  // console.log("the resultData after: ", resultData)
+  if (typeof resultData === "string") {
+    resultData = JSON.parse(resultData)
+  }
   const currentMonthData =
     data.years_tracked[current_year].months_tracked[current_month]
   const entry = {
@@ -94,8 +97,6 @@ const updateNestedData = (
     date: resultData.date,
   }
 
-  console.log("the resultData.account_balance: ", resultData["account_balance"])
-  console.log("the resultData.amount: ", resultData["amount"])
   return {
     ...data,
     budget: {

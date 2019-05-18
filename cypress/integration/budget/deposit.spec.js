@@ -24,7 +24,7 @@ describe("Budget page deposit features", () => {
     cy.get(".deposit").should("have.text", "$40.00")
   })
 
-  it("displays error warning if user enters non-integer input for depositAmount", () => {
+  it.only("displays error warning if user enters non-integer input for depositAmount", () => {
     cy.contains("Total Balance:")
     cy.get(".deposit-btn").click()
     cy.getInputAndEnter("#income-source", "Check")

@@ -23,10 +23,8 @@ const formatCurrency = amount => {
 }
 
 const convertCurrencyToInt = str => {
-  if (str.length > 0) {
+  if (str !== null && str.length > 0) {
     str = str.match(numbersOnlyRegex).join("")
-    console.log("typeof str: ", typeof str)
-    console.log(str)
     return parseInt(str)
   } else {
     return 0

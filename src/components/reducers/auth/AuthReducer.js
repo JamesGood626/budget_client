@@ -21,7 +21,7 @@ const useAuthReducer = () => {
   // to add an expiry time both on the backend, and on the frontend to ensure that
   // they are redirected to the login page the next time they visit.
   const rememberToken = window.localStorage.getItem("rememberToken")
-  console.log("the rememberToken")
+  console.log("the rememberToken: ", rememberToken)
   if (!rememberToken) {
     initialState = { ...initialState, authenticated: false }
   } else {

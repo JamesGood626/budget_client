@@ -33,7 +33,6 @@ const budgetDisplay = ({ budgetData }) => {
     <Container>
       <BudgetContext.Consumer>
         {value => {
-          console.log("The budgetData: ", budgetData)
           return (
             <>
               <PrimaryAccountDetails
