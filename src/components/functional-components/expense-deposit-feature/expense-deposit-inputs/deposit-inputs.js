@@ -5,7 +5,7 @@ import Button from "components/functional-components/foundational-components/but
 import TransactionWarning from "components/functional-components/expense-deposit-feature/transaction-warning"
 import handleLabelAnimation from "components/functional-components/expense-deposit-feature/expense-deposit-inputs/label-anim-helper"
 import utils from "utils/currency"
-import { changeAmount } from "./helpers"
+import { Amount, changeAmount } from "./helpers"
 
 const depositInputs = ({ dateData, transact, toggleModal }) => {
   const [warningVisible, setWarningVisible] = useState(false)
@@ -24,8 +24,14 @@ const depositInputs = ({ dateData, transact, toggleModal }) => {
     setIncomeSource({ value, err })
   }
 
+  // Create a wrapper class for the user inputted amount:
+  // Validate that value is:
+  //    - not equal to null
+  //    - typeof string
+  //    - has a length > 0
+
   const changeDepositAmount = e =>
-    changeAmount(e.target.value, setDepositAmount)
+    changeAmount(new Amount(e.target.value), setDepositAmount)
 
   const handleSubmit = async (e, dateData, transact, toggleModal) => {
     e.preventDefault()

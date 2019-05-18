@@ -27,7 +27,7 @@ const convertCurrencyToInt = str => {
     str = str.match(numbersOnlyRegex).join("")
     return parseInt(str)
   } else {
-    return 0
+    return ""
   }
 
   // if (str[0] === "$") {
