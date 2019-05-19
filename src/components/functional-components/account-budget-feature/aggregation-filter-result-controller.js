@@ -138,6 +138,7 @@ const singleYearAggregation = (
 }
 
 const filterAccountActivityData = (monthData, accountActivityFilter) => {
+  console.log("the month Data: ", monthData)
   switch (accountActivityFilter) {
     case "All Activity":
       return concatenateDataArrays(monthData)
@@ -187,6 +188,8 @@ const aggregationFilterResultController = ({
   //   "SHOW ME THE ACCOUNT ACTIVITY FILTERED DATA: ",
   //   accountActivityData
   // )
+  console.log("AGG FILT RESLT CONTRLR RE-RENDERING")
+  console.log("accountActivityData: ", accountActivityData)
   return (
     <div>
       <AggregatedBudgetExpenseTotal totals={totals} />

@@ -8,7 +8,7 @@ import {
 export default function monthsDropdown({
   selectedYear,
   monthsAvailable,
-  changeSelectedMonths,
+  setSelectedMonths,
   monthObj,
 }) {
   return (
@@ -18,7 +18,7 @@ export default function monthsDropdown({
         defaultValue="ALL_MONTHS"
         onChange={e => {
           const month = e.target.value
-          changeSelectedMonths(month)
+          setSelectedMonths(month)
         }}
       >
         <option value="ALL_MONTHS">All Months</option>

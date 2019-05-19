@@ -11,13 +11,13 @@ export default function accountActivityDropdown({
 }) {
   return (
     <Label htmlFor="account-activity-select">
-      <Select id="account-activity-select" defaultValue="All Activity">
+      <Select
+        id="account-activity-select"
+        defaultValue="All Activity"
+        onChange={e => setExpenseDepositFilter(e.target.value)}
+      >
         {accountActivityOptions.map(option => (
-          <option
-            value={option}
-            key={option}
-            onClick={() => setExpenseDepositFilter(option)}
-          >
+          <option value={option} key={option}>
             {option}
           </option>
         ))}

@@ -19,9 +19,9 @@ const monthObj = {
   12: "December",
 }
 
-const selectYearOption = (year, setSelectedYear, changeSelectedMonths) => {
+const selectYearOption = (year, setSelectedYear, setSelectedMonths) => {
   setSelectedYear(year)
-  changeSelectedMonths("ALL_MONTHS")
+  setSelectedMonths("ALL_MONTHS")
 }
 
 const yearsAndMonthDropdowns = ({
@@ -29,7 +29,7 @@ const yearsAndMonthDropdowns = ({
   setSelectedYear,
   selectedYear,
   monthsAvailable,
-  changeSelectedMonths,
+  setSelectedMonths,
 }) => {
   if (yearsAvailable.length === 0 && !selectedYear) {
     return
@@ -39,13 +39,13 @@ const yearsAndMonthDropdowns = ({
       <YearsDropdown
         yearsAvailable={yearsAvailable}
         selectYearOption={year =>
-          selectYearOption(year, setSelectedYear, changeSelectedMonths)
+          selectYearOption(year, setSelectedYear, setSelectedMonths)
         }
       />
       <MonthsDropdown
         selectedYear={selectedYear}
         monthsAvailable={monthsAvailable}
-        changeSelectedMonths={changeSelectedMonths}
+        setSelectedMonths={setSelectedMonths}
         monthObj={monthObj}
       />
     </>

@@ -93,6 +93,8 @@ const Table = styled.table`
   }
 `
 
+const formatDate = date => new Date(date).toLocaleDateString()
+
 const renderTableRows = data => {
   return data.map(({ category, type, amount, date }, i) => (
     <tr key={`${category}-${type}-${i}`} data-testid={`${category}-${i}`}>
@@ -104,7 +106,7 @@ const renderTableRows = data => {
       >
         {utils.formatCurrency(amount)}
       </td>
-      <td>{date}</td>
+      <td>{formatDate(date)}</td>
     </tr>
   ))
 }

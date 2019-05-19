@@ -3,7 +3,7 @@ import utils from "utils/currency"
 
 const numbersOnlyRegex = /\d+/g
 
-export class Amount {
+class Amount {
   constructor(amount) {
     this._amount = amount
   }
@@ -15,20 +15,6 @@ export class Amount {
     setAmount,
   ]
 
-  // static validCurrencyCheck = ([amount, setAmount]) => {
-  //   let err = null
-  //   if (amount.isNotANumber()) {
-  //     err = "Please provide an integer value."
-  //   } else {
-  //     amount = amount.convertToCurrency()
-  //   }
-  //   const result = {
-  //     value: amount.getAmount(),
-  //     err: err,
-  //   }
-  //   return [result, setAmount]
-  // }
-
   static validCurrencyCheck = ([amount, setAmount]) => {
     const result = amount.isNotANumber()
       ? this.currencyInvalidResult(amount)
@@ -37,7 +23,7 @@ export class Amount {
   }
 
   static currencyValidResult = amount => ({
-    value: amount.getAmount(),
+    value: amount.convertToCurrency().getAmount(),
     err: null,
   })
 
@@ -70,49 +56,7 @@ const processAmountInput = flow([
   Amount.persistChangeResult,
 ])
 
-// Newer Impl
+export const wrapAmount = amount => new Amount(amount)
+
 export const changeAmount = (amount, setAmount) =>
   processAmountInput([amount, setAmount])
-
-// New Impl
-// export const changeAmount = (amount, setAmount) => {
-//   // compose parseNumber ->
-//   let newAmount = amount.parseNumber()
-//   let err = false
-
-//   // abstract this into method on Amount (validCurrencyCheck)
-//   // which takes the output of parseNumber()
-//   if (newAmount.isNotANumber()) {
-//     err = "Please provide an integer value."
-//   } else {
-//     newAmount = newAmount.convertToCurrency()
-//   }
-
-//   // create persistAmount method on Amount
-//   setAmount({
-//     value: newAmount.getAmount(),
-//     err: err,
-//   })
-// }
-
-// old impl
-// export const changeAmount = (value, setAmount) => {
-//   let newAmount = ""
-//   let err = false
-//   if (value.length > 0) {
-//     value = value.match(numbersOnlyRegex)
-//     if (value !== null) {
-//       value = value.join("")
-//     }
-//   }
-//   const valueIsString = isNaN(value)
-//   if (valueIsString || typeof valueIsString !== "number") {
-//     err = "Please provide an integer value."
-//   } else {
-//     newAmount = utils.convertStringToCurrency(value)
-//   }
-//   setAmount({
-//     value: newAmount,
-//     err: err,
-//   })
-// }

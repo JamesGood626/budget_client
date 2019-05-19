@@ -5,7 +5,7 @@ import Button from "components/functional-components/foundational-components/but
 import TransactionWarning from "components/functional-components/expense-deposit-feature/transaction-warning"
 import handleLabelAnimation from "components/functional-components/expense-deposit-feature/expense-deposit-inputs/label-anim-helper"
 import utils from "utils/currency"
-import { Amount, changeAmount } from "./helpers"
+import { wrapAmount, changeAmount } from "./helpers"
 
 const depositInputs = ({ dateData, transact, toggleModal }) => {
   const [warningVisible, setWarningVisible] = useState(false)
@@ -31,7 +31,7 @@ const depositInputs = ({ dateData, transact, toggleModal }) => {
   //    - has a length > 0
 
   const changeDepositAmount = e =>
-    changeAmount(new Amount(e.target.value), setDepositAmount)
+    changeAmount(wrapAmount(e.target.value), setDepositAmount)
 
   const handleSubmit = async (e, dateData, transact, toggleModal) => {
     e.preventDefault()

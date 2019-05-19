@@ -46,28 +46,28 @@ const accountActivityOptions = [
 ]
 
 const useSelectMonths = initialState => {
-  const [selectedMonths, setSelectedMonths] = useState(initialState)
+  const [selectedMonths, setState] = useState(initialState)
 
   // TODO:
   // Need to handle preventing UI from reflecting a successful selection if
   // this invariant doesn't hold true.
-  const changeSelectedMonths = month => {
+  const setSelectedMonths = month => {
     if (typeof selectedMonths === "Array") {
       const lastElementPosition = selectedMonths.length - 1
       // This is to ensure that August can't be added to the selectedMonths array if
       // July doesn't precede it.
       if (selectedMonths[lastElementPosition] + 1 === month) {
         let newSelectedMonths = [...selectedMonths, month]
-        setSelectedMonths(newSelectedMonths)
+        setState(newSelectedMonths)
       }
     } else {
-      setSelectedMonths([month])
+      setState([month])
     }
   }
 
   return {
     selectedMonths,
-    changeSelectedMonths,
+    setSelectedMonths,
   }
 }
 
@@ -108,7 +108,7 @@ const aggregatedBudgetDataDisplay = ({
   // TODO: create a Context so that I don't have to prop drill these down (currently passing
   // down through two components... Not terrible, but considering neater alternatives)
   const [selectedYear, setSelectedYear] = useState("ALL_YEARS")
-  const { selectedMonths, changeSelectedMonths } = useSelectMonths("ALL_MONTHS")
+  const { selectedMonths, setSelectedMonths } = useSelectMonths("ALL_MONTHS")
   useEffect(() => {
     if (yearsAvailable.length === 0) {
       console.log("THE DATA: ", data)
@@ -126,6 +126,8 @@ const aggregatedBudgetDataDisplay = ({
     // TODO: Dan's blog post on useEffect
   }, [])
 
+  console.log("AGG BUDGET DATA DISPLAY RE-RENDERING")
+  console.log("expenseDepositFilter: ", expenseDepositFilter)
   return (
     <Container>
       <div id="dropdowns">
@@ -138,7 +140,7 @@ const aggregatedBudgetDataDisplay = ({
           setSelectedYear={setSelectedYear}
           selectedYear={selectedYear}
           monthsAvailable={monthsAvailable}
-          changeSelectedMonths={changeSelectedMonths}
+          setSelectedMonths={setSelectedMonths}
         />
       </div>
       {/* The div with two inner divs */}
