@@ -1,3 +1,4 @@
+import flow from "lodash.flow"
 import utils from "utils/currency"
 
 const numbersOnlyRegex = /\d+/g
@@ -7,11 +8,30 @@ export class Amount {
     this._amount = amount
   }
 
-  getAmount() {
-    return this._amount
+  getAmount = () => this._amount
+
+  static validateCorrectInput = ([amount, setAmount]) => [
+    amount.parseNumber(),
+    setAmount,
+  ]
+
+  static validCurrencyCheck = ([amount, setAmount]) => {
+    let err = null
+    if (amount.isNotANumber()) {
+      err = "Please provide an integer value."
+    } else {
+      amount = amount.convertToCurrency()
+    }
+    const result = {
+      value: amount.getAmount(),
+      err: err,
+    }
+    return [result, setAmount]
   }
 
-  parseNumber() {
+  static persistChangeResult = ([result, setAmount]) => setAmount(result)
+
+  parseNumber = () => {
     if (typeof this._amount === "string" && this._amount.length > 0) {
       const parsedNum = this._amount.match(numbersOnlyRegex)
       if (parsedNum !== null) {
@@ -21,29 +41,42 @@ export class Amount {
     return new Amount("")
   }
 
-  isNotANumber() {
-    return isNaN(parseInt(this._amount))
-  }
+  isNotANumber = () => isNaN(parseInt(this._amount))
 
-  convertToCurrency() {
-    return new Amount(utils.convertStringToCurrency(this._amount))
-  }
+  convertToCurrency = () =>
+    new Amount(utils.convertStringToCurrency(this._amount))
 }
 
-export const changeAmount = (amount, setAmount) => {
-  let newAmount = amount.parseNumber()
-  let err = false
+const processAmountInput = flow([
+  Amount.validateCorrectInput,
+  Amount.validCurrencyCheck,
+  Amount.persistChangeResult,
+])
 
-  if (newAmount.isNotANumber()) {
-    err = "Please provide an integer value."
-  } else {
-    newAmount = newAmount.convertToCurrency()
-  }
-  setAmount({
-    value: newAmount.getAmount(),
-    err: err,
-  })
-}
+// Newer Impl
+export const changeAmount = (amount, setAmount) =>
+  processAmountInput([amount, setAmount])
+
+// New Impl
+// export const changeAmount = (amount, setAmount) => {
+//   // compose parseNumber ->
+//   let newAmount = amount.parseNumber()
+//   let err = false
+
+//   // abstract this into method on Amount (validCurrencyCheck)
+//   // which takes the output of parseNumber()
+//   if (newAmount.isNotANumber()) {
+//     err = "Please provide an integer value."
+//   } else {
+//     newAmount = newAmount.convertToCurrency()
+//   }
+
+//   // create persistAmount method on Amount
+//   setAmount({
+//     value: newAmount.getAmount(),
+//     err: err,
+//   })
+// }
 
 // old impl
 // export const changeAmount = (value, setAmount) => {
