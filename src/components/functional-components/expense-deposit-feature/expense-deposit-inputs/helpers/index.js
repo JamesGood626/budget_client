@@ -15,19 +15,36 @@ export class Amount {
     setAmount,
   ]
 
+  // static validCurrencyCheck = ([amount, setAmount]) => {
+  //   let err = null
+  //   if (amount.isNotANumber()) {
+  //     err = "Please provide an integer value."
+  //   } else {
+  //     amount = amount.convertToCurrency()
+  //   }
+  //   const result = {
+  //     value: amount.getAmount(),
+  //     err: err,
+  //   }
+  //   return [result, setAmount]
+  // }
+
   static validCurrencyCheck = ([amount, setAmount]) => {
-    let err = null
-    if (amount.isNotANumber()) {
-      err = "Please provide an integer value."
-    } else {
-      amount = amount.convertToCurrency()
-    }
-    const result = {
-      value: amount.getAmount(),
-      err: err,
-    }
+    const result = amount.isNotANumber()
+      ? this.currencyInvalidResult(amount)
+      : this.currencyValidResult(amount)
     return [result, setAmount]
   }
+
+  static currencyValidResult = amount => ({
+    value: amount.getAmount(),
+    err: null,
+  })
+
+  static currencyInvalidResult = amount => ({
+    value: amount.getAmount(),
+    err: "Please provide an integer value.",
+  })
 
   static persistChangeResult = ([result, setAmount]) => setAmount(result)
 

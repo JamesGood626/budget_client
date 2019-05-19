@@ -10,7 +10,7 @@ import {
   LabelTextSpan,
 } from "components/functional-components/filter-dropdowns/dropdown-styles"
 import utils from "utils/currency"
-import { changeAmount } from "./helpers"
+import { Amount, changeAmount } from "./helpers"
 
 const expenseInputs = ({ dateData, transact, toggleModal }) => {
   const [warningVisible, setWarningVisible] = useState(false)
@@ -29,7 +29,8 @@ const expenseInputs = ({ dateData, transact, toggleModal }) => {
     setExpense({ value, err: false })
   }
 
-  const changeExpenseAmount = e => changeAmount(e.target.value, setAmount)
+  const changeExpenseAmount = e =>
+    changeAmount(new Amount(e.target.value), setAmount)
 
   const handleShowWarning = e => {
     e.preventDefault()
