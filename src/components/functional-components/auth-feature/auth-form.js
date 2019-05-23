@@ -101,9 +101,7 @@ const handleSubmitOrFail = async (
 ) => {
   e.preventDefault()
   const result = await handleSubmit(email, password, login, apiEndpoint)
-  console.log("WTF is result: ", result)
   const errorsPresent = result.hasOwnProperty("length") && result.length > 0
-  console.log("errorsPresent", errorsPresent)
   if (errorsPresent) {
     result.map(obj =>
       obj.error === "Invalid email" ? setEmail(obj) : setPassword(obj)
@@ -118,7 +116,6 @@ const handleSubmit = async (email, password, login, apiEndpoint) => {
     return result
   }
   const postSuccess = await postInput(email, password, apiEndpoint)
-  console.log("the postSuccess response: ", postSuccess)
   if (postSuccess === "LOGIN_SUCCESS") {
     redirectToBudgetPage(login)
     return true

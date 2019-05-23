@@ -34,7 +34,6 @@ const Container = styled.div`
 
 const fetchBudgetData = async setBudgetData => {
   const result = await axios.get(endpoints.GET_ACCOUNT_URL)
-  console.log("fetchBudgetData result: ", result.data)
   setBudgetData(result.data)
 }
 

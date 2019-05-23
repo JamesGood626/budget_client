@@ -8,8 +8,9 @@ function reducer(state, action) {
     case actions.SET_STATE:
       return { ...state, data: action.payload }
     case actions.SET_BUDGET:
-      const { budget_amount } = action.payload.data
-      return setBudgetUpdateState(state, budget_amount)
+      const data = action.payload
+      const result = setBudgetUpdateState(state, data)
+      return result
     case actions.DEPOSIT:
       return {
         ...state,
@@ -64,17 +65,47 @@ const useBudgetReducer = () => {
   }
 }
 
-const setBudgetUpdateState = (state, budget_amount) => ({
-  ...state,
-  data: {
-    ...state.data,
-    budget: {
-      ...state.data.budget,
-      current_budget: budget_amount,
-      budget_set: true,
+// @budget_post_result %{
+//   "budget" => %{
+//     "account_balance" => 0,
+//     "budget_exceeded" => false,
+//     "budget_set" => true,
+//     "current_budget" => 60000
+//   },
+//   "current_month" => 5,
+//   "current_month" => 2019,
+//   "message" => "Successfully set your budget for the month.",
+//   "updated_month_data" => %{
+//     "budget" => 60000,
+//     "budget_exceeded" => false,
+//     "deposits" => [],
+//     "necessary_expenses" => [],
+//     "total_deposited" => 0,
+//     "total_necessary_expenses" => 0,
+//     "total_unnecessary_expenses" => 0,
+//     "unnecessary_expenses" => []
+//   }
+// }
+
+const setBudgetUpdateState = (state, data) => {
+  const { budget, updated_month_data, current_month, current_year } = data
+  return {
+    ...state,
+    data: {
+      ...state.data,
+      budget: budget,
+      years_tracked: {
+        ...state.data.years_tracked,
+        [current_year]: {
+          months_tracked: {
+            ...state.data.years_tracked[current_year].months_tracked,
+            [current_month]: updated_month_data,
+          },
+        },
+      },
     },
-  },
-})
+  }
+}
 
 const updateNestedData = (
   data,

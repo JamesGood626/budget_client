@@ -53,7 +53,7 @@ const setBudgetForm = ({ toggleModal, setBudget, dateData }) => {
       // How to handle this so that user may receive notification of post failure?
       return "It failed..."
     }
-    await setBudget("SET_BUDGET", setBudgetResult, dateData)
+    await setBudget(setBudgetResult.data)
     toggleModal("")
   }
 

@@ -63,7 +63,6 @@ const transactButtons = ({
   }
 
   const toggleModal = type => {
-    console.log("MODAL TOGGLED: ", type)
     setModalToggled({ toggled: !modalToggled.toggled, transactionType: type })
   }
   // Clicking either of these buttons should open an appropriate modal

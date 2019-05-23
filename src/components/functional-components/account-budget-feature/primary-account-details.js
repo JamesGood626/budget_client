@@ -150,10 +150,10 @@ const primaryAccountDetails = ({
     setModalToggled({ toggled: !modalToggled.toggled })
   }
 
-  const setBudget = async (result, dateData) => {
+  const setBudget = async data => {
     dispatch({
       type: actions.SET_BUDGET,
-      payload: { result, ...dateData },
+      payload: data,
     })
   }
 

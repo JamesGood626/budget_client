@@ -111,7 +111,6 @@ const aggregatedBudgetDataDisplay = ({
   const { selectedMonths, setSelectedMonths } = useSelectMonths("ALL_MONTHS")
   useEffect(() => {
     if (yearsAvailable.length === 0) {
-      console.log("THE DATA: ", data)
       setYearsAndMonthsAvailableKeys(
         data,
         setYearsAvailable,
@@ -126,8 +125,6 @@ const aggregatedBudgetDataDisplay = ({
     // TODO: Dan's blog post on useEffect
   }, [])
 
-  console.log("AGG BUDGET DATA DISPLAY RE-RENDERING")
-  console.log("expenseDepositFilter: ", expenseDepositFilter)
   return (
     <Container>
       <div id="dropdowns">

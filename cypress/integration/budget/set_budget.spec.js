@@ -6,8 +6,25 @@ describe("Budget page set budget feature", () => {
 
   it("sets a new budget", () => {
     cy.route("POST", "/api/account", {
+      budget: {
+        account_balance: 0,
+        budget_exceeded: false,
+        budget_set: true,
+        current_budget: 60000,
+      },
+      current_month: 5,
+      current_year: 2019,
       message: "Successfully set your budget for the month.",
-      budget_amount: 100000,
+      updated_month_data: {
+        budget: 60000,
+        budget_exceeded: false,
+        deposits: [],
+        necessary_expenses: [],
+        total_deposited: 0,
+        total_necessary_expenses: 0,
+        total_unnecessary_expenses: 0,
+        unnecessary_expenses: [],
+      },
     })
     cy.contains("Total Balance:")
     cy.get(".set-budget-btn").click()

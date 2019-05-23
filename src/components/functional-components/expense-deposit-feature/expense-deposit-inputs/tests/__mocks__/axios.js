@@ -9,14 +9,10 @@ import endpoints from "config/api_endpoints"
 const mockAxios = {
   create: () => mockAxios,
   post: (url, params) => {
-    console.log("THE URL: ", url)
-    console.log("THE params: ", params)
     switch (url) {
       case endpoints.DEPOSIT_URL:
-        console.log("RETURNING")
         return Promise.resolve(successfulDepositResponse)
       case endpoints.EXPENSE_URL:
-        console.log("RETURNING")
         return Promise.resolve(successfulDepositResponse)
     }
   },
