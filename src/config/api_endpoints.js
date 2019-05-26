@@ -1,6 +1,7 @@
 const BASE_URL = "http://localhost:4000"
 
 export default {
+  CSRF_URL: `${BASE_URL}/api/csrf`,
   SIGNUP_URL: `${BASE_URL}/api/signup`,
   LOGIN_URL: `${BASE_URL}/api/login`,
   LOGOUT_URL: `${BASE_URL}/api/logout`,

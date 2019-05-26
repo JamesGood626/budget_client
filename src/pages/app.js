@@ -8,8 +8,6 @@ import BudgetCoordinator from "components/class-components/BudgetCoordinator"
 import Login from "components/functional-components/auth-feature/login"
 import Signup from "components/functional-components/auth-feature/signup"
 
-axios.defaults.withCredentials = true
-
 const theme = {
   white: "#fff",
   darkGreen: "#1d470c",

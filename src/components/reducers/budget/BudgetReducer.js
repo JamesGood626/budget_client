@@ -6,6 +6,7 @@ function reducer(state, action) {
   console.log("The action: ", action)
   switch (action.type) {
     case actions.SET_STATE:
+      console.log("the action.payload from SET_STATE: ", action.payload)
       return { ...state, data: action.payload }
     case actions.SET_BUDGET:
       const data = action.payload
