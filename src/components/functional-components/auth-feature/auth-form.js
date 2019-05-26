@@ -116,6 +116,7 @@ const handleSubmit = async (email, password, login, apiEndpoint) => {
     return result
   }
   const postSuccess = await postInput(email, password, apiEndpoint)
+  console.log("The LOGIN post success: ", postSuccess)
   if (postSuccess === "LOGIN_SUCCESS") {
     redirectToBudgetPage(login)
     return true

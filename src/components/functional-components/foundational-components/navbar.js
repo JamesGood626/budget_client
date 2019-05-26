@@ -1,7 +1,9 @@
 import React from "react"
+import axios from "axios"
 import styled from "styled-components"
 import { Link } from "gatsby"
 import { navigate } from "@reach/router"
+import endpoints from "config/api_endpoints"
 
 const Container = styled.div`
   display: flex;
@@ -48,8 +50,10 @@ const navbar = ({ authenticated, logout }) => {
         {authenticated ? (
           <a
             href="/"
-            onClick={e => {
+            onClick={async e => {
               e.preventDefault()
+              const logoutResult = await axios.post(endpoints.LOGOUT_URL)
+              console.log("THE LOGOUT RESULT: ", logoutResult)
               logout(() => navigate(`/app/login`))
             }}
           >
