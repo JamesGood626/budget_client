@@ -6,6 +6,7 @@ import TransactionWarning from "components/functional-components/expense-deposit
 import handleLabelAnimation from "components/functional-components/expense-deposit-feature/expense-deposit-inputs/label-anim-helper"
 import utils from "utils/currency"
 import { wrapAmount, changeAmount } from "./helpers"
+import { navigate } from "gatsby"
 
 const depositInputs = ({ dateData, transact, toggleModal }) => {
   const [warningVisible, setWarningVisible] = useState(false)
@@ -56,6 +57,10 @@ const depositInputs = ({ dateData, transact, toggleModal }) => {
       })
     } else {
       return "Must enter an amount greater than 0."
+    }
+    if (depositResult.data.hasOwnProperty("message")) {
+      depositResult.data.message === "INVALID_SESSION" && navigate("/app/login")
+      return
     }
     if (!depositResult) {
       // TODO: (future improvement) -> use a hook to display error UI if post fails/otherwise close modal

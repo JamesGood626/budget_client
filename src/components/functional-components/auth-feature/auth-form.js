@@ -6,7 +6,97 @@ import Button from "components/functional-components/foundational-components/but
 import Form from "components/functional-components/foundational-components/form-styles"
 import handleLabelAnimation from "components/functional-components/expense-deposit-feature/expense-deposit-inputs/label-anim-helper"
 
-const authForm = ({ apiEndpoint, btnText, login }) => {
+// TODO:
+// Make more comprehensive
+const validateEmail = str => {
+  if (str.indexOf("@") > 0) {
+    return true
+  }
+  return false
+}
+
+// TODO:
+// Make more comprehensive
+const validatePassword = str => {
+  return str.length >= 10
+}
+
+const handleChange = (value, setField) => {
+  setField({ value, error: false })
+}
+
+const handleSubmitOrFail = async (
+  e,
+  email,
+  password,
+  setEmail,
+  setPassword,
+  dispatchLogin,
+  apiEndpoint
+) => {
+  e.preventDefault()
+  const result = await handleSubmit(email, password, dispatchLogin, apiEndpoint)
+  const errorsPresent = result.hasOwnProperty("length") && result.length > 0
+  if (errorsPresent) {
+    result.map(obj =>
+      obj.error === "Invalid email" ? setEmail(obj) : setPassword(obj)
+    )
+  }
+}
+
+const handleSubmit = async (email, password, dispatchLogin, apiEndpoint) => {
+  const result = validateUserInput(email, password)
+  const errorsPresent = result.hasOwnProperty("length") && result.length > 0
+  if (errorsPresent) {
+    return result
+  }
+  const postSuccess = await postInput(email, password, apiEndpoint)
+  console.log("The LOGIN post success: ", postSuccess)
+  if (postSuccess === "LOGIN_SUCCESS") {
+    redirectToBudgetPage(dispatchLogin)
+    return true
+  } else if (postSuccess === "SIGNUP_SUCCESS") {
+    // TODO: set state w/ a useState to display signup success UI.
+    return true
+  } else {
+    // create another useState to display this.
+    return "Woops, something went wrong"
+  }
+}
+
+// Pass in validateEmail and validatePassword as args instead? Then I'd have so many args being
+// passed into handleSubmitOrFail <- what in the name of referential transparency
+const validateUserInput = (email, password) => {
+  let errors = []
+  if (!validateEmail(email)) {
+    errors = [...errors, { value: email, error: "Invalid email" }]
+  }
+  if (!validatePassword(password)) {
+    errors = [...errors, { value: password, error: "Invalid password" }]
+  }
+  return errors
+}
+
+const postInput = async (email, password, apiEndpoint) => {
+  const result = await axios.post(apiEndpoint, {
+    email,
+    password,
+  })
+  const loginSuccess =
+    result.data.message === "Login Success!" &&
+    apiEndpoint === endpoints.LOGIN_URL
+  if (loginSuccess) {
+    return "LOGIN_SUCCESS"
+  }
+  return "SIGNUP_SUCCESS"
+}
+
+const redirectToBudgetPage = dispatchLogin => {
+  dispatchLogin()
+  navigate("/app/budget")
+}
+
+const authForm = ({ apiEndpoint, btnText, dispatchLogin }) => {
   const [email, setEmail] = useState({ value: "", error: false })
   const [password, setPassword] = useState({ value: "", error: false })
   const [emailFocused, setEmailFocused] = useState(false)
@@ -22,7 +112,7 @@ const authForm = ({ apiEndpoint, btnText, login }) => {
           password.value,
           setEmail,
           setPassword,
-          login,
+          dispatchLogin,
           apiEndpoint
         )
       }
@@ -69,97 +159,6 @@ const authForm = ({ apiEndpoint, btnText, login }) => {
       </Button>
     </Form>
   )
-}
-
-// TODO:
-// Make more comprehensive
-const validateEmail = str => {
-  if (str.indexOf("@") > 0) {
-    return true
-  }
-  return false
-}
-
-// TODO:
-// Make more comprehensive
-const validatePassword = str => {
-  return str.length >= 10
-}
-
-const handleChange = (value, setField) => {
-  setField({ value, error: false })
-}
-
-const handleSubmitOrFail = async (
-  e,
-  email,
-  password,
-  setEmail,
-  setPassword,
-  login,
-  apiEndpoint
-) => {
-  e.preventDefault()
-  const result = await handleSubmit(email, password, login, apiEndpoint)
-  const errorsPresent = result.hasOwnProperty("length") && result.length > 0
-  if (errorsPresent) {
-    result.map(obj =>
-      obj.error === "Invalid email" ? setEmail(obj) : setPassword(obj)
-    )
-  }
-}
-
-const handleSubmit = async (email, password, login, apiEndpoint) => {
-  const result = validateUserInput(email, password)
-  const errorsPresent = result.hasOwnProperty("length") && result.length > 0
-  if (errorsPresent) {
-    return result
-  }
-  const postSuccess = await postInput(email, password, apiEndpoint)
-  console.log("The LOGIN post success: ", postSuccess)
-  if (postSuccess === "LOGIN_SUCCESS") {
-    redirectToBudgetPage(login)
-    return true
-  } else if (postSuccess === "SIGNUP_SUCCESS") {
-    // TODO: set state w/ a useState to display signup success UI.
-    return true
-  } else {
-    // create another useState to display this...?
-    // Am I using too many useStates
-    return "Woops, something went wrong"
-  }
-}
-
-// Pass in validateEmail and validatePassword as args instead? Then I'd have so many args being
-// passed into handleSubmitOrFail <- what in the name of referential transparency
-const validateUserInput = (email, password) => {
-  let errors = []
-  if (!validateEmail(email)) {
-    errors = [...errors, { value: email, error: "Invalid email" }]
-  }
-  if (!validatePassword(password)) {
-    errors = [...errors, { value: password, error: "Invalid password" }]
-  }
-  return errors
-}
-
-const postInput = async (email, password, apiEndpoint) => {
-  const result = await axios.post(apiEndpoint, {
-    email,
-    password,
-  })
-  const loginSuccess =
-    result.data.message === "Login Success!" &&
-    apiEndpoint === endpoints.LOGIN_URL
-  if (loginSuccess) {
-    return "LOGIN_SUCCESS"
-  }
-  return "SIGNUP_SUCCESS"
-}
-
-const redirectToBudgetPage = login => {
-  login()
-  navigate("/app/budget")
 }
 
 export default authForm

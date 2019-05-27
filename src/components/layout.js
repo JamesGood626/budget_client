@@ -26,12 +26,15 @@ const Layout = ({ children }) => {
   console.log(`typeof children: ${typeof children}`)
   return (
     <AuthReducerProvider reducer={reducer}>
-      {({ state: { authenticated }, login, logout }) => {
+      {({ state: { authenticated }, dispatchLogin, dispatchLogout }) => {
         return (
           <>
-            <Navbar authenticated={authenticated} logout={logout} />
+            <Navbar
+              authenticated={authenticated}
+              dispatchLogout={dispatchLogout}
+            />
             {typeof children === "function"
-              ? children({ authenticated, login, logout })
+              ? children({ authenticated, dispatchLogin, dispatchLogout })
               : children}
           </>
         )

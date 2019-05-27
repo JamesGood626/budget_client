@@ -35,11 +35,25 @@ const Container = styled.div`
 
 const isLoggedIn = () => false
 
-const logout = fn => {
+const logout = async (e, dispatchLogout) => {
+  e.preventDefault()
+  const signoutResult = await axios.post(endpoints.LOGOUT_URL)
+
+  // TODO:
+  // Two possible responses here
+  // Logout Success! or // Logout Failed!
+  // If logout fail occurs then the hashed remember token
+  // wasn't removed from GenServer state...
+  // In which case a message should be displayed indicating that something went wrong
+  // and prompting the user to try logging out again.
+
   console.log("logout called!")
-  fn()
+  // If successful:
+  dispatchLogout()
+  navigate(`/app/login`)
 }
-const navbar = ({ authenticated, logout }) => {
+
+const navbar = ({ authenticated, dispatchLogout }) => {
   console.log(`this is authenticated ${authenticated}`)
   return (
     <Container>
@@ -48,15 +62,7 @@ const navbar = ({ authenticated, logout }) => {
       <nav>
         {` `}
         {authenticated ? (
-          <a
-            href="/"
-            onClick={async e => {
-              e.preventDefault()
-              const logoutResult = await axios.post(endpoints.LOGOUT_URL)
-              console.log("THE LOGOUT RESULT: ", logoutResult)
-              logout(() => navigate(`/app/login`))
-            }}
-          >
+          <a href="/" onClick={e => logout(e, dispatchLogout)}>
             Logout
           </a>
         ) : (

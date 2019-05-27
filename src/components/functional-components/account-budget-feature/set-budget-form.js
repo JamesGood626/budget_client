@@ -8,6 +8,7 @@ import endpoints from "config/api_endpoints"
 import utils from "utils/currency"
 import ExitSvg from "components/functional-components/foundational-components/ExitSvg"
 import handleLabelAnimation from "components/functional-components/expense-deposit-feature/expense-deposit-inputs/label-anim-helper"
+import { navigate } from "gatsby"
 
 const Div = styled.div`
   display: flex;
@@ -49,6 +50,14 @@ const setBudgetForm = ({ toggleModal, setBudget, dateData }) => {
       budget_amount: utils.convertCurrencyToInt(budgetAmount.value),
       ...dateData,
     })
+    // This same if statement has been repeated in three places
+    // (look in deposit-inputs.js & expense-inputs.js)
+    // Find a better solution
+    if (setBudgetResult.data.hasOwnProperty("message")) {
+      setBudgetResult.data.message === "INVALID_SESSION" &&
+        navigate("/app/login")
+      return
+    }
     if (!setBudgetResult) {
       // How to handle this so that user may receive notification of post failure?
       return "It failed..."

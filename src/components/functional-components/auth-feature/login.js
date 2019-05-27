@@ -13,14 +13,14 @@ const Container = styled.div`
   width: 100%;
 `
 
-const login = ({ login }) => {
-  console.log(`The login function: ${login}`)
+const login = ({ dispatchLogin }) => {
+  console.log(`The login function: ${dispatchLogin}`)
   return (
     <Container>
       <AuthForm
         apiEndpoint={endpoints.LOGIN_URL}
         btnText="Log In!"
-        login={login}
+        dispatchLogin={dispatchLogin}
       />
     </Container>
   )

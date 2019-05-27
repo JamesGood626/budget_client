@@ -11,6 +11,7 @@ import {
 } from "components/functional-components/filter-dropdowns/dropdown-styles"
 import utils from "utils/currency"
 import { wrapAmount, changeAmount } from "./helpers"
+import { navigate } from "gatsby"
 
 const expenseInputs = ({ dateData, transact, toggleModal }) => {
   const [warningVisible, setWarningVisible] = useState(false)
@@ -61,10 +62,15 @@ const expenseInputs = ({ dateData, transact, toggleModal }) => {
       amount: utils.convertCurrencyToInt(amount.value),
       ...dateData,
     })
+    if (expendResult.data.hasOwnProperty("message")) {
+      expendResult.data.message === "INVALID_SESSION" && navigate("/app/login")
+      return
+    }
     if (!expendResult) {
       // How to handle this so that user may receive notification of post failure?
       return "It failed..."
     }
+    console.log("Shouldn't be making it to transact")
     await transact(type, expendResult, dateData)
     toggleModal("")
   }

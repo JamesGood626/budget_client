@@ -27,12 +27,12 @@ const theme = {
 
 const App = () => (
   <Layout>
-    {({ authenticated, login }) => {
+    {({ authenticated, dispatchLogin }) => {
       return (
         <ThemeProvider theme={theme}>
           <Router>
             <Signup path="/app/signup" />
-            <Login path="/app/login" login={login} />
+            <Login path="/app/login" dispatchLogin={dispatchLogin} />
             <PrivateRoute
               path="/app/budget"
               authenticated={authenticated}

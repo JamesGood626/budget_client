@@ -28,21 +28,20 @@ const useAuthReducer = () => {
     initialState = { ...initialState, authenticated: true }
   }
   const [state, dispatch] = useReducer(reducer, initialState)
-  const login = () => {
+  const dispatchLogin = () => {
     // Will need to refactor to include token expiry in localStorage as well.
     window.localStorage.setItem("rememberToken", true)
     dispatch({ type: actions.LOGIN })
   }
-  const logout = redirectToLoginPage => {
+  const dispatchLogout = () => {
     dispatch({ type: actions.LOGOUT })
-    redirectToLoginPage()
   }
 
   return {
     state,
     dispatch,
-    login,
-    logout,
+    dispatchLogin,
+    dispatchLogout,
   }
 }
 
