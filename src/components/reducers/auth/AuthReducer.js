@@ -20,9 +20,9 @@ const useAuthReducer = () => {
   // TODO: need to add that user is authenticated inside of localStorage, but need
   // to add an expiry time both on the backend, and on the frontend to ensure that
   // they are redirected to the login page the next time they visit.
-  const rememberToken = window.localStorage.getItem("rememberToken")
-  console.log("the rememberToken: ", rememberToken)
-  if (!rememberToken) {
+  const authenticated = window.localStorage.getItem("authenticated")
+  console.log("the authenticated: ", authenticated)
+  if (!authenticated) {
     initialState = { ...initialState, authenticated: false }
   } else {
     initialState = { ...initialState, authenticated: true }
@@ -30,10 +30,11 @@ const useAuthReducer = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
   const dispatchLogin = () => {
     // Will need to refactor to include token expiry in localStorage as well.
-    window.localStorage.setItem("rememberToken", true)
+    window.localStorage.setItem("authenticated", true)
     dispatch({ type: actions.LOGIN })
   }
   const dispatchLogout = () => {
+    window.localStorage.removeItem("authenticated")
     dispatch({ type: actions.LOGOUT })
   }
 

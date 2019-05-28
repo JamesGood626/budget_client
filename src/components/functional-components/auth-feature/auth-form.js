@@ -6,6 +6,9 @@ import Button from "components/functional-components/foundational-components/but
 import Form from "components/functional-components/foundational-components/form-styles"
 import handleLabelAnimation from "components/functional-components/expense-deposit-feature/expense-deposit-inputs/label-anim-helper"
 
+const LOGIN_SUCCESS = "LOGIN_SUCCESS"
+const SIGNUP_SUCCESS = "SIGNUP_SUCCESS"
+
 // TODO:
 // Make more comprehensive
 const validateEmail = str => {
@@ -53,7 +56,8 @@ const handleSubmit = async (email, password, dispatchLogin, apiEndpoint) => {
   const postSuccess = await postInput(email, password, apiEndpoint)
   console.log("The LOGIN post success: ", postSuccess)
   if (postSuccess === "LOGIN_SUCCESS") {
-    redirectToBudgetPage(dispatchLogin)
+    dispatchLogin()
+    redirectToBudgetPage()
     return true
   } else if (postSuccess === "SIGNUP_SUCCESS") {
     // TODO: set state w/ a useState to display signup success UI.
@@ -82,19 +86,27 @@ const postInput = async (email, password, apiEndpoint) => {
     email,
     password,
   })
-  const loginSuccess =
-    result.data.message === "Login Success!" &&
-    apiEndpoint === endpoints.LOGIN_URL
-  if (loginSuccess) {
-    return "LOGIN_SUCCESS"
+  console.log("the login result: ", result)
+  // {
+  //   status,
+  //   data: { message },
+  // }
+  // console.log("the signup status: ", status)
+  // console.log("the signup message: ", message)
+  if (result.status === 200) {
+    const loginSuccess =
+      result.data.message === LOGIN_SUCCESS &&
+      apiEndpoint === endpoints.LOGIN_URL
+    if (loginSuccess) {
+      return LOGIN_SUCCESS
+    }
+    return SIGNUP_SUCCESS
   }
-  return "SIGNUP_SUCCESS"
+  // Show error UI.
+  return "Oops... Something went wrong."
 }
 
-const redirectToBudgetPage = dispatchLogin => {
-  dispatchLogin()
-  navigate("/app/budget")
-}
+const redirectToBudgetPage = () => navigate("/app/budget")
 
 const authForm = ({ apiEndpoint, btnText, dispatchLogin }) => {
   const [email, setEmail] = useState({ value: "", error: false })

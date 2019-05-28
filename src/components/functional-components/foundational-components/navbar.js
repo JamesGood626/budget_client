@@ -5,6 +5,8 @@ import { Link } from "gatsby"
 import { navigate } from "@reach/router"
 import endpoints from "config/api_endpoints"
 
+const LOGOUT_SUCCESS = "LOGOUT_SUCCESS"
+
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -38,7 +40,7 @@ const isLoggedIn = () => false
 const logout = async (e, dispatchLogout) => {
   e.preventDefault()
   const signoutResult = await axios.post(endpoints.LOGOUT_URL)
-
+  console.log("The signout Result: ", signoutResult)
   // TODO:
   // Two possible responses here
   // Logout Success! or // Logout Failed!
@@ -49,6 +51,7 @@ const logout = async (e, dispatchLogout) => {
 
   console.log("logout called!")
   // If successful:
+  // if (signoutResult.data.message === LOGOUT_SUCCESS) {}
   dispatchLogout()
   navigate(`/app/login`)
 }
