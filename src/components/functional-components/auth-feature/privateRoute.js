@@ -4,6 +4,7 @@ import { navigate } from "gatsby"
 const PrivateRoute = ({
   component: Component,
   authenticated,
+  dispatchLogout,
   location,
   ...rest
 }) => {
@@ -14,7 +15,7 @@ const PrivateRoute = ({
     return null
   }
 
-  return <Component {...rest} />
+  return <Component {...rest} dispatchLogout={dispatchLogout} />
 }
 
 export default PrivateRoute

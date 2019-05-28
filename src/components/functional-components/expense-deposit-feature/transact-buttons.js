@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 // import axios from "axios"
 import styled from "styled-components"
 import Modal from "components/functional-components/expense-deposit-feature/modal"
@@ -23,7 +23,9 @@ const Container = styled.div`
 
 const FadedBackground = styled.div`
   position: absolute;
-  top: 0;
+  /* This needs to be adjusted to be positioned at top of screen */
+  /* Utilize scroll listener */
+  top: ${props => `${props.scrollPosition}px`};
   left: 0;
   z-index: 50;
   background: #222;
@@ -50,6 +52,17 @@ const transactButtons = ({
     state: { data },
   },
 }) => {
+  const [scrollPosition, setScrollPosition] = useState(window.scrollY)
+  useEffect(() => {
+    const handleScroll = e => {
+      console.log("the window.scrollY: ", window.scrollY)
+      setScrollPosition(window.scrollY)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [setScrollPosition])
   const [modalToggled, setModalToggled] = useState({
     toggled: false,
     transactionType: null,
@@ -97,7 +110,7 @@ const transactButtons = ({
       </Button>
       {modalToggled.toggled && (
         <>
-          <Modal toggleModal={toggleModal}>
+          <Modal toggleModal={toggleModal} scrollPosition={scrollPosition}>
             <TransactForm
               transactionType={modalToggled.transactionType}
               toggleModal={toggleModal}
@@ -108,7 +121,7 @@ const transactButtons = ({
               transact={transact}
             />
           </Modal>
-          <FadedBackground />
+          <FadedBackground scrollPosition={scrollPosition} />
         </>
       )}
     </Container>

@@ -21,7 +21,7 @@ const useAuthReducer = () => {
   // to add an expiry time both on the backend, and on the frontend to ensure that
   // they are redirected to the login page the next time they visit.
   const authenticated = window.localStorage.getItem("authenticated")
-  console.log("the authenticated: ", authenticated)
+  console.log("the authenticated status: ", authenticated)
   if (!authenticated) {
     initialState = { ...initialState, authenticated: false }
   } else {
@@ -34,6 +34,7 @@ const useAuthReducer = () => {
     dispatch({ type: actions.LOGIN })
   }
   const dispatchLogout = () => {
+    console.log("dispatchLogout firing")
     window.localStorage.removeItem("authenticated")
     dispatch({ type: actions.LOGOUT })
   }

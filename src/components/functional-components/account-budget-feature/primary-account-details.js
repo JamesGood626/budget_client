@@ -121,19 +121,6 @@ const Container = styled.div`
   }
 `
 
-// TODO: Fix this so that it always appears from the top to bottom of the viewport (even when scrolled down the page....)
-// for whatever reason this css isn't taking effect in the cypress view.
-const FadedBackground = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 50;
-  background: #222;
-  opacity: 0.5;
-  width: 100vw;
-  height: 100vh;
-`
-
 const primaryAccountDetails = ({
   budget,
   reducer: {
@@ -219,7 +206,6 @@ const primaryAccountDetails = ({
               setBudget={setBudget}
             />
           </Modal>
-          <FadedBackground />
         </>
       )}
     </Container>

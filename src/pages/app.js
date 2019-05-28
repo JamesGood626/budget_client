@@ -34,7 +34,7 @@ const theme = {
 
 const App = () => (
   <Layout>
-    {({ authenticated, dispatchLogin }) => {
+    {({ authenticated, dispatchLogin, dispatchLogout }) => {
       return (
         <ThemeProvider theme={theme}>
           <Router>
@@ -44,6 +44,7 @@ const App = () => (
               path="/app/budget"
               authenticated={authenticated}
               component={BudgetCoordinator}
+              dispatchLogout={dispatchLogout}
             />
           </Router>
         </ThemeProvider>

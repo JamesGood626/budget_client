@@ -5,9 +5,7 @@ import useBudgetReducer from "components/reducers/budget/BudgetReducer"
 import BudgetReducerProvider from "components/reducers/budget/BudgetReducerProvider"
 import BudgetDisplay from "components/class-components/BudgetDisplay"
 import endpoints from "config/api_endpoints"
-
-// only required while styling the application
-import { accountDataWithUpdates } from "test_fixture_data"
+import { navigate } from "gatsby"
 
 const Container = styled.div`
   display: flex;
@@ -32,20 +30,28 @@ const Container = styled.div`
 // is to pass in useReducer(reducer, initalState) to the reducer prop of the
 // children components <- and even this seems unlikely to work.
 
-const fetchBudgetData = async setBudgetData => {
+const fetchBudgetData = async (setBudgetData, dispatchLogout) => {
   const result = await axios.get(endpoints.GET_ACCOUNT_URL)
+  // status from server is still 200 in this case.
+  // Could fix that.
+  console.log("The get account result: ", result)
+  if (result.data.message === "INVALID_SESSION") {
+    // window.localStorage.removeItem("authenticated")
+    dispatchLogout()
+    navigate(`/app/login`)
+  }
+  // This is the status 200 case
   setBudgetData(result.data)
+  // Any other status cases should render error UI message.
 }
 
 // ALso fetchBudgetData as props to facilitate testing as well?
-const BudgetCoordinator = () => {
+const BudgetCoordinator = ({ dispatchLogout }) => {
   // Dependency injection these useBudgetReducer values to facilitate unit testing this component?
   const { state, dispatch, setBudgetData } = useBudgetReducer()
   const { data: budgetData } = state
   if (budgetData === null) {
-    // this is for dev only:
-    // setBudgetData(accountDataWithUpdates)
-    fetchBudgetData(setBudgetData)
+    fetchBudgetData(setBudgetData, dispatchLogout)
   }
 
   const budgetDataIsAvailable = budgetData !== null && budgetData.budget

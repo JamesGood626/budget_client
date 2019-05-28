@@ -6,7 +6,9 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 0;
+  /* This needs to be adjusted to be positioned at top of screen */
+  /* Utilize scroll listener */
+  top: ${props => `${props.scrollPosition}px`};
   left: 0;
   z-index: 100;
   width: 100vw;
@@ -64,9 +66,12 @@ class TransactModalForm extends Component {
   }
 
   render() {
-    const { children, toggleModal } = this.props
+    const { children, toggleModal, scrollPosition } = this.props
     return (
-      <Container onClick={e => this.handleCloseClick(e, toggleModal)}>
+      <Container
+        onClick={e => this.handleCloseClick(e, toggleModal)}
+        scrollPosition={scrollPosition}
+      >
         {children}
       </Container>
     )
