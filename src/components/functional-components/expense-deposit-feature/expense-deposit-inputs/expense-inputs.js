@@ -70,7 +70,6 @@ const expenseInputs = ({ dateData, transact, toggleModal }) => {
       // How to handle this so that user may receive notification of post failure?
       return "It failed..."
     }
-    console.log("Shouldn't be making it to transact")
     await transact(type, expendResult, dateData)
     toggleModal("")
   }

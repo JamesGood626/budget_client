@@ -54,7 +54,6 @@ const handleSubmit = async (email, password, dispatchLogin, apiEndpoint) => {
     return result
   }
   const postSuccess = await postInput(email, password, apiEndpoint)
-  console.log("The LOGIN post success: ", postSuccess)
   if (postSuccess === "LOGIN_SUCCESS") {
     dispatchLogin()
     redirectToBudgetPage()
@@ -63,7 +62,7 @@ const handleSubmit = async (email, password, dispatchLogin, apiEndpoint) => {
     // TODO: set state w/ a useState to display signup success UI.
     return true
   } else {
-    // create another useState to display this.
+    // create another useState to display error UI.
     return "Woops, something went wrong"
   }
 }
@@ -82,21 +81,16 @@ const validateUserInput = (email, password) => {
 }
 
 const postInput = async (email, password, apiEndpoint) => {
-  const result = await axios.post(apiEndpoint, {
+  const {
+    status,
+    data: { message },
+  } = await axios.post(apiEndpoint, {
     email,
     password,
   })
-  console.log("the login result: ", result)
-  // {
-  //   status,
-  //   data: { message },
-  // }
-  // console.log("the signup status: ", status)
-  // console.log("the signup message: ", message)
-  if (result.status === 200) {
+  if (status === 200) {
     const loginSuccess =
-      result.data.message === LOGIN_SUCCESS &&
-      apiEndpoint === endpoints.LOGIN_URL
+      message === LOGIN_SUCCESS && apiEndpoint === endpoints.LOGIN_URL
     if (loginSuccess) {
       return LOGIN_SUCCESS
     }

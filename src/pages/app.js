@@ -8,6 +8,13 @@ import BudgetCoordinator from "components/class-components/BudgetCoordinator"
 import Login from "components/functional-components/auth-feature/login"
 import Signup from "components/functional-components/auth-feature/signup"
 
+// FINAL TODOS:
+// - Error handle for the nav.js signout action
+// - Spruce up forms...
+// - Add success/error UI notifications where you've left comments in the code...
+// - fix tests, and then constantly come back to them and find better ways...
+// - This need not all be done before deploying... but fix the tests at least
+
 const theme = {
   white: "#fff",
   darkGreen: "#1d470c",

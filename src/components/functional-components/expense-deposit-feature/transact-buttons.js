@@ -67,14 +67,6 @@ const transactButtons = ({
   }
   // Clicking either of these buttons should open an appropriate modal
   // which will enable the user to enter deposit_type/expense_type and amount
-  //////////
-  // TODO //
-  //////////
-  // This is where the tests are failing... must have left off here last time.
-  // 1. Draw a diagram to determine the component tree flow.
-  // 2. Add signup/login/signout aspects of the app.
-  // 3. Handle user interaction flow for deposit/necessary_expense/unnecessary_expense
-  //    -> This will be handled in the modal components which get toggled below.
   return (
     <Container>
       {/* Need to open modals onClick with forms for adding the transactions */}
