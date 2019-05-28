@@ -1,6 +1,5 @@
 describe("Budget page set budget feature", () => {
   beforeEach(() => {
-    // Need to refactor codebase to not require entering in email and password for every setup.
     cy.seedAndVisitBudgetPage()
   })
 
@@ -45,7 +44,7 @@ describe("Budget page set budget feature", () => {
     //   cy.get(".expense").should("have.text", "$9000")
   })
 
-  it.only("handles invalid session response properly when attempting to create a budget", () => {
+  it("handles invalid session response properly when attempting to create a budget", () => {
     cy.route("POST", "/api/account", {
       message: "INVALID_SESSION",
     })

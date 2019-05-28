@@ -1,6 +1,5 @@
 describe("Budget page deposit features", () => {
   beforeEach(() => {
-    // Need to refactor codebase to not require entering in email and password for every setup.
     cy.seedAndVisitBudgetPage()
   })
 
