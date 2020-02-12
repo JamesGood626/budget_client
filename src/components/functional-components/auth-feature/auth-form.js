@@ -61,6 +61,9 @@ const handleSubmit = async (email, password, dispatchLogin, apiEndpoint) => {
   } else if (postSuccess === "SIGNUP_SUCCESS") {
     // TODO: set state w/ a useState to display signup success UI.
     return true
+  } else if (postSuccess === "EMAIL_TAKEN") {
+    // SetState to show error ui
+    return false
   } else {
     // create another useState to display error UI.
     return "Woops, something went wrong"
@@ -88,6 +91,7 @@ const postInput = async (email, password, apiEndpoint) => {
     email,
     password,
   })
+  console.log("THE MESSAGE: ", message)
   if (status === 200) {
     const loginSuccess =
       message === LOGIN_SUCCESS && apiEndpoint === endpoints.LOGIN_URL
@@ -95,6 +99,11 @@ const postInput = async (email, password, apiEndpoint) => {
       return LOGIN_SUCCESS
     }
     return SIGNUP_SUCCESS
+  }
+
+  if (status === 422) {
+    console.log("EMAIL_TAKEN")
+    return "EMAIL_TAKEN"
   }
   // Show error UI.
   return "Oops... Something went wrong."

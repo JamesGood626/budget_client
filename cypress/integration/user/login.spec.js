@@ -6,7 +6,7 @@ describe("Login page", () => {
   it("can successfully login", () => {
     cy.get("#email")
       .focus()
-      .type("james.good@codeimmersives.com")
+      .type("test@gmail.com")
     cy.get("#password")
       .focus()
       .type("passwordshabuya")
@@ -19,7 +19,7 @@ describe("Login page", () => {
   it("displays error if email is invalid", () => {
     cy.get("#email")
       .focus()
-      .type("james.goodcodeimmersives.com")
+      .type("test@gmail.com")
     cy.get("#password")
       .focus()
       .type("passwordshabuya")
@@ -31,7 +31,7 @@ describe("Login page", () => {
   it("displays error if password is invalid", () => {
     cy.get("#email")
       .focus()
-      .type("james.good@codeimmersives.com")
+      .type("test@gmail.com")
     cy.get("#password")
       .focus()
       .type("password")
